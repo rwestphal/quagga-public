@@ -39,12 +39,14 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "bgpd/bgp_fsm.h"
 #include "bgpd/bgp_snmp.h"
 
-/* BGP4-MIB described in RFC1657. */
+/* BGP4-MIB described in RFC4273. */
 #define BGP4MIB 1,3,6,1,2,1,15
 
 /* BGP TRAP. */
-#define BGPESTABLISHED			1
-#define BGPBACKWARDTRANSITION		2	
+#define BGPESTABLISHEDNOTIFICATION	1
+#define BGPBACKWARDTRANSNOTIFICATION	2
+#define BGPESTABLISHED			1 /* Deprecated */
+#define BGPBACKWARDTRANSITION		2 /* Deprecated */
 
 /* BGP MIB bgpVersion. */
 #define BGPVERSION			      0
@@ -253,7 +255,7 @@ bgpVersion (struct variable *v, oid name[], size_t *length, int exact,
       == MATCH_FAILED)
     return NULL;
 
-  /* Retrun BGP version.  Zebra bgpd only support version 4. */
+  /* Return BGP version.  Zebra bgpd only support version 4. */
   version = (0x80 >> (BGP_VERSION_4 - 1));
 
   /* Return octet string length 1. */
@@ -467,7 +469,10 @@ bgpPeerTable (struct variable *v, oid name[], size_t *length,
   switch (v->magic)
     {
     case BGPPEERIDENTIFIER:
-      return SNMP_IPADDRESS (peer->remote_id);
+      if (peer->status == OpenConfirm || peer->status == Established)
+        return SNMP_IPADDRESS (peer->remote_id);
+      else
+	return SNMP_INTEGER (0);
       break;
     case BGPPEERSTATE:
       return SNMP_INTEGER (peer->status);
@@ -482,7 +487,10 @@ bgpPeerTable (struct variable *v, oid name[], size_t *length,
 	return SNMP_INTEGER (BGP_PeerAdmin_start);
       break;
     case BGPPEERNEGOTIATEDVERSION:
-      return SNMP_INTEGER (BGP_VERSION_4);
+      if (peer->status == OpenConfirm || peer->status == Established)
+        return SNMP_INTEGER (BGP_VERSION_4);
+      else
+	return SNMP_INTEGER (0);
       break;
     case BGPPEERLOCALADDR:
       if (peer->su_local)
@@ -788,7 +796,7 @@ bgp4PathAttrTable (struct variable *v, oid name[], size_t *length,
       return SNMP_IPADDRESS (addr.prefix);
       break;
     case BGP4PATHATTRORIGIN:	/* 4 */
-      return SNMP_INTEGER (binfo->attr->origin);
+      return SNMP_INTEGER (binfo->attr->origin + 1);
       break;
     case BGP4PATHATTRASPATHSEGMENT: /* 5 */
       return aspath_snmp_pathseg (binfo->attr->aspath, var_len);
@@ -797,10 +805,16 @@ bgp4PathAttrTable (struct variable *v, oid name[], size_t *length,
       return SNMP_IPADDRESS (binfo->attr->nexthop);
       break;
     case BGP4PATHATTRMULTIEXITDISC: /* 7 */
-      return SNMP_INTEGER (binfo->attr->med);
+      if (CHECK_FLAG (binfo->attr->flag, ATTR_FLAG_BIT (BGP_ATTR_MULTI_EXIT_DISC)))
+        return SNMP_INTEGER (binfo->attr->med);
+      else
+        return SNMP_INTEGER (-1);
       break;
     case BGP4PATHATTRLOCALPREF:	/* 8 */
-      return SNMP_INTEGER (binfo->attr->local_pref);
+      if (CHECK_FLAG (binfo->attr->flag, ATTR_FLAG_BIT (BGP_ATTR_LOCAL_PREF)))
+        return SNMP_INTEGER (binfo->attr->local_pref);
+      else
+        return SNMP_INTEGER (-1);
       break;
     case BGP4PATHATTRATOMICAGGREGATE: /* 9 */
       return SNMP_INTEGER (1);
@@ -829,9 +843,13 @@ bgp4PathAttrTable (struct variable *v, oid name[], size_t *length,
 	return SNMP_INTEGER (BGP4_PathAttrBest_false);
       break;
     case BGP4PATHATTRUNKNOWN:	/* 14 */
-      *var_len = 0;
-      return NULL;
-      break;
+	{
+	  static u_char empty;
+	  empty = 0;
+	  *var_len = 0;
+	  return (u_char *)&empty;
+	  break;
+	}
     }
   return NULL;
 }
@@ -839,6 +857,7 @@ bgp4PathAttrTable (struct variable *v, oid name[], size_t *length,
 /* BGP Traps. */
 struct trap_object bgpTrapList[] =
 {
+  {3, {3, 1, BGPPEERREMOTEADDR}},
   {3, {3, 1, BGPPEERLASTERROR}},
   {3, {3, 1, BGPPEERSTATE}}
 };
@@ -861,7 +880,7 @@ bgpTrapEstablished (struct peer *peer)
 	     bgp_oid, sizeof bgp_oid / sizeof (oid),
 	     index, IN_ADDR_SIZE,
 	     bgpTrapList, sizeof bgpTrapList / sizeof (struct trap_object),
-	     BGPESTABLISHED);
+	     BGPESTABLISHEDNOTIFICATION);
 }
 
 void
@@ -882,7 +901,7 @@ bgpTrapBackwardTransition (struct peer *peer)
 	     bgp_oid, sizeof bgp_oid / sizeof (oid),
 	     index, IN_ADDR_SIZE,
 	     bgpTrapList, sizeof bgpTrapList / sizeof (struct trap_object),
-	     BGPBACKWARDTRANSITION);
+	     BGPBACKWARDTRANSNOTIFICATION);
 }
 
 void
