@@ -62,6 +62,53 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 extern const char *bgp_origin_str[];
 extern const char *bgp_origin_long_str[];
 
+enum bgp_show_type
+{
+  bgp_show_type_normal,
+  bgp_show_type_prefix_list,
+  bgp_show_type_filter_list,
+  bgp_show_type_regexp,
+  bgp_show_type_route_map,
+  bgp_show_type_neighbor,
+  bgp_show_type_cidr_only,
+  bgp_show_type_prefix_longer,
+  bgp_show_type_community_all,
+  bgp_show_type_community,
+  bgp_show_type_community_exact,
+  bgp_show_type_community_list,
+  bgp_show_type_community_list_exact,
+  bgp_show_type_flap_address,
+  bgp_show_type_flap_prefix,
+  bgp_show_type_dampend_paths,
+  bgp_show_type_damp_neighbor,
+  bgp_show_type_labels
+};
+
+enum bgp_stats
+{
+  BGP_STATS_MAXBITLEN = 0,
+  BGP_STATS_RIB,
+  BGP_STATS_PREFIXES,
+  BGP_STATS_TOTPLEN,
+  BGP_STATS_UNAGGREGATEABLE,
+  BGP_STATS_MAX_AGGREGATEABLE,
+  BGP_STATS_AGGREGATES,
+  BGP_STATS_SPACE,
+  BGP_STATS_ASPATH_COUNT,
+  BGP_STATS_ASPATH_MAXHOPS,
+  BGP_STATS_ASPATH_TOTHOPS,
+  BGP_STATS_ASPATH_MAXSIZE,
+  BGP_STATS_ASPATH_TOTSIZE,
+  BGP_STATS_ASN_HIGHEST,
+  BGP_STATS_MAX,
+};
+
+struct bgp_table_stats
+{
+  struct bgp_table *table;
+  unsigned long long counts[BGP_STATS_MAX];
+};
+
 static const char *table_stats_strs[] =
 {
   [BGP_STATS_PREFIXES]            = "Total Prefixes",
@@ -80,6 +127,27 @@ static const char *table_stats_strs[] =
   [BGP_STATS_MAX] = NULL,
 };
 
+enum bgp_pcounts
+{
+  PCOUNT_ADJ_IN = 0,
+  PCOUNT_DAMPED,
+  PCOUNT_REMOVED,
+  PCOUNT_HISTORY,
+  PCOUNT_STALE,
+  PCOUNT_VALID,
+  PCOUNT_ALL,
+  PCOUNT_COUNTED,
+  PCOUNT_PFCNT, /* the figure we display to users */
+  PCOUNT_MAX,
+};
+
+struct peer_pcounts
+{
+  unsigned int count[PCOUNT_MAX];
+  const struct peer *peer;
+  const struct bgp_table *table;
+};
+
 static const char *pcount_strs[] =
 {
   [PCOUNT_ADJ_IN]  = "Adj-in",
@@ -94,17 +162,18 @@ static const char *pcount_strs[] =
   [PCOUNT_MAX]     = NULL,
 };
 
-#define BGP_SHOW_SCODE_HEADER "Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,%s              r RIB-failure, S Stale, R Removed%s"
-#define BGP_SHOW_OCODE_HEADER "Origin codes: i - IGP, e - EGP, ? - incomplete%s%s"
-#define BGP_SHOW_HEADER "   Network          Next Hop            Metric LocPrf Weight Path%s"
-#define BGP_SHOW_DAMP_HEADER "   Network          From             Reuse    Path%s"
-#define BGP_SHOW_FLAP_HEADER "   Network          From            Flaps Duration Reuse    Path%s"
+#define BGP_SHOW_SCODE_HEADER	"Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,%s              r RIB-failure, S Stale, R Removed%s"
+#define BGP_SHOW_OCODE_HEADER	"Origin codes: i - IGP, e - EGP, ? - incomplete%s%s"
+#define BGP_SHOW_HEADER		"   Network          Next Hop            Metric LocPrf Weight Path%s"
+#define BGP_SHOW_DAMP_HEADER	"   Network          From             Reuse    Path%s"
+#define BGP_SHOW_FLAP_HEADER	"   Network          From            Flaps Duration Reuse    Path%s"
+#define BGP_SHOW_LABELS_HEADER	"   Network          Next Hop      In Label/Out Label%s"
 
-/* Print the short form route status for a bgp_info */
+/* Print the short form route status for a bgp_info. */
 static void
 route_vty_short_status_out (struct vty *vty, struct bgp_info *binfo)
 {
- /* Route status display. */
+  /* Route status display. */
   if (CHECK_FLAG (binfo->flags, BGP_INFO_REMOVED))
     vty_out (vty, "R");
   else if (CHECK_FLAG (binfo->flags, BGP_INFO_STALE))
@@ -127,13 +196,13 @@ route_vty_short_status_out (struct vty *vty, struct bgp_info *binfo)
     vty_out (vty, " ");
 
   /* Internal route. */
-    if ((binfo->peer->as) && (binfo->peer->as == binfo->peer->local_as))
-      vty_out (vty, "i");
-    else
-      vty_out (vty, " ");
+  if ((binfo->peer->as) && (binfo->peer->as == binfo->peer->local_as))
+    vty_out (vty, "i");
+  else
+    vty_out (vty, " ");
 }
 
-/* Static function to display route. */
+/* Print the route prefix. */
 static void
 route_vty_out_route (struct prefix *p, struct vty *vty)
 {
@@ -167,24 +236,24 @@ route_vty_out_route (struct prefix *p, struct vty *vty)
     vty_out (vty, "%*s", len, " ");
 }
 
-/* called from terminal list command */
+/* Print a single route. */
 static void
-route_vty_out (struct vty *vty, struct prefix *p,
-	       struct bgp_info *binfo, int display, safi_t safi)
+route_vty_out (struct vty *vty, struct prefix *p, struct bgp_info *binfo,
+               struct attr *attr, int display, safi_t safi)
 {
-  struct attr *attr;
-
   /* short status lead text */
-  route_vty_short_status_out (vty, binfo);
+  if (binfo)
+    route_vty_short_status_out (vty, binfo);
+  else
+    vty_out (vty, "*> ");
 
   /* print prefix and mask */
-  if (! display)
+  if (display)
     route_vty_out_route (p, vty);
   else
     vty_out (vty, "%*s", 17, " ");
 
   /* Print attribute */
-  attr = binfo->attr;
   if (attr)
     {
       if (p->family == AF_INET)
@@ -234,75 +303,9 @@ route_vty_out (struct vty *vty, struct prefix *p,
   vty_out (vty, "%s", VTY_NEWLINE);
 }
 
-/* called from terminal list command */
+/* Print a single route with dampening information. */
 static void
-route_vty_out_tmp (struct vty *vty, struct prefix *p,
-		   struct attr *attr, safi_t safi)
-{
-  /* Route status display. */
-  vty_out (vty, "*");
-  vty_out (vty, ">");
-  vty_out (vty, " ");
-
-  /* print prefix and mask */
-  route_vty_out_route (p, vty);
-
-  /* Print attribute */
-  if (attr)
-    {
-      if (p->family == AF_INET)
-	{
-	  if (safi == SAFI_MPLS_VPN)
-	    vty_out (vty, "%-16s",
-                     inet_ntoa (attr->extra->mp_nexthop_global_in));
-	  else
-	    vty_out (vty, "%-16s", inet_ntoa (attr->nexthop));
-	}
-#ifdef HAVE_IPV6
-      else if (p->family == AF_INET6)
-        {
-          int len;
-          char buf[BUFSIZ];
-
-          assert (attr->extra);
-
-          len = vty_out (vty, "%s",
-                         inet_ntop (AF_INET6, &attr->extra->mp_nexthop_global,
-                         buf, BUFSIZ));
-          len = 16 - len;
-          if (len < 1)
-            vty_out (vty, "%s%*s", VTY_NEWLINE, 36, " ");
-          else
-            vty_out (vty, "%*s", len, " ");
-        }
-#endif /* HAVE_IPV6 */
-
-      if (attr->flag & ATTR_FLAG_BIT (BGP_ATTR_MULTI_EXIT_DISC))
-	vty_out (vty, "%10u", attr->med);
-      else
-	vty_out (vty, "          ");
-
-      if (attr->flag & ATTR_FLAG_BIT (BGP_ATTR_LOCAL_PREF))
-	vty_out (vty, "%7u", attr->local_pref);
-      else
-	vty_out (vty, "       ");
-
-      vty_out (vty, "%7u ", (attr->extra ? attr->extra->weight : 0));
-
-      /* Print aspath */
-      if (attr->aspath)
-        aspath_print_vty (vty, "%s", attr->aspath, " ");
-
-      /* Print origin */
-      vty_out (vty, "%s", bgp_origin_str[attr->origin]);
-    }
-
-  vty_out (vty, "%s", VTY_NEWLINE);
-}
-
-/* dampening route */
-static void
-damp_route_vty_out (struct vty *vty, struct prefix *p,
+route_vty_out_damp (struct vty *vty, struct prefix *p,
 		    struct bgp_info *binfo, int display, safi_t safi)
 {
   struct attr *attr;
@@ -313,7 +316,7 @@ damp_route_vty_out (struct vty *vty, struct prefix *p,
   route_vty_short_status_out (vty, binfo);
 
   /* print prefix and mask */
-  if (! display)
+  if (display)
     route_vty_out_route (p, vty);
   else
     vty_out (vty, "%*s", 17, " ");
@@ -341,9 +344,9 @@ damp_route_vty_out (struct vty *vty, struct prefix *p,
   vty_out (vty, "%s", VTY_NEWLINE);
 }
 
-/* flap route */
+/* Print a single route with flap statistics information. */
 static void
-flap_route_vty_out (struct vty *vty, struct prefix *p,
+route_vty_out_flap (struct vty *vty, struct prefix *p,
 		    struct bgp_info *binfo, int display, safi_t safi)
 {
   struct attr *attr;
@@ -360,7 +363,7 @@ flap_route_vty_out (struct vty *vty, struct prefix *p,
   route_vty_short_status_out (vty, binfo);
 
   /* print prefix and mask */
-  if (! display)
+  if (display)
     route_vty_out_route (p, vty);
   else
     vty_out (vty, "%*s", 17, " ");
@@ -402,8 +405,9 @@ flap_route_vty_out (struct vty *vty, struct prefix *p,
   vty_out (vty, "%s", VTY_NEWLINE);
 }
 
+/* Print a single route with MPLS label information. */
 static void
-route_vty_out_tag (struct vty *vty, struct prefix *p,
+route_vty_out_label (struct vty *vty, struct prefix *p,
 		   struct bgp_info *binfo, int display, safi_t safi)
 {
   struct attr *attr;
@@ -412,11 +416,11 @@ route_vty_out_tag (struct vty *vty, struct prefix *p,
   if (!binfo->extra)
     return;
 
-  /* short status lead text */
-  route_vty_short_status_out (vty, binfo);
+  /* don't display short status text */
+  vty_out (vty, "   ");
 
   /* print prefix and mask */
-  if (! display)
+  if (display)
     route_vty_out_route (p, vty);
   else
     vty_out (vty, "%*s", 17, " ");
@@ -460,259 +464,316 @@ route_vty_out_tag (struct vty *vty, struct prefix *p,
 
   vty_out (vty, "%s", VTY_NEWLINE);
 }
-
-int
-bgp_show_table (struct vty *vty, struct bgp_table *table, struct in_addr *router_id,
-	  enum bgp_show_type type, void *output_arg)
+
+static int
+bgp_show_filter_route (struct bgp_node *rn, struct bgp_info *ri,
+		       int flap_s, enum bgp_show_type type, void *output_arg)
+{
+  if (flap_s
+      || type == bgp_show_type_dampend_paths
+      || type == bgp_show_type_damp_neighbor)
+    {
+      if (!(ri->extra && ri->extra->damp_info))
+	return 1;
+    }
+  if (type == bgp_show_type_regexp)
+    {
+      regex_t *regex = output_arg;
+
+      if (bgp_regexec (regex, ri->attr->aspath) == REG_NOMATCH)
+	return 1;
+    }
+  if (type == bgp_show_type_prefix_list)
+    {
+      struct prefix_list *plist = output_arg;
+
+      if (prefix_list_apply (plist, &rn->p) != PREFIX_PERMIT)
+	return 1;
+    }
+  if (type == bgp_show_type_filter_list)
+    {
+      struct as_list *as_list = output_arg;
+
+      if (as_list_apply (as_list, ri->attr->aspath) != AS_FILTER_PERMIT)
+	return 1;
+    }
+  if (type == bgp_show_type_route_map)
+    {
+      struct route_map *rmap = output_arg;
+      struct bgp_info binfo;
+      struct attr dummy_attr;
+      struct attr_extra dummy_extra;
+      int ret;
+
+      dummy_attr.extra = &dummy_extra;
+      bgp_attr_dup (&dummy_attr, ri->attr);
+
+      binfo.peer = ri->peer;
+      binfo.attr = &dummy_attr;
+
+      ret = route_map_apply (rmap, &rn->p, RMAP_BGP, &binfo);
+      if (ret == RMAP_DENYMATCH)
+	return 1;
+    }
+  if (type == bgp_show_type_neighbor
+      || type == bgp_show_type_damp_neighbor)
+    {
+      union sockunion *su = output_arg;
+
+      if (ri->peer->su_remote == NULL || ! sockunion_same(ri->peer->su_remote, su))
+	return 1;
+    }
+  if (type == bgp_show_type_cidr_only)
+    {
+      u_int32_t destination;
+
+      destination = ntohl (rn->p.u.prefix4.s_addr);
+      if (IN_CLASSC (destination) && rn->p.prefixlen == 24)
+	return 1;
+      if (IN_CLASSB (destination) && rn->p.prefixlen == 16)
+	return 1;
+      if (IN_CLASSA (destination) && rn->p.prefixlen == 8)
+	return 1;
+    }
+  if (type == bgp_show_type_prefix_longer)
+    {
+      struct prefix *p = output_arg;
+
+      if (! prefix_match (p, &rn->p))
+	return 1;
+    }
+  if (type == bgp_show_type_community_all)
+    {
+      if (! ri->attr->community)
+	return 1;
+    }
+  if (type == bgp_show_type_community)
+    {
+      struct community *com = output_arg;
+
+      if (! ri->attr->community ||
+	  ! community_match (ri->attr->community, com))
+	return 1;
+    }
+  if (type == bgp_show_type_community_exact)
+    {
+      struct community *com = output_arg;
+
+      if (! ri->attr->community ||
+	  ! community_cmp (ri->attr->community, com))
+	return 1;
+    }
+  if (type == bgp_show_type_community_list)
+    {
+      struct community_list *clist = output_arg;
+
+      if (! community_list_match (ri->attr->community, clist))
+	return 1;
+    }
+  if (type == bgp_show_type_community_list_exact)
+    {
+      struct community_list *clist = output_arg;
+
+      if (! community_list_exact_match (ri->attr->community, clist))
+	return 1;
+    }
+  if (type == bgp_show_type_flap_address
+      || type == bgp_show_type_flap_prefix)
+    {
+      struct prefix *p = output_arg;
+
+      if (! prefix_match (&rn->p, p))
+	return 1;
+
+      if (type == bgp_show_type_flap_prefix)
+	if (p->prefixlen != rn->p.prefixlen)
+	  return 1;
+    }
+  if (type == bgp_show_type_dampend_paths
+      || type == bgp_show_type_damp_neighbor)
+    {
+      if (! CHECK_FLAG (ri->flags, BGP_INFO_DAMPED)
+	  || CHECK_FLAG (ri->flags, BGP_INFO_HISTORY))
+	return 1;
+    }
+
+  return 0;
+}
+
+static void
+bgp_show_header (struct vty *vty, struct in_addr *router_id, int def_originate,
+                 enum bgp_show_type type, int flap_s, int *header,
+                 u_char **rd_header)
+{
+  if (*header)
+    {
+      if (type == bgp_show_type_labels)
+	vty_out (vty, BGP_SHOW_LABELS_HEADER, VTY_NEWLINE);
+      else
+	{
+	  vty_out (vty, "BGP table version is 0, local router ID is %s%s",
+		   inet_ntoa (*router_id), VTY_NEWLINE);
+	  vty_out (vty, BGP_SHOW_SCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
+	  vty_out (vty, BGP_SHOW_OCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
+
+          if (def_originate)
+	    vty_out (vty, "Originating default network 0.0.0.0%s%s",
+		     VTY_NEWLINE, VTY_NEWLINE);
+
+	  if (type == bgp_show_type_dampend_paths
+	      || type == bgp_show_type_damp_neighbor)
+	    vty_out (vty, BGP_SHOW_DAMP_HEADER, VTY_NEWLINE);
+	  else if (flap_s)
+	    vty_out (vty, BGP_SHOW_FLAP_HEADER, VTY_NEWLINE);
+	  else
+	    vty_out (vty, BGP_SHOW_HEADER, VTY_NEWLINE);
+	}
+      *header = 0;
+    }
+
+  if (rd_header && *rd_header)
+    {
+      u_int16_t type;
+      struct rd_as rd_as;
+      struct rd_ip rd_ip;
+
+      /* Decode RD type. */
+      type = decode_rd_type (*rd_header);
+
+      /* Decode RD value. */
+      if (type == RD_TYPE_AS)
+	decode_rd_as (*rd_header + 2, &rd_as);
+      else if (type == RD_TYPE_IP)
+	decode_rd_ip (*rd_header + 2, &rd_ip);
+
+      vty_out (vty, "Route Distinguisher: ");
+      if (type == RD_TYPE_AS)
+	vty_out (vty, "%u:%u", rd_as.as, rd_as.val);
+      else if (type == RD_TYPE_IP)
+	vty_out (vty, "%s:%u", inet_ntoa (rd_ip.ip), rd_ip.val);
+
+      vty_out (vty, "%s", VTY_NEWLINE);
+      *rd_header = NULL;
+    }
+}
+
+static int
+bgp_show_table (struct vty *vty, struct bgp_table *table, safi_t safi,
+		struct in_addr *router_id, int *header, u_char **rd_header,
+		int flap_s, enum bgp_show_type type, void *output_arg)
 {
   struct bgp_info *ri;
   struct bgp_node *rn;
-  int header = 1;
   int display;
-  unsigned long output_count;
-
-  /* This is first entry point, so reset total line. */
-  output_count = 0;
 
   /* Start processing of routes. */
   for (rn = bgp_table_top (table); rn; rn = bgp_route_next (rn))
-    if (rn->info != NULL)
-      {
-	display = 0;
-
-	for (ri = rn->info; ri; ri = ri->next)
-	  {
-	    if (type == bgp_show_type_flap_statistics
-		|| type == bgp_show_type_flap_address
-		|| type == bgp_show_type_flap_prefix
-		|| type == bgp_show_type_flap_cidr_only
-		|| type == bgp_show_type_flap_regexp
-		|| type == bgp_show_type_flap_filter_list
-		|| type == bgp_show_type_flap_prefix_list
-		|| type == bgp_show_type_flap_prefix_longer
-		|| type == bgp_show_type_flap_route_map
-		|| type == bgp_show_type_flap_neighbor
-		|| type == bgp_show_type_dampend_paths
-		|| type == bgp_show_type_damp_neighbor)
-	      {
-		if (!(ri->extra && ri->extra->damp_info))
-		  continue;
-	      }
-	    if (type == bgp_show_type_regexp
-		|| type == bgp_show_type_flap_regexp)
-	      {
-		regex_t *regex = output_arg;
-
-		if (bgp_regexec (regex, ri->attr->aspath) == REG_NOMATCH)
-		  continue;
-	      }
-	    if (type == bgp_show_type_prefix_list
-		|| type == bgp_show_type_flap_prefix_list)
-	      {
-		struct prefix_list *plist = output_arg;
-
-		if (prefix_list_apply (plist, &rn->p) != PREFIX_PERMIT)
-		  continue;
-	      }
-	    if (type == bgp_show_type_filter_list
-		|| type == bgp_show_type_flap_filter_list)
-	      {
-		struct as_list *as_list = output_arg;
-
-		if (as_list_apply (as_list, ri->attr->aspath) != AS_FILTER_PERMIT)
-		  continue;
-	      }
-	    if (type == bgp_show_type_route_map
-		|| type == bgp_show_type_flap_route_map)
-	      {
-		struct route_map *rmap = output_arg;
-		struct bgp_info binfo;
-		struct attr dummy_attr;
-		struct attr_extra dummy_extra;
-		int ret;
-
-		dummy_attr.extra = &dummy_extra;
-		bgp_attr_dup (&dummy_attr, ri->attr);
-
-		binfo.peer = ri->peer;
-		binfo.attr = &dummy_attr;
-
-		ret = route_map_apply (rmap, &rn->p, RMAP_BGP, &binfo);
-		if (ret == RMAP_DENYMATCH)
-		  continue;
-	      }
-	    if (type == bgp_show_type_neighbor
-		|| type == bgp_show_type_flap_neighbor
-		|| type == bgp_show_type_damp_neighbor)
-	      {
-		union sockunion *su = output_arg;
-
-		if (ri->peer->su_remote == NULL || ! sockunion_same(ri->peer->su_remote, su))
-		  continue;
-	      }
-	    if (type == bgp_show_type_cidr_only
-		|| type == bgp_show_type_flap_cidr_only)
-	      {
-		u_int32_t destination;
-
-		destination = ntohl (rn->p.u.prefix4.s_addr);
-		if (IN_CLASSC (destination) && rn->p.prefixlen == 24)
-		  continue;
-		if (IN_CLASSB (destination) && rn->p.prefixlen == 16)
-		  continue;
-		if (IN_CLASSA (destination) && rn->p.prefixlen == 8)
-		  continue;
-	      }
-	    if (type == bgp_show_type_prefix_longer
-		|| type == bgp_show_type_flap_prefix_longer)
-	      {
-		struct prefix *p = output_arg;
-
-		if (! prefix_match (p, &rn->p))
-		  continue;
-	      }
-	    if (type == bgp_show_type_community_all)
-	      {
-		if (! ri->attr->community)
-		  continue;
-	      }
-	    if (type == bgp_show_type_community)
-	      {
-		struct community *com = output_arg;
-
-		if (! ri->attr->community ||
-		    ! community_match (ri->attr->community, com))
-		  continue;
-	      }
-	    if (type == bgp_show_type_community_exact)
-	      {
-		struct community *com = output_arg;
-
-		if (! ri->attr->community ||
-		    ! community_cmp (ri->attr->community, com))
-		  continue;
-	      }
-	    if (type == bgp_show_type_community_list)
-	      {
-		struct community_list *list = output_arg;
-
-		if (! community_list_match (ri->attr->community, list))
-		  continue;
-	      }
-	    if (type == bgp_show_type_community_list_exact)
-	      {
-		struct community_list *list = output_arg;
-
-		if (! community_list_exact_match (ri->attr->community, list))
-		  continue;
-	      }
-	    if (type == bgp_show_type_flap_address
-		|| type == bgp_show_type_flap_prefix)
-	      {
-		struct prefix *p = output_arg;
-
-		if (! prefix_match (&rn->p, p))
-		  continue;
-
-		if (type == bgp_show_type_flap_prefix)
-		  if (p->prefixlen != rn->p.prefixlen)
-		    continue;
-	      }
-	    if (type == bgp_show_type_dampend_paths
-		|| type == bgp_show_type_damp_neighbor)
-	      {
-		if (! CHECK_FLAG (ri->flags, BGP_INFO_DAMPED)
-		    || CHECK_FLAG (ri->flags, BGP_INFO_HISTORY))
-		  continue;
-	      }
-
-	    if (header)
-	      {
-		vty_out (vty, "BGP table version is 0, local router ID is %s%s", inet_ntoa (*router_id), VTY_NEWLINE);
-		vty_out (vty, BGP_SHOW_SCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
-		vty_out (vty, BGP_SHOW_OCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
-		if (type == bgp_show_type_dampend_paths
-		    || type == bgp_show_type_damp_neighbor)
-		  vty_out (vty, BGP_SHOW_DAMP_HEADER, VTY_NEWLINE);
-		else if (type == bgp_show_type_flap_statistics
-			 || type == bgp_show_type_flap_address
-			 || type == bgp_show_type_flap_prefix
-			 || type == bgp_show_type_flap_cidr_only
-			 || type == bgp_show_type_flap_regexp
-			 || type == bgp_show_type_flap_filter_list
-			 || type == bgp_show_type_flap_prefix_list
-			 || type == bgp_show_type_flap_prefix_longer
-			 || type == bgp_show_type_flap_route_map
-			 || type == bgp_show_type_flap_neighbor)
-		  vty_out (vty, BGP_SHOW_FLAP_HEADER, VTY_NEWLINE);
-		else
-		  vty_out (vty, BGP_SHOW_HEADER, VTY_NEWLINE);
-		header = 0;
-	      }
-
-	    if (type == bgp_show_type_dampend_paths
-		|| type == bgp_show_type_damp_neighbor)
-	      damp_route_vty_out (vty, &rn->p, ri, display, SAFI_UNICAST);
-	    else if (type == bgp_show_type_flap_statistics
-		     || type == bgp_show_type_flap_address
-		     || type == bgp_show_type_flap_prefix
-		     || type == bgp_show_type_flap_cidr_only
-		     || type == bgp_show_type_flap_regexp
-		     || type == bgp_show_type_flap_filter_list
-		     || type == bgp_show_type_flap_prefix_list
-		     || type == bgp_show_type_flap_prefix_longer
-		     || type == bgp_show_type_flap_route_map
-		     || type == bgp_show_type_flap_neighbor)
-	      flap_route_vty_out (vty, &rn->p, ri, display, SAFI_UNICAST);
-	    else
-	      route_vty_out (vty, &rn->p, ri, display, SAFI_UNICAST);
-	    display++;
-	  }
-	if (display)
-	  output_count++;
-      }
-
-  /* No route is displayed */
-  if (output_count == 0)
     {
-      if (type == bgp_show_type_normal)
-	vty_out (vty, "No BGP network exists%s", VTY_NEWLINE);
+      if (rn->info == NULL)
+	continue;
+
+      display = 1;
+
+      for (ri = rn->info; ri; ri = ri->next)
+	{
+	  if (bgp_show_filter_route (rn, ri, flap_s, type, output_arg))
+	    continue;
+
+	  bgp_show_header (vty, router_id, 0, type, flap_s, header, rd_header);
+
+	  if (type == bgp_show_type_dampend_paths
+	      || type == bgp_show_type_damp_neighbor)
+	    route_vty_out_damp (vty, &rn->p, ri, display, safi);
+	  else if (flap_s)
+	    route_vty_out_flap (vty, &rn->p, ri, display, safi);
+	  else if (type == bgp_show_type_labels)
+	    route_vty_out_label (vty, &rn->p, ri, display, safi);
+	  else
+	    route_vty_out (vty, &rn->p, ri, ri->attr, display, safi);
+	  display = 0;
+	}
     }
-  else
-    vty_out (vty, "%sTotal number of prefixes %ld%s",
-	     VTY_NEWLINE, output_count, VTY_NEWLINE);
 
   return CMD_SUCCESS;
 }
 
-int
-bgp_show (struct vty *vty, struct bgp *bgp, afi_t afi, safi_t safi,
-         enum bgp_show_type type, void *output_arg)
+static int
+bgp_show (struct vty *vty, struct vty_arg *args[], enum bgp_show_type type,
+          void *output_arg)
 {
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  const char *rd_str;
+  struct bgp *bgp;
+  int flap_s;
+  struct prefix_rd prd;
   struct bgp_table *table;
+  struct bgp_node *rn;
+  int header = 1;
+  u_char *rd_header;
 
-  if (bgp == NULL) {
-    bgp = bgp_get_default ();
-  }
-
-  if (bgp == NULL)
-    {
-      vty_out (vty, "No BGP process is configured%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+  flap_s = vty_get_arg_value (args, "flap-statistics") ? 1 : 0;
+  rd_str = vty_get_arg_value (args, "rd");
+  if (rd_str && vty_get_rd (vty, rd_str, &prd) < 0)
+    return CMD_WARNING;
 
   table = bgp->rib[afi][safi];
 
-  return bgp_show_table (vty, table, &bgp->router_id, type, output_arg);
+  if (safi == SAFI_MPLS_VPN)
+    {
+      for (rn = bgp_table_top (table); rn; rn = bgp_route_next (rn))
+	{
+	  if (rd_str && memcmp (rn->p.u.val, prd.val, 8) != 0)
+	    continue;
+
+	  table = rn->info;
+	  if (! table)
+	    continue;
+
+          rd_header = (u_char *) &rn->p.u.val;
+	  bgp_show_table (vty, table, safi, &bgp->router_id, &header,
+                          &rd_header, flap_s, type, output_arg);
+	}
+      return CMD_SUCCESS;
+    }
+
+  return bgp_show_table (vty, table, safi, &bgp->router_id, &header, NULL,
+                         flap_s, type, output_arg);
 }
 
 int
-bgp_show_prefix_list (struct vty *vty, const char *prefix_list_str, afi_t afi,
-		      safi_t safi, enum bgp_show_type type)
+bgp_show_normal (struct vty *vty, struct vty_arg *args[])
 {
+  enum bgp_show_type type;
+
+  if (vty_get_arg_value (args, "dampened-paths"))
+    type = bgp_show_type_dampend_paths;
+  else
+    type = bgp_show_type_normal;
+
+  return bgp_show (vty, args, type, NULL);
+}
+
+/* Display routes conforming to the prefix-list. */
+int
+bgp_show_prefix_list (struct vty *vty, struct vty_arg *args[])
+{
+  afi_t afi;
+  safi_t safi;
+  const char *prefix_list_str;
   struct prefix_list *plist;
 
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+
+  prefix_list_str = vty_get_arg_value (args, "prefix-list");
   plist = prefix_list_lookup (afi, prefix_list_str);
   if (plist == NULL)
     {
@@ -721,15 +782,17 @@ bgp_show_prefix_list (struct vty *vty, const char *prefix_list_str, afi_t afi,
       return CMD_WARNING;
     }
 
-  return bgp_show (vty, NULL, afi, safi, type, plist);
+  return bgp_show (vty, args, bgp_show_type_prefix_list, plist);
 }
 
+/* Display routes conforming to the filter-list. */
 int
-bgp_show_filter_list (struct vty *vty, const char *filter, afi_t afi,
-		      safi_t safi, enum bgp_show_type type)
+bgp_show_filter_list (struct vty *vty, struct vty_arg *args[])
 {
+  const char *filter;
   struct as_list *as_list;
 
+  filter = vty_get_arg_value (args, "filter-list");
   as_list = as_list_lookup (filter);
   if (as_list == NULL)
     {
@@ -737,13 +800,14 @@ bgp_show_filter_list (struct vty *vty, const char *filter, afi_t afi,
       return CMD_WARNING;
     }
 
-  return bgp_show (vty, NULL, afi, safi, type, as_list);
+  return bgp_show (vty, args, bgp_show_type_filter_list, as_list);
 }
 
+/* Display routes matching the AS path regular expression. */
 int
-bgp_show_regexp (struct vty *vty, int argc, const char **argv, afi_t afi,
-		 safi_t safi, enum bgp_show_type type)
+bgp_show_regexp (struct vty *vty, struct vty_arg *args[])
 {
+  struct vty_arg *arg;
   int i;
   struct buffer *b;
   char *regstr;
@@ -751,20 +815,18 @@ bgp_show_regexp (struct vty *vty, int argc, const char **argv, afi_t afi,
   regex_t *regex;
   int rc;
 
+  arg = vty_get_arg (args, "expr");
+
   first = 0;
   b = buffer_new (1024);
-  for (i = 0; i < argc; i++)
+  for (i = 0; i < arg->argc; i++)
     {
       if (first)
 	buffer_putc (b, ' ');
       else
-	{
-	  if ((strcmp (argv[i], "unicast") == 0) || (strcmp (argv[i], "multicast") == 0))
-	    continue;
-	  first = 1;
-	}
+	first = 1;
 
-      buffer_putstr (b, argv[i]);
+      buffer_putstr (b, arg->argv[i]);
     }
   buffer_putc (b, '\0');
 
@@ -775,22 +837,24 @@ bgp_show_regexp (struct vty *vty, int argc, const char **argv, afi_t afi,
   XFREE(MTYPE_TMP, regstr);
   if (! regex)
     {
-      vty_out (vty, "Can't compile regexp %s%s", argv[0],
+      vty_out (vty, "Can't compile regexp %s%s", arg->argv[0],
 	       VTY_NEWLINE);
       return CMD_WARNING;
     }
 
-  rc = bgp_show (vty, NULL, afi, safi, type, regex);
+  rc = bgp_show (vty, args, bgp_show_type_regexp, regex);
   bgp_regex_free (regex);
   return rc;
 }
 
+/* Display routes matching the route-map. */
 int
-bgp_show_route_map (struct vty *vty, const char *rmap_str, afi_t afi,
-		    safi_t safi, enum bgp_show_type type)
+bgp_show_route_map (struct vty *vty, struct vty_arg *args[])
 {
+  const char *rmap_str;
   struct route_map *rmap;
 
+  rmap_str = vty_get_arg_value (args, "route-map");
   rmap = route_map_lookup_by_name (rmap_str);
   if (! rmap)
     {
@@ -799,223 +863,237 @@ bgp_show_route_map (struct vty *vty, const char *rmap_str, afi_t afi,
       return CMD_WARNING;
     }
 
-  return bgp_show (vty, NULL, afi, safi, type, rmap);
+  return bgp_show (vty, args, bgp_show_type_route_map, rmap);
 }
 
+/* Display routes learned from neighbor. */
 int
-bgp_show_neighbor_route (struct vty *vty, struct peer *peer, afi_t afi,
-			 safi_t safi, enum bgp_show_type type)
+bgp_show_neighbor_route (struct vty *vty, struct vty_arg *args[])
 {
-  if (! peer || ! peer->afc[afi][safi])
-    {
-      vty_out (vty, "%% No such neighbor or address family%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
+  const char *addr_str;
+  struct peer *peer;
+  enum bgp_show_type type;
 
-  return bgp_show (vty, peer->bgp, afi, safi, type, &peer->su);
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+
+  addr_str = vty_get_arg_value (args, "address");
+  peer = vty_peer_lookup (vty, bgp, afi, safi, addr_str);
+  if (! peer)
+    return CMD_WARNING;
+
+  if (vty_get_arg_value (args, "dampened-routes"))
+    type = bgp_show_type_damp_neighbor;
+  else
+    type = bgp_show_type_neighbor;
+
+  return bgp_show (vty, args, type, &peer->su);
 }
 
+/* Display only routes with non-natural netmasks. */
 int
-bgp_show_prefix_longer (struct vty *vty, const char *prefix, afi_t afi,
-			safi_t safi, enum bgp_show_type type)
+bgp_show_cidr_only (struct vty *vty, struct vty_arg *args[])
 {
+  return bgp_show (vty, args, bgp_show_type_cidr_only, NULL);
+}
+
+/* Display route and more specific routes. */
+int
+bgp_show_prefix_longer (struct vty *vty, struct vty_arg *args[])
+{
+  const char *prefix_str;
   int ret;
   struct prefix *p;
 
   p = prefix_new();
 
-  ret = str2prefix (prefix, p);
+  prefix_str = vty_get_arg_value (args, "prefix");
+  ret = str2prefix (prefix_str, p);
   if (! ret)
     {
       vty_out (vty, "%% Malformed Prefix%s", VTY_NEWLINE);
       return CMD_WARNING;
     }
 
-  ret = bgp_show (vty, NULL, afi, safi, type, p);
+  ret = bgp_show (vty, args, bgp_show_type_prefix_longer, p);
   prefix_free(p);
   return ret;
 }
 
+/* Display routes matching the communities. */
 int
-bgp_show_community (struct vty *vty, const char *view_name, int argc,
-		    const char **argv, int exact, afi_t afi, safi_t safi)
+bgp_show_community (struct vty *vty, struct vty_arg *args[])
 {
-  struct community *com;
-  struct buffer *b;
-  struct bgp *bgp;
-  int i;
-  char *str;
-  int first = 0;
+  enum bgp_show_type type;
+  const char *com_str;
+  struct community *com = NULL;
 
-  /* BGP structure lookup */
-  if (view_name)
+  com_str = vty_get_arg_value (args, "community");
+  if (com_str)
     {
-      bgp = bgp_lookup_by_name (view_name);
-      if (bgp == NULL)
+      com = community_str2com (com_str);
+      if (! com)
 	{
-	  vty_out (vty, "Can't find BGP view %s%s", view_name, VTY_NEWLINE);
+	  vty_out (vty, "%% Community malformed: %s", VTY_NEWLINE);
 	  return CMD_WARNING;
 	}
+    }
+
+  if (! com_str)
+    type = bgp_show_type_community_all;
+  else if (vty_get_arg_value (args, "exact-match"))
+    type = bgp_show_type_community_exact;
+  else
+    type = bgp_show_type_community;
+
+  return bgp_show (vty, args, type, com);
+}
+
+/* Display routes matching the community-list. */
+int
+bgp_show_community_list (struct vty *vty, struct vty_arg *args[])
+{
+  const char *clist_str;
+  struct community_list *clist;
+  int exact;
+
+  exact = vty_get_arg_value (args, "exact-match") ? 1 : 0;
+
+  clist_str = vty_get_arg_value (args, "clist");
+  clist = community_list_lookup (bgp_clist, clist_str, COMMUNITY_LIST_MASTER);
+  if (! clist)
+    return CMD_WARNING;
+
+  return bgp_show (vty, args,
+                   (exact ? bgp_show_type_community_list_exact :
+                            bgp_show_type_community_list), clist);
+}
+
+/* Display flap statistics of routes. */
+int
+bgp_show_route_flap (struct vty *vty, struct vty_arg *args[])
+{
+  const char *prefix_str;
+  const char *network_str;
+  enum bgp_show_type type;
+  struct prefix match;
+  int ret;
+
+  /* Check network/prefix argument. */
+  prefix_str = vty_get_arg_value (args, "prefix");
+  network_str = vty_get_arg_value (args, "network");
+  ret = str2prefix (prefix_str ? prefix_str : network_str, &match);
+  if (! ret)
+    {
+      vty_out (vty, "address is malformed%s", VTY_NEWLINE);
+      return CMD_WARNING;
+    }
+
+  if (prefix_str)
+    type = bgp_show_type_flap_prefix;
+  else
+    type = bgp_show_type_flap_address;
+
+  return bgp_show (vty, args, type, &match);
+}
+
+/* Display BGP labels for prefixes. */
+int
+bgp_show_labels (struct vty *vty, struct vty_arg *args[])
+{
+  return bgp_show (vty, args, bgp_show_type_labels, NULL);
+}
+
+static int
+bgp_show_adj_prefix (struct vty *vty, struct bgp_node *rn, afi_t afi, safi_t safi,
+		     struct in_addr *router_id, struct peer *peer, int in,
+		     int *header, u_char **rd_header)
+{
+  struct bgp_adj_in *ain;
+  struct bgp_adj_out *adj;
+  int def_originate = 0;
+  unsigned long output_count = 0;
+
+  if (in)
+    {
+      for (ain = rn->adj_in; ain; ain = ain->next)
+	if (ain->peer == peer)
+	  {
+	    bgp_show_header (vty, router_id, 0, bgp_show_type_normal, 0,
+			     header, rd_header);
+	    if (ain->attr)
+	      {
+		route_vty_out (vty, &rn->p, NULL, ain->attr, 1, safi);
+		output_count++;
+	      }
+	  }
     }
   else
     {
-      bgp = bgp_get_default ();
-      if (bgp == NULL)
-	{
-	  vty_out (vty, "No BGP process is configured%s", VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
+      if (CHECK_FLAG (peer->af_sflags[afi][safi],
+		      PEER_STATUS_DEFAULT_ORIGINATE))
+	def_originate = 1;
+
+      for (adj = rn->adj_out; adj; adj = adj->next)
+	if (adj->peer == peer)
+	  {
+	    bgp_show_header (vty, router_id, def_originate,
+			     bgp_show_type_normal, 0, header, rd_header);
+	    if (adj->attr)
+	      {
+		route_vty_out (vty, &rn->p, NULL, adj->attr, 1, safi);
+		output_count++;
+	      }
+	  }
     }
 
-  b = buffer_new (1024);
-  for (i = 0; i < argc; i++)
-    {
-      if (first)
-        buffer_putc (b, ' ');
-      else
-	{
-	  if ((strcmp (argv[i], "unicast") == 0) || (strcmp (argv[i], "multicast") == 0))
-	    continue;
-	  first = 1;
-	}
-
-      buffer_putstr (b, argv[i]);
-    }
-  buffer_putc (b, '\0');
-
-  str = buffer_getstr (b);
-  buffer_free (b);
-
-  com = community_str2com (str);
-  XFREE (MTYPE_TMP, str);
-  if (! com)
-    {
-      vty_out (vty, "%% Community malformed: %s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
-  return bgp_show (vty, bgp, afi, safi,
-                   (exact ? bgp_show_type_community_exact :
-		            bgp_show_type_community), com);
+  return output_count;
 }
 
+/* Display the Adj-RIB-In or Adj-RIB-Out from a BGP neighbor. */
 int
-bgp_show_community_list (struct vty *vty, const char *com, int exact,
-			 afi_t afi, safi_t safi)
+bgp_show_adj (struct vty *vty, struct vty_arg *args[])
 {
-  struct community_list *list;
-
-  list = community_list_lookup (bgp_clist, com, COMMUNITY_LIST_MASTER);
-  if (list == NULL)
-    {
-      vty_out (vty, "%% %s is not a valid community-list name%s", com,
-	       VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
-  return bgp_show (vty, NULL, afi, safi,
-                   (exact ? bgp_show_type_community_list_exact :
-		            bgp_show_type_community_list), list);
-}
-
-static void
-show_adj_route (struct vty *vty, struct peer *peer, afi_t afi, safi_t safi,
-		int in)
-{
-  struct bgp_table *table;
-  struct bgp_adj_in *ain;
-  struct bgp_adj_out *adj;
-  unsigned long output_count;
-  struct bgp_node *rn;
-  int header1 = 1;
+  afi_t afi;
+  safi_t safi;
+  const char *view;
   struct bgp *bgp;
-  int header2 = 1;
+  const char *rd_str;
+  const char *addr_str;
+  struct prefix_rd prd;
+  struct peer *peer;
+  int in;
+  unsigned long output_count;
+  struct bgp_table *table;
+  struct bgp_node *rn;
+  struct bgp_node *rn_vpn;
+  int header = 1;
+  u_char *rd_header;
 
-  bgp = peer->bgp;
-
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
   if (! bgp)
-    return;
+    return CMD_WARNING;
+  rd_str = vty_get_arg_value (args, "rd");
+  if (rd_str && vty_get_rd (vty, rd_str, &prd) < 0)
+    return CMD_WARNING;
 
-  table = bgp->rib[afi][safi];
+  addr_str = vty_get_arg_value (args, "address");
+  peer = vty_peer_lookup (vty, bgp, afi, safi, addr_str);
+  if (! peer)
+    return CMD_WARNING;
 
-  output_count = 0;
-
-  if (! in && CHECK_FLAG (peer->af_sflags[afi][safi],
-			  PEER_STATUS_DEFAULT_ORIGINATE))
-    {
-      vty_out (vty, "BGP table version is 0, local router ID is %s%s", inet_ntoa (bgp->router_id), VTY_NEWLINE);
-      vty_out (vty, BGP_SHOW_SCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
-      vty_out (vty, BGP_SHOW_OCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
-
-      vty_out (vty, "Originating default network 0.0.0.0%s%s",
-	       VTY_NEWLINE, VTY_NEWLINE);
-      header1 = 0;
-    }
-
-  for (rn = bgp_table_top (table); rn; rn = bgp_route_next (rn))
-    if (in)
-      {
-	for (ain = rn->adj_in; ain; ain = ain->next)
-	  if (ain->peer == peer)
-	    {
-	      if (header1)
-		{
-		  vty_out (vty, "BGP table version is 0, local router ID is %s%s", inet_ntoa (bgp->router_id), VTY_NEWLINE);
-		  vty_out (vty, BGP_SHOW_SCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
-		  vty_out (vty, BGP_SHOW_OCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
-		  header1 = 0;
-		}
-	      if (header2)
-		{
-		  vty_out (vty, BGP_SHOW_HEADER, VTY_NEWLINE);
-		  header2 = 0;
-		}
-	      if (ain->attr)
-		{
-		  route_vty_out_tmp (vty, &rn->p, ain->attr, safi);
-		  output_count++;
-		}
-	    }
-      }
-    else
-      {
-	for (adj = rn->adj_out; adj; adj = adj->next)
-	  if (adj->peer == peer)
-	    {
-	      if (header1)
-		{
-		  vty_out (vty, "BGP table version is 0, local router ID is %s%s", inet_ntoa (bgp->router_id), VTY_NEWLINE);
-		  vty_out (vty, BGP_SHOW_SCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
-		  vty_out (vty, BGP_SHOW_OCODE_HEADER, VTY_NEWLINE, VTY_NEWLINE);
-		  header1 = 0;
-		}
-	      if (header2)
-		{
-		  vty_out (vty, BGP_SHOW_HEADER, VTY_NEWLINE);
-		  header2 = 0;
-		}
-	      if (adj->attr)
-		{
-		  route_vty_out_tmp (vty, &rn->p, adj->attr, safi);
-		  output_count++;
-		}
-	    }
-      }
-
-  if (output_count != 0)
-    vty_out (vty, "%sTotal number of prefixes %ld%s",
-	     VTY_NEWLINE, output_count, VTY_NEWLINE);
-}
-
-int
-peer_adj_routes (struct vty *vty, struct peer *peer, afi_t afi, safi_t safi, int in)
-{
-  if (! peer || ! peer->afc[afi][safi])
-    {
-      vty_out (vty, "%% No such neighbor or address family%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
+  in = vty_get_arg_value (args, "received") ? 1 : 0;
   if (in && ! CHECK_FLAG (peer->af_flags[afi][safi], PEER_FLAG_SOFT_RECONFIG))
     {
       vty_out (vty, "%% Inbound soft reconfiguration not enabled%s",
@@ -1023,180 +1101,38 @@ peer_adj_routes (struct vty *vty, struct peer *peer, afi_t afi, safi_t safi, int
       return CMD_WARNING;
     }
 
-  show_adj_route (vty, peer, afi, safi, in);
+  output_count = 0;
+  table = bgp->rib[afi][safi];
 
-  return CMD_SUCCESS;
-}
+  if (safi == SAFI_MPLS_VPN)
+    for (rn = bgp_table_top (table); rn; rn = bgp_route_next (rn))
+      {
+	if (rd_str && memcmp (rn->p.u.val, prd.val, 8) != 0)
+	  continue;
 
-int
-show_adj_route_vpn (struct vty *vty, struct peer *peer, struct prefix_rd *prd)
-{
-  struct bgp *bgp;
-  struct bgp_table *table;
-  struct bgp_node *rn;
-  struct bgp_node *rm;
-  struct attr *attr;
-  int rd_header;
-  int header = 1;
-  char v4_header[] = "   Network          Next Hop            Metric LocPrf Weight Path%s";
+	table = rn->info;
+	if (! table)
+	  continue;
 
-  bgp = bgp_get_default ();
-  if (bgp == NULL)
-    {
-      vty_out (vty, "No BGP process is configured%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
+	rd_header = (u_char *) &rn->p.u.val;
+	for (rn_vpn = bgp_table_top (table); rn_vpn; rn_vpn = bgp_route_next (rn_vpn))
+	  {
+	    if (rn_vpn->info == NULL)
+	      continue;
 
-  for (rn = bgp_table_top (bgp->rib[AFI_IP][SAFI_MPLS_VPN]); rn;
-       rn = bgp_route_next (rn))
-    {
-      if (prd && memcmp (rn->p.u.val, prd->val, 8) != 0)
-        continue;
+	    output_count += bgp_show_adj_prefix (vty, rn_vpn, afi, safi, &bgp->router_id,
+						 peer, in, &header, &rd_header);
+	  }
+      }
+  else
+    for (rn = bgp_table_top (table); rn; rn = bgp_route_next (rn))
+      output_count += bgp_show_adj_prefix (vty, rn, afi, safi, &bgp->router_id,
+					   peer, in, &header, NULL);
 
-      if ((table = rn->info) != NULL)
-        {
-          rd_header = 1;
+  if (output_count != 0)
+    vty_out (vty, "%sTotal number of prefixes %lu%s",
+	     VTY_NEWLINE, output_count, VTY_NEWLINE);
 
-          for (rm = bgp_table_top (table); rm; rm = bgp_route_next (rm))
-            if ((attr = rm->info) != NULL)
-              {
-                if (header)
-                  {
-                    vty_out (vty, "BGP table version is 0, local router ID is %s%s",
-                             inet_ntoa (bgp->router_id), VTY_NEWLINE);
-                    vty_out (vty, "Status codes: s suppressed, d damped, h history, * valid, > best, i - internal%s",
-                             VTY_NEWLINE);
-                    vty_out (vty, "Origin codes: i - IGP, e - EGP, ? - incomplete%s%s",
-                             VTY_NEWLINE, VTY_NEWLINE);
-                    vty_out (vty, v4_header, VTY_NEWLINE);
-                    header = 0;
-                  }
-
-                if (rd_header)
-                  {
-                    u_int16_t type;
-                    struct rd_as rd_as;
-                    struct rd_ip rd_ip;
-                    u_char *pnt;
-
-                    pnt = rn->p.u.val;
-
-                    /* Decode RD type. */
-                    type = decode_rd_type (pnt);
-                    /* Decode RD value. */
-                    if (type == RD_TYPE_AS)
-                      decode_rd_as (pnt + 2, &rd_as);
-                    else if (type == RD_TYPE_IP)
-                      decode_rd_ip (pnt + 2, &rd_ip);
-
-                    vty_out (vty, "Route Distinguisher: ");
-
-                    if (type == RD_TYPE_AS)
-                      vty_out (vty, "%u:%d", rd_as.as, rd_as.val);
-                    else if (type == RD_TYPE_IP)
-                      vty_out (vty, "%s:%d", inet_ntoa (rd_ip.ip), rd_ip.val);
-
-                    vty_out (vty, "%s", VTY_NEWLINE);
-                    rd_header = 0;
-                  }
-                route_vty_out_tmp (vty, &rm->p, attr, SAFI_MPLS_VPN);
-              }
-        }
-    }
-  return CMD_SUCCESS;
-}
-
-int
-bgp_show_mpls_vpn (struct vty *vty, struct prefix_rd *prd, enum bgp_show_type type,
-		   void *output_arg, int tags)
-{
-  struct bgp *bgp;
-  struct bgp_table *table;
-  struct bgp_node *rn;
-  struct bgp_node *rm;
-  struct bgp_info *ri;
-  int rd_header;
-  int header = 1;
-  char v4_header[] = "   Network          Next Hop            Metric LocPrf Weight Path%s";
-  char v4_header_tag[] = "   Network          Next Hop      In tag/Out tag%s";
-
-  bgp = bgp_get_default ();
-  if (bgp == NULL)
-    {
-      vty_out (vty, "No BGP process is configured%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
-  for (rn = bgp_table_top (bgp->rib[AFI_IP][SAFI_MPLS_VPN]); rn; rn = bgp_route_next (rn))
-    {
-      if (prd && memcmp (rn->p.u.val, prd->val, 8) != 0)
-	continue;
-
-      if ((table = rn->info) != NULL)
-	{
-	  rd_header = 1;
-
-	  for (rm = bgp_table_top (table); rm; rm = bgp_route_next (rm))
-	    for (ri = rm->info; ri; ri = ri->next)
-	      {
-		if (type == bgp_show_type_neighbor)
-		  {
-		    union sockunion *su = output_arg;
-
-		    if (ri->peer->su_remote == NULL || ! sockunion_same(ri->peer->su_remote, su))
-		      continue;
-		  }
-		if (header)
-		  {
-		    if (tags)
-		      vty_out (vty, v4_header_tag, VTY_NEWLINE);
-		    else
-		      {
-			vty_out (vty, "BGP table version is 0, local router ID is %s%s",
-				 inet_ntoa (bgp->router_id), VTY_NEWLINE);
-			vty_out (vty, "Status codes: s suppressed, d damped, h history, * valid, > best, i - internal%s",
-				 VTY_NEWLINE);
-			vty_out (vty, "Origin codes: i - IGP, e - EGP, ? - incomplete%s%s",
-				 VTY_NEWLINE, VTY_NEWLINE);
-			vty_out (vty, v4_header, VTY_NEWLINE);
-		      }
-		    header = 0;
-		  }
-
-		if (rd_header)
-		  {
-		    u_int16_t type;
-		    struct rd_as rd_as;
-		    struct rd_ip rd_ip;
-		    u_char *pnt;
-
-		    pnt = rn->p.u.val;
-
-		    /* Decode RD type. */
-		    type = decode_rd_type (pnt);
-		    /* Decode RD value. */
-		    if (type == RD_TYPE_AS)
-		      decode_rd_as (pnt + 2, &rd_as);
-		    else if (type == RD_TYPE_IP)
-		      decode_rd_ip (pnt + 2, &rd_ip);
-
-		    vty_out (vty, "Route Distinguisher: ");
-
-		    if (type == RD_TYPE_AS)
-		      vty_out (vty, "%u:%d", rd_as.as, rd_as.val);
-		    else if (type == RD_TYPE_IP)
-		      vty_out (vty, "%s:%d", inet_ntoa (rd_ip.ip), rd_ip.val);
-
-		    vty_out (vty, "%s", VTY_NEWLINE);
-		    rd_header = 0;
-		  }
-	        if (tags)
-		  route_vty_out_tag (vty, &rm->p, ri, 0, SAFI_MPLS_VPN);
-	        else
-		  route_vty_out (vty, &rm->p, ri, 0, SAFI_MPLS_VPN);
-	      }
-        }
-    }
   return CMD_SUCCESS;
 }
 
@@ -1461,95 +1397,106 @@ route_vty_out_detail (struct vty *vty, struct bgp *bgp, struct prefix *p,
       vty_out (vty, "      Last update: %s", ctime(&binfo->uptime));
 #endif /* HAVE_CLOCK_MONOTONIC */
     }
+
   vty_out (vty, "%s", VTY_NEWLINE);
+}
+
+static int
+bgp_show_route_node (struct vty *vty, struct bgp *bgp, afi_t afi, safi_t safi,
+		     struct bgp_table *table, struct prefix match,
+		     const char *prefix_str, struct prefix_rd *prd)
+{
+  struct bgp_node *rn;
+  struct bgp_info *ri;
+  int header = 1;
+  int display = 0;
+
+  if ((rn = bgp_node_match (table, &match)) != NULL)
+    {
+      if (prefix_str && rn->p.prefixlen != match.prefixlen)
+	{
+	  /* Unlock bgp_node_match () lock. */
+	  bgp_unlock_node (rn);
+	  return 0;
+	}
+
+      for (ri = rn->info; ri; ri = ri->next)
+	{
+	  if (header)
+	    {
+	      route_vty_out_detail_header (vty, bgp, rn, prd, afi, safi);
+	      header = 0;
+	    }
+	  display++;
+	  route_vty_out_detail (vty, bgp, &rn->p, ri, afi, safi);
+	}
+
+      /* Unlock bgp_node_match () lock. */
+      bgp_unlock_node (rn);
+    }
+
+  return display;
 }
 
 /* Display specified route of BGP table. */
 int
-bgp_show_route_in_table (struct vty *vty, struct bgp *bgp,
-                         struct bgp_table *rib, const char *ip_str,
-                         afi_t afi, safi_t safi, struct prefix_rd *prd,
-                         int prefix_check)
+bgp_show_route (struct vty *vty, struct vty_arg *args[])
 {
-  int ret;
-  int header;
-  int display = 0;
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
+  const char *rd_str;
+  const char *prefix_str;
+  const char *network_str;
+  struct prefix_rd prd;
   struct prefix match;
   struct bgp_node *rn;
-  struct bgp_node *rm;
-  struct bgp_info *ri;
-  struct bgp_table *table;
+  struct bgp_table *rib;
+  int ret;
+  int display = 0;
 
-  /* Check IP address argument. */
-  ret = str2prefix (ip_str, &match);
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+
+  rd_str = vty_get_arg_value (args, "rd");
+  if (rd_str && vty_get_rd (vty, rd_str, &prd) < 0)
+    return CMD_WARNING;
+
+  /* Check network/prefix argument. */
+  prefix_str = vty_get_arg_value (args, "prefix");
+  network_str = vty_get_arg_value (args, "network");
+  ret = str2prefix (prefix_str ? prefix_str : network_str, &match);
   if (! ret)
     {
-      vty_out (vty, "address is malformed%s", VTY_NEWLINE);
+      vty_out (vty, "%% address is malformed%s", VTY_NEWLINE);
       return CMD_WARNING;
     }
 
+  rib = bgp->rib[afi][safi];
   match.family = afi2family (afi);
 
   if (safi == SAFI_MPLS_VPN)
     {
       for (rn = bgp_table_top (rib); rn; rn = bgp_route_next (rn))
-        {
-          if (prd && memcmp (rn->p.u.val, prd->val, 8) != 0)
-            continue;
+	{
+	  if (rd_str && memcmp (rn->p.u.val, prd.val, 8) != 0)
+	    continue;
 
-          if ((table = rn->info) != NULL)
-            {
-              header = 1;
+	  if ((rib = rn->info) == NULL)
+	    continue;
 
-              if ((rm = bgp_node_match (table, &match)) != NULL)
-                {
-                  if (prefix_check && rm->p.prefixlen != match.prefixlen)
-                    {
-                      bgp_unlock_node (rm);
-                      continue;
-                    }
-
-                  for (ri = rm->info; ri; ri = ri->next)
-                    {
-                      if (header)
-                        {
-                          route_vty_out_detail_header (vty, bgp, rm, (struct prefix_rd *)&rn->p,
-                                                       AFI_IP, SAFI_MPLS_VPN);
-
-                          header = 0;
-                        }
-                      display++;
-                      route_vty_out_detail (vty, bgp, &rm->p, ri, AFI_IP, SAFI_MPLS_VPN);
-                    }
-
-                  bgp_unlock_node (rm);
-                }
-            }
-        }
+	  display += bgp_show_route_node (vty, bgp, afi, safi, rib, match, prefix_str,
+					  (struct prefix_rd *) &rn->p);
+	}
     }
   else
-    {
-      header = 1;
-
-      if ((rn = bgp_node_match (rib, &match)) != NULL)
-        {
-          if (! prefix_check || rn->p.prefixlen == match.prefixlen)
-            {
-              for (ri = rn->info; ri; ri = ri->next)
-                {
-                  if (header)
-                    {
-                      route_vty_out_detail_header (vty, bgp, rn, NULL, afi, safi);
-                      header = 0;
-                    }
-                  display++;
-                  route_vty_out_detail (vty, bgp, &rn->p, ri, afi, safi);
-                }
-            }
-
-          bgp_unlock_node (rn);
-        }
-    }
+    display += bgp_show_route_node (vty, bgp, afi, safi, rib, match,
+				    prefix_str, NULL);
 
   if (! display)
     {
@@ -1560,84 +1507,50 @@ bgp_show_route_in_table (struct vty *vty, struct bgp *bgp,
   return CMD_SUCCESS;
 }
 
-/* Display specified route of Main RIB */
+/* Display the prefixlist filter received from a BGP neighbor. */
 int
-bgp_show_route (struct vty *vty, const char *view_name, const char *ip_str,
-		afi_t afi, safi_t safi, struct prefix_rd *prd,
-		int prefix_check)
+bgp_show_received_prefix_filter (struct vty *vty, struct vty_arg *args[])
 {
+  afi_t afi;
+  safi_t safi;
+  const char *view;
   struct bgp *bgp;
+  const char *addr_str;
+  struct peer *peer;
+  char name[BUFSIZ];
+  int count;
 
-  /* BGP structure lookup. */
-  if (view_name)
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+
+  addr_str = vty_get_arg_value (args, "address");
+  peer = vty_peer_lookup (vty, bgp, afi, safi, addr_str);
+  if (! peer)
+    return CMD_WARNING;
+
+  sprintf (name, "%s.%d.%d", peer->host, afi, safi);
+  count =  prefix_bgp_show_prefix_list (NULL, afi, name);
+  if (count)
     {
-      bgp = bgp_lookup_by_name (view_name);
-      if (bgp == NULL)
-	{
-	  vty_out (vty, "Can't find BGP view %s%s", view_name, VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
-    }
-  else
-    {
-      bgp = bgp_get_default ();
-      if (bgp == NULL)
-	{
-	  vty_out (vty, "No BGP process is configured%s", VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
+      vty_out (vty, "Address family: %s%s", afi_safi_print (afi, safi),
+               VTY_NEWLINE);
+      prefix_bgp_show_prefix_list (vty, afi, name);
     }
 
-  return bgp_show_route_in_table (vty, bgp, bgp->rib[afi][safi], ip_str,
-                                   afi, safi, prd, prefix_check);
+  return CMD_SUCCESS;
 }
 
-struct peer *
-peer_lookup_in_view (struct vty *vty, const char *view_name,
-                     const char *ip_str)
+/* Display all the BGP paths (AFI/SAFI independent) */
+int
+bgp_show_paths (struct vty *vty, struct vty_arg *args[])
 {
-  int ret;
-  struct bgp *bgp;
-  struct peer *peer;
-  union sockunion su;
-
-  /* BGP structure lookup. */
-  if (view_name)
-    {
-      bgp = bgp_lookup_by_name (view_name);
-      if (! bgp)
-        {
-          vty_out (vty, "Can't find BGP view %s%s", view_name, VTY_NEWLINE);
-          return NULL;
-        }
-    }
-  else
-    {
-      bgp = bgp_get_default ();
-      if (! bgp)
-        {
-          vty_out (vty, "No BGP process is configured%s", VTY_NEWLINE);
-          return NULL;
-        }
-    }
-
-  /* Get peer sockunion. */
-  ret = str2sockunion (ip_str, &su);
-  if (ret < 0)
-    {
-      vty_out (vty, "Malformed address: %s%s", ip_str, VTY_NEWLINE);
-      return NULL;
-    }
-
-  /* Peer structure lookup. */
-  peer = peer_lookup (bgp, &su);
-  if (! peer)
-    {
-      vty_out (vty, "No such neighbor%s", VTY_NEWLINE);
-      return NULL;
-    }
-
-  return peer;
+  vty_out (vty, "Address Refcnt Path%s", VTY_NEWLINE);
+  aspath_print_all_vty (vty);
+  return CMD_SUCCESS;
 }
 
 static int
@@ -1744,13 +1657,24 @@ bgp_table_stats_walker (struct thread *t)
   return 0;
 }
 
-static int
-bgp_table_stats (struct vty *vty, struct bgp *bgp, afi_t afi, safi_t safi)
+/* Display BGP RIB advertisement statistics. */
+int
+bgp_show_stats (struct vty *vty, struct vty_arg *args[])
 {
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
   struct bgp_table_stats ts;
   unsigned int i;
 
-  if (!bgp->rib[afi][safi])
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+  if (! bgp->rib[afi][safi])
     {
       vty_out (vty, "%% No RIB exist for the AFI/SAFI%s", VTY_NEWLINE);
       return CMD_WARNING;
@@ -1828,59 +1752,6 @@ bgp_table_stats (struct vty *vty, struct bgp *bgp, afi_t afi, safi_t safi)
   return CMD_SUCCESS;
 }
 
-int
-bgp_table_stats_vty (struct vty *vty, const char *name,
-                     const char *afi_str, const char *safi_str)
-{
-  struct bgp *bgp;
-  afi_t afi;
-  safi_t safi;
-
- if (name)
-    bgp = bgp_lookup_by_name (name);
-  else
-    bgp = bgp_get_default ();
-
-  if (!bgp)
-    {
-      vty_out (vty, "%% No such BGP instance exist%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-  if (strncmp (afi_str, "ipv", 3) == 0)
-    {
-      if (strncmp (afi_str, "ipv4", 4) == 0)
-        afi = AFI_IP;
-      else if (strncmp (afi_str, "ipv6", 4) == 0)
-        afi = AFI_IP6;
-      else
-        {
-          vty_out (vty, "%% Invalid address family %s%s",
-                   afi_str, VTY_NEWLINE);
-          return CMD_WARNING;
-        }
-      if (strncmp (safi_str, "m", 1) == 0)
-        safi = SAFI_MULTICAST;
-      else if (strncmp (safi_str, "u", 1) == 0)
-        safi = SAFI_UNICAST;
-      else if (strncmp (safi_str, "vpnv4", 5) == 0 || strncmp (safi_str, "vpnv6", 5) == 0)
-        safi = SAFI_MPLS_LABELED_VPN;
-      else
-        {
-          vty_out (vty, "%% Invalid subsequent address family %s%s",
-                   safi_str, VTY_NEWLINE);
-          return CMD_WARNING;
-        }
-    }
-  else
-    {
-      vty_out (vty, "%% Invalid address family %s%s",
-               afi_str, VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
-  return bgp_table_stats (vty, bgp, afi, safi);
-}
-
 static int
 bgp_peer_count_walker (struct thread *t)
 {
@@ -1947,20 +1818,33 @@ bgp_peer_count_walker (struct thread *t)
   return 0;
 }
 
+/* Display detailed prefix count information. */
 int
-bgp_peer_counts (struct vty *vty, struct peer *peer, afi_t afi, safi_t safi)
+bgp_peer_counts (struct vty *vty, struct vty_arg *args[])
 {
-  struct peer_pcounts pcounts = { .peer = peer };
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
+  const char *addr_str;
+  struct peer *peer;
+  struct peer_pcounts pcounts;
   unsigned int i;
 
-  if (!peer || !peer->bgp || !peer->afc[afi][safi]
-      || !peer->bgp->rib[afi][safi])
-    {
-      vty_out (vty, "%% No such neighbor or address family%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
 
-  memset (&pcounts, 0, sizeof(pcounts));
+  addr_str = vty_get_arg_value (args, "address");
+  peer = vty_peer_lookup (vty, bgp, afi, safi, addr_str);
+  if (! peer)
+    return CMD_WARNING;
+
+  pcounts.peer = peer;
+  memset (&pcounts, 0, sizeof (pcounts));
   pcounts.peer = peer;
   pcounts.table = peer->bgp->rib[afi][safi];
 
@@ -1992,14 +1876,25 @@ bgp_peer_counts (struct vty *vty, struct peer *peer, afi_t afi, safi_t safi)
 }
 
 /* Show BGP peer's summary information. */
-static int
-bgp_show_summary (struct vty *vty, struct bgp *bgp, int afi, int safi)
+int
+bgp_show_summary (struct vty *vty, struct vty_arg *args[])
 {
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
   struct peer *peer;
   struct listnode *node, *nnode;
   unsigned int count = 0;
   char timebuf[BGP_UPTIME_LEN];
   int len;
+
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
 
   /* Header string for each address family. */
   static char header[] = "Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd";
@@ -2091,179 +1986,6 @@ bgp_show_summary (struct vty *vty, struct bgp *bgp, int afi, int safi)
 	  vty_out (vty, "%s", VTY_NEWLINE);
 	}
     }
-
-  if (count)
-    vty_out (vty, "%sTotal number of neighbors %d%s", VTY_NEWLINE,
-	     count, VTY_NEWLINE);
-  else
-    vty_out (vty, "No %s neighbor is configured%s",
-	     afi == AFI_IP ? "IPv4" : "IPv6", VTY_NEWLINE);
-  return CMD_SUCCESS;
-}
-
-int
-bgp_show_summary_vty (struct vty *vty, const char *name,
-                      afi_t afi, safi_t safi)
-{
-  struct bgp *bgp;
-
-  if (name)
-    {
-      bgp = bgp_lookup_by_name (name);
-
-      if (! bgp)
-	{
-	  vty_out (vty, "%% No such BGP instance exist%s", VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
-
-      bgp_show_summary (vty, bgp, afi, safi);
-      return CMD_SUCCESS;
-    }
-
-  bgp = bgp_get_default ();
-
-  if (bgp)
-    bgp_show_summary (vty, bgp, afi, safi);
-
-  return CMD_SUCCESS;
-}
-
-static int
-bgp_write_rsclient_summary (struct vty *vty, struct peer *rsclient,
-        afi_t afi, safi_t safi)
-{
-  char timebuf[BGP_UPTIME_LEN];
-  char rmbuf[14];
-  const char *rmname;
-  struct peer *peer;
-  struct listnode *node, *nnode;
-  int len;
-  int count = 0;
-
-  if (CHECK_FLAG (rsclient->sflags, PEER_STATUS_GROUP))
-    {
-      for (ALL_LIST_ELEMENTS (rsclient->group->peer, node, nnode, peer))
-        {
-          count++;
-          bgp_write_rsclient_summary (vty, peer, afi, safi);
-        }
-      return count;
-    }
-
-  len = vty_out (vty, "%s", rsclient->host);
-  len = 16 - len;
-
-  if (len < 1)
-    vty_out (vty, "%s%*s", VTY_NEWLINE, 16, " ");
-  else
-    vty_out (vty, "%*s", len, " ");
-
-  vty_out (vty, "4 ");
-
-  vty_out (vty, "%11d ", rsclient->as);
-
-  rmname = ROUTE_MAP_EXPORT_NAME(&rsclient->filter[afi][safi]);
-  if ( rmname && strlen (rmname) > 13 )
-    {
-      sprintf (rmbuf, "%13s", "...");
-      rmname = strncpy (rmbuf, rmname, 10);
-    }
-  else if (! rmname)
-    rmname = "<none>";
-  vty_out (vty, " %13s ", rmname);
-
-  rmname = ROUTE_MAP_IMPORT_NAME(&rsclient->filter[afi][safi]);
-  if ( rmname && strlen (rmname) > 13 )
-    {
-      sprintf (rmbuf, "%13s", "...");
-      rmname = strncpy (rmbuf, rmname, 10);
-    }
-  else if (! rmname)
-    rmname = "<none>";
-  vty_out (vty, " %13s ", rmname);
-
-  vty_out (vty, "%8s", peer_uptime (rsclient->uptime, timebuf, BGP_UPTIME_LEN));
-
-  if (CHECK_FLAG (rsclient->flags, PEER_FLAG_SHUTDOWN))
-    vty_out (vty, " Idle (Admin)");
-  else if (CHECK_FLAG (rsclient->sflags, PEER_STATUS_PREFIX_OVERFLOW))
-    vty_out (vty, " Idle (PfxCt)");
-  else
-    vty_out (vty, " %-11s", LOOKUP(bgp_status_msg, rsclient->status));
-
-  vty_out (vty, "%s", VTY_NEWLINE);
-
-  return 1;
-}
-
-static int
-bgp_show_rsclient_summary (struct vty *vty, struct bgp *bgp,
-                           afi_t afi, safi_t safi)
-{
-  struct peer *peer;
-  struct listnode *node, *nnode;
-  int count = 0;
-
-  /* Header string for each address family. */
-  static char header[] = "Neighbor        V    AS  Export-Policy  Import-Policy  Up/Down  State";
-
-  for (ALL_LIST_ELEMENTS (bgp->rsclient, node, nnode, peer))
-    {
-      if (peer->afc[afi][safi] &&
-         CHECK_FLAG (peer->af_flags[afi][safi], PEER_FLAG_RSERVER_CLIENT))
-       {
-         if (! count)
-           {
-             vty_out (vty,
-                      "Route Server's BGP router identifier %s%s",
-                      inet_ntoa (bgp->router_id), VTY_NEWLINE);
-             vty_out (vty,
-              "Route Server's local AS number %u%s", bgp->as,
-                       VTY_NEWLINE);
-
-             vty_out (vty, "%s", VTY_NEWLINE);
-             vty_out (vty, "%s%s", header, VTY_NEWLINE);
-           }
-
-         count += bgp_write_rsclient_summary (vty, peer, afi, safi);
-       }
-    }
-
-  if (count)
-    vty_out (vty, "%sTotal number of Route Server Clients %d%s", VTY_NEWLINE,
-            count, VTY_NEWLINE);
-  else
-    vty_out (vty, "No %s Route Server Client is configured%s",
-            afi == AFI_IP ? "IPv4" : "IPv6", VTY_NEWLINE);
-
-  return CMD_SUCCESS;
-}
-
-int
-bgp_show_rsclient_summary_vty (struct vty *vty, const char *name,
-                               afi_t afi, safi_t safi)
-{
-  struct bgp *bgp;
-
-  if (name)
-    {
-      bgp = bgp_lookup_by_name (name);
-
-      if (! bgp)
-       {
-         vty_out (vty, "%% No such BGP instance exist%s", VTY_NEWLINE);
-         return CMD_WARNING;
-       }
-
-      bgp_show_rsclient_summary (vty, bgp, afi, safi);
-      return CMD_SUCCESS;
-    }
-
-  bgp = bgp_get_default ();
-
-  if (bgp)
-    bgp_show_rsclient_summary (vty, bgp, afi, safi);
 
   return CMD_SUCCESS;
 }
@@ -2510,7 +2232,7 @@ bgp_show_peer_afi (struct vty *vty, struct peer *p, afi_t afi, safi_t safi)
   vty_out (vty, "%s", VTY_NEWLINE);
 }
 
-void
+static void
 bgp_show_peer (struct vty *vty, struct peer *p)
 {
   struct bgp *bgp;
@@ -2878,74 +2600,39 @@ bgp_show_peer (struct vty *vty, struct peer *p)
   vty_out (vty, "%s", VTY_NEWLINE);
 }
 
-static int
-bgp_show_neighbor (struct vty *vty, struct bgp *bgp,
-		   enum show_type type, union sockunion *su)
+/* Detailed information on TCP and BGP neighbor connections. */
+int
+bgp_show_neighbor (struct vty *vty, struct vty_arg *args[])
 {
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
   struct listnode *node, *nnode;
   struct peer *peer;
-  int find = 0;
+  const char *addr_str;
 
-  for (ALL_LIST_ELEMENTS (bgp->peer, node, nnode, peer))
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+
+  addr_str = vty_get_arg_value (args, "address");
+  if (addr_str)
     {
-      switch (type)
-	{
-	case show_all:
-	  bgp_show_peer (vty, peer);
-	  break;
-	case show_peer:
-	  if (sockunion_same (&peer->su, su))
-	    {
-	      find = 1;
-	      bgp_show_peer (vty, peer);
-	    }
-	  break;
-	}
-    }
+      peer = vty_peer_lookup (vty, bgp, afi, safi, addr_str);
+      if (! peer)
+	return CMD_WARNING;
 
-  if (type == show_peer && ! find)
-    vty_out (vty, "%% No such neighbor%s", VTY_NEWLINE);
-
-  return CMD_SUCCESS;
-}
-
-int
-bgp_show_neighbor_vty (struct vty *vty, const char *name,
-                       enum show_type type, const char *ip_str)
-{
-  int ret;
-  struct bgp *bgp;
-  union sockunion su;
-
-  if (ip_str)
-    {
-      ret = str2sockunion (ip_str, &su);
-      if (ret < 0)
-        {
-          vty_out (vty, "%% Malformed address: %s%s", ip_str, VTY_NEWLINE);
-          return CMD_WARNING;
-        }
-    }
-
-  if (name)
-    {
-      bgp = bgp_lookup_by_name (name);
-
-      if (! bgp)
-        {
-          vty_out (vty, "%% No such BGP instance exist%s", VTY_NEWLINE);
-          return CMD_WARNING;
-        }
-
-      bgp_show_neighbor (vty, bgp, type, &su);
-
+      bgp_show_peer (vty, peer);
       return CMD_SUCCESS;
     }
 
-  bgp = bgp_get_default ();
-
-  if (bgp)
-    bgp_show_neighbor (vty, bgp, type, &su);
+  for (ALL_LIST_ELEMENTS (bgp->peer, node, nnode, peer))
+    if (peer->afc[afi][safi])
+      bgp_show_peer (vty, peer);
 
   return CMD_SUCCESS;
 }

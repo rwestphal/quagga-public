@@ -73,6 +73,113 @@ bgp_node_safi (struct vty *vty)
   return SAFI_UNICAST;
 }
 
+struct bgp *
+vty_bgp_get (struct vty *vty, const char *view)
+{
+  struct bgp *bgp;
+
+  if (view == NULL)
+    {
+      bgp = bgp_get_default ();
+      if (bgp == NULL)
+	{
+	  vty_out (vty, "No BGP process is configured%s", VTY_NEWLINE);
+	  return NULL;
+	}
+    }
+  else
+    {
+      bgp = bgp_lookup_by_name (view);
+      if (bgp == NULL)
+	{
+	  vty_out (vty, "Can't find BGP view %s%s", view, VTY_NEWLINE);
+	  return NULL;
+	}
+    }
+
+  return bgp;
+}
+
+int
+vty_get_arg_afi_safi (struct vty *vty, struct vty_arg *args[], afi_t *afi, safi_t *safi)
+{
+  const char *afi_str;
+  const char *safi_str;
+
+  afi_str = vty_get_arg_value (args, "afi");
+  safi_str = vty_get_arg_value (args, "safi");
+  if (afi_str == NULL || safi_str == NULL)
+    {
+      *afi = AFI_IP;
+      *safi = SAFI_UNICAST;
+      return 0;
+    }
+
+  if (strncmp (afi_str, "vpnv", 4) == 0)
+    {
+      if (strcmp (safi_str, "unicast") != 0)
+	{
+	  vty_out (vty, "%% AFI/SAFI combination not supported%s", VTY_NEWLINE);
+	  return -1;
+	}
+      if (afi_str[4] == '4')
+	*afi = AFI_IP;
+      else if (afi_str[4] == '6')
+	*afi = AFI_IP6;
+
+      *safi = SAFI_MPLS_VPN;
+      return 0;
+    }
+
+  if (strcmp (afi_str, "ipv4") == 0)
+    *afi = AFI_IP;
+  else if (strcmp (afi_str, "ipv6") == 0)
+    *afi = AFI_IP6;
+
+  if (strcmp (safi_str, "unicast") == 0)
+    *safi = SAFI_UNICAST;
+  else if (strcmp (safi_str, "multicast") == 0)
+    *safi = SAFI_MULTICAST;
+
+  return 0;
+}
+
+struct peer *
+vty_peer_lookup (struct vty *vty, struct bgp *bgp, afi_t afi, safi_t safi,
+                 const char *addr_str)
+{
+  union sockunion su;
+  struct peer *peer;
+
+  if (str2sockunion (addr_str, &su) < 0)
+    {
+      vty_out (vty, "%% Malformed address: %s%s", addr_str, VTY_NEWLINE);
+      return NULL;
+    }
+
+  /* Peer structure lookup. */
+  peer = peer_lookup (bgp, &su);
+  if (! peer || ! peer->afc[afi][safi])
+    {
+      vty_out (vty, "%% No such neighbor or address family%s", VTY_NEWLINE);
+      return NULL;
+    }
+
+  return peer;
+}
+
+int
+vty_get_rd (struct vty *vty, const char *rd_str, struct prefix_rd *prd)
+{
+  if (! str2prefix_rd (rd_str, prd))
+    {
+      vty_out (vty, "%% Malformed Route Distinguisher%s", VTY_NEWLINE);
+      return -1;
+    }
+
+  return 0;
+}
+
 static int
 peer_address_self_check (union sockunion *su)
 {

@@ -23,10 +23,18 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #define CMD_AS_RANGE "<1-4294967295>"
 
+struct prefix_rd;
+
 extern void bgp_vty_init (void);
 extern void bgp_vty_show_init (void);
 extern void bgp_vty_clear_init (void);
 extern const char *afi_safi_print (afi_t, safi_t);
 extern const char *community_direct_str (int);
+
+extern struct bgp *vty_bgp_get (struct vty *, const char *);
+extern int vty_get_arg_afi_safi (struct vty *, struct vty_arg **, afi_t *, safi_t *);
+extern int vty_get_rd (struct vty *, const char *, struct prefix_rd *);
+extern struct peer *vty_peer_lookup (struct vty *, struct bgp *, afi_t, safi_t,
+                                     const char *);
 
 #endif /* _QUAGGA_BGP_VTY_H */

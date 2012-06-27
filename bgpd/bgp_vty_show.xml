@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<file init="bgp_vty_show_init" header="bgp_vty_show.h">
+  <!--SAFI options -->
+  <options name="safi">
+    <unicast help="Address Family modifier"/>
+    <multicast help="Address Family modifier"/>
+  </options>
+  <!--BGP community options -->
+  <options name="community">
+    <input type="community" help="community number"/>
+    <local-AS help="Do not send outside local AS (well-known community)"/>
+    <no-advertise help="Do not advertise to any peer (well-known community)"/>
+    <no-export help="Do not export to next AS (well-known community)"/>
+  </options>
+  <!-- "show bgp ... filter-list/prefix-list" commands -->
+  <subtree name="bgp_show_filter">
+    <filter-list help="Display routes conforming to the filter-list">
+      <input arg="filter-list" type="word" help="Regular expression access list name" cmd="bgp_show_filter_list"/>
+    </filter-list>
+    <prefix-list help="Display routes conforming to the prefix-list">
+      <input arg="prefix-list" type="word" help="IP prefix-list name" cmd="bgp_show_prefix_list"/>
+    </prefix-list>
+  </subtree>
+  <!-- "show bgp ... regexp/route-map" commands -->
+  <subtree name="bgp_show_match">
+    <regexp help="Display routes matching the AS path regular expression">
+      <input arg="expr" type="line" help="A regular-expression to match the BGP AS paths" cmd="bgp_show_regexp"/>
+    </regexp>
+    <route-map help="Display routes matching the route-map">
+      <input arg="route-map" type="word" help="A route-map to match on" cmd="bgp_show_route_map"/>
+    </route-map>
+  </subtree>
+  <!-- "show bgp ... neighbor" commands -->
+  <subtree name="bgp_show_neighbors">
+    <advertised-routes help="Display the routes advertised to a BGP neighbor" cmd="bgp_show_adj"/>
+    <received help="Display information received from a BGP neighbor">
+      <prefix-filter help="Display the prefixlist filter" cmd="bgp_show_received_prefix_filter"/>
+    </received>
+    <received-routes arg="received" help="Display the received routes from neighbor" cmd="bgp_show_adj"/>
+    <routes help="Display routes learned from neighbor" cmd="bgp_show_neighbor_route"/>
+  </subtree>
+  <!-- address-family independent commands -->
+  <subtree name="bgp_show_afi_any">
+    <include name="bgp_show_filter"/>
+    <include name="bgp_show_match"/>
+    <community help="Display routes matching the communities" cmd="bgp_show_community">
+      <select name="community" arg="community" cmd="inherited">
+        <exact-match arg="exact-match" help="Exact match of the communities" cmd="inherited"/>
+      </select>
+    </community>
+    <community-list help="Display routes matching the community-list">
+      <input arg="clist" type="clist" help="community-list number" cmd="bgp_show_community_list">
+        <exact-match arg="exact-match" help="Exact match of the communities" cmd="inherited"/>
+      </input>
+      <input arg="clist" type="word" help="extcommunity-list name" cmd="bgp_show_community_list">
+        <exact-match arg="exact-match" help="Exact match of the communities" cmd="inherited"/>
+      </input>
+    </community-list>
+    <neighbors help="Detailed information on TCP and BGP neighbor connections" cmd="bgp_show_neighbor">
+      <input arg="address" type="ipv4" help="Neighbor to display information about" cmd="inherited">
+        <include name="bgp_show_neighbors"/>
+      </input>
+      <input arg="address" type="ipv6" help="Neighbor to display information about" cmd="inherited" ifdef="HAVE_IPV6">
+        <include name="bgp_show_neighbors"/>
+      </input>
+    </neighbors>
+    <paths help="Path information" cmd="bgp_show_paths"/>
+    <summary help="Summary of BGP neighbor status" cmd="bgp_show_summary"/>
+  </subtree>
+  <!-- ipv4 specific commands -->
+  <subtree name="bgp_show_afi_ipv4">
+    <!-- BGP dampening currently is supported only for IPv4 -->
+    <dampening help="Display detailed information about dampening">
+      <dampened-paths arg="dampened-paths" help="Display paths suppressed due to dampening" cmd="bgp_show_normal"/>
+      <flap-statistics arg="flap-statistics" help="Display flap statistics of routes" cmd="bgp_show_normal">
+        <include name="bgp_show_filter"/>
+        <include name="bgp_show_match"/>
+        <cidr-only arg="cidr" help="Display only routes with non-natural netmasks" cmd="bgp_show_cidr_only"/>
+        <input arg="network" type="ipv4" help="Network in the BGP routing table to display" cmd="bgp_show_route_flap"/>
+        <input arg="prefix" type="ipv4m" help="IP prefix &lt;network&gt;/&lt;length&gt;, e.g., 35.0.0.0/8" cmd="bgp_show_route_flap">
+          <longer-prefixes help="Display route and more specific routes" cmd="bgp_show_prefix_longer"/>
+        </input>
+      </flap-statistics>
+    </dampening>
+    <neighbors help="Detailed information on TCP and BGP neighbor connections">
+      <input arg="address" type="ipv4" help="Neighbor to display information about">
+        <dampened-routes arg="dampened-routes" help="Display the dampened routes received from neighbor" cmd="bgp_show_neighbor_route"/>
+        <flap-statistics arg="flap-statistics" help="Display flap statistics of the routes learned from neighbor" cmd="bgp_show_neighbor_route"/>
+      </input>
+    </neighbors>
+  </subtree>
+  <!-- ipv4/vpnv4 specific commands -->
+  <subtree name="bgp_show_afi_ipv4_vpnv4">
+    <cidr-only arg="cidr" help="Display only routes with non-natural netmasks" cmd="bgp_show_cidr_only"/>
+    <input arg="network" type="ipv4" help="Network in the BGP routing table to display" cmd="bgp_show_route"/>
+    <input arg="prefix" type="ipv4m" help="IP prefix &lt;network&gt;/&lt;length&gt;, e.g., 35.0.0.0/8" cmd="bgp_show_route">
+      <longer-prefixes help="Display route and more specific routes" cmd="bgp_show_prefix_longer"/>
+    </input>
+  </subtree>
+  <!-- ipv6/vpnv6 specific commands -->
+  <subtree name="bgp_show_afi_ipv6_vpnv6">
+    <input arg="prefix" type="ipv6m" help="Network in the BGP routing table to display" cmd="bgp_show_route">
+      <longer-prefixes help="Display route and more specific routes" cmd="bgp_show_prefix_longer"/>
+    </input>
+  </subtree>
+  <!-- commands that currently are not supported for vpnv4/vpnv6 -->
+  <subtree name="bgp_show_afi_ipv4_ipv6">
+    <statistics help="BGP RIB advertisement statistics" tags="quagga" cmd="bgp_show_stats"/>
+    <neighbors help="Detailed information on TCP and BGP neighbor connections">
+      <input arg="address" type="ipv4" help="Neighbor to display information about">
+        <prefix-counts help="Display detailed prefix count information" tags="quagga" cmd="bgp_peer_counts"/>
+      </input>
+      <input arg="address" type="ipv6" help="Neighbor to display information about" ifdef="HAVE_IPV6">
+        <prefix-counts help="Display detailed prefix count information" tags="quagga" cmd="bgp_peer_counts"/>
+      </input>
+    </neighbors>
+  </subtree>
+  <!-- "show bgp afi/safi" commands -->
+  <subtree name="bgp_show">
+    <ipv4 arg="afi" help="Address family">
+      <select name="safi" arg="safi" cmd="bgp_show_normal">
+        <include name="bgp_show_afi_any"/>
+        <include name="bgp_show_afi_ipv4"/>
+        <include name="bgp_show_afi_ipv4_vpnv4"/>
+        <include name="bgp_show_afi_ipv4_ipv6"/>
+      </select>
+    </ipv4>
+    <ipv6 arg="afi" help="Address family" ifdef="HAVE_IPV6">
+      <select name="safi" arg="safi" cmd="bgp_show_normal">
+        <include name="bgp_show_afi_any"/>
+        <include name="bgp_show_afi_ipv6_vpnv6"/>
+        <include name="bgp_show_afi_ipv4_ipv6"/>
+      </select>
+    </ipv6>
+    <vpnv4 arg="afi" help="Address family">
+      <unicast arg="safi" help="Address Family modifier">
+        <all help="Display information about all VPN NLRIs" cmd="bgp_show_normal">
+          <include name="bgp_show_afi_any"/>
+          <include name="bgp_show_afi_ipv4_vpnv4"/>
+          <labels help="Display BGP labels for prefixes" cmd="bgp_show_labels"/>
+        </all>
+        <rd help="Display information for a route distinguisher">
+          <input arg="rd" type="rd" help="VPN Route Distinguisher" cmd="bgp_show_normal">
+            <include name="bgp_show_afi_any"/>
+            <include name="bgp_show_afi_ipv4_vpnv4"/>
+            <labels help="Display BGP labels for prefixes" cmd="bgp_show_labels"/>
+          </input>
+        </rd>
+      </unicast>
+    </vpnv4>
+  </subtree>
+  <!-- "show" commands -->
+  <show nodes="ENABLE=1 VIEW=1 RESTRICTED=1" help="Show running system information">
+    <bgp help="BGP information">
+      <include name="bgp_show"/>
+      <view help="BGP view">
+        <input arg="view" type="word" help="View name">
+          <include name="bgp_show"/>
+        </input>
+      </view>
+    </bgp>
+    <!-- old commands for compatibility -->
+    <ip help="IP information">
+      <bgp help="BGP information" cmd="bgp_show_normal">
+        <include name="bgp_show_afi_any"/>
+        <include name="bgp_show_afi_ipv4"/>
+        <include name="bgp_show_afi_ipv4_vpnv4"/>
+        <include name="bgp_show_afi_ipv4_ipv6"/>
+      </bgp>
+    </ip>
+  </show>
+</file>
