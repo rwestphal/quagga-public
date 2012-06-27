@@ -48,7 +48,6 @@ struct rd_as4
   u_int16_t val;
 };
 
-extern void bgp_mplsvpn_init (void);
 extern int bgp_nlri_parse_vpnv4 (struct peer *, struct attr *, struct bgp_nlri *);
 extern u_int16_t decode_rd_type (u_char *);
 extern u_int32_t decode_label (u_char *);
@@ -56,7 +55,6 @@ extern int str2prefix_rd (const char *, struct prefix_rd *);
 extern void decode_rd_as (u_char *, struct rd_as *);
 extern void decode_rd_ip (u_char *, struct rd_ip *);
 extern void decode_rd_as4 (u_char *, struct rd_as4 *);
-extern int str2label (const char *, u_char *);
 extern char *prefix_rd2str (struct prefix_rd *, char *, size_t);
 
 #endif /* _QUAGGA_BGP_MPLSVPN_H */

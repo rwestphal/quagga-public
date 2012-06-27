@@ -557,23 +557,6 @@ bgp_attr_default_set (struct attr *attr, u_char origin)
   return attr;
 }
 
-
-/* Make network statement's attribute. */
-struct attr *
-bgp_attr_default_intern (u_char origin)
-{
-  struct attr attr;
-  struct attr *new;
-
-  bgp_attr_default_set(&attr, origin);
-
-  new = bgp_attr_intern (&attr);
-  bgp_attr_extra_free (&attr);
-  
-  aspath_unintern (&new->aspath);
-  return new;
-}
-
 struct attr *
 bgp_attr_aggregate_intern (struct bgp *bgp, u_char origin,
 			   struct aspath *aspath,

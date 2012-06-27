@@ -48,7 +48,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "bgpd/bgp_packet.h"
 #include "bgpd/bgp_filter.h"
 #include "bgpd/bgp_fsm.h"
-#include "bgpd/bgp_mplsvpn.h"
 #include "bgpd/bgp_nexthop.h"
 #include "bgpd/bgp_damp.h"
 #include "bgpd/bgp_advertise.h"
@@ -3533,39 +3532,6 @@ bgp_static_update (struct bgp *bgp, struct prefix *p,
     }
 }
 
-static void
-bgp_static_update_vpnv4 (struct bgp *bgp, struct prefix *p, afi_t afi,
-			 safi_t safi, struct prefix_rd *prd, u_char *label)
-{
-  struct bgp_node *rn;
-  struct bgp_info *new;
-  
-  rn = bgp_afi_node_get (bgp->rib[afi][safi], afi, safi, p, prd);
-
-  /* Make new BGP info. */
-  new = bgp_info_new ();
-  new->type = ZEBRA_ROUTE_BGP;
-  new->sub_type = BGP_ROUTE_STATIC;
-  new->peer = bgp->peer_self;
-  new->attr = bgp_attr_default_intern (BGP_ORIGIN_IGP);
-  SET_FLAG (new->flags, BGP_INFO_VALID);
-  new->uptime = bgp_clock ();
-  new->extra = bgp_info_extra_new();
-  memcpy (new->extra->label, label, 3);
-
-  /* Aggregate address increment. */
-  bgp_aggregate_increment (bgp, p, new, afi, safi);
-  
-  /* Register new BGP information. */
-  bgp_info_add (rn, new);
-
-  /* route_node_get lock */
-  bgp_unlock_node (rn);
-  
-  /* Process change. */
-  bgp_process (bgp, rn, afi, safi);
-}
-
 void
 bgp_static_withdraw (struct bgp *bgp, struct prefix *p, afi_t afi,
 		     safi_t safi)
@@ -3612,34 +3578,6 @@ bgp_check_local_routes_rsclient (struct peer *rsclient, afi_t afi, safi_t safi)
         bgp_static_update_rsclient (rsclient, p, bgp_static,
                 afi, safi);
       }
-}
-
-static void
-bgp_static_withdraw_vpnv4 (struct bgp *bgp, struct prefix *p, afi_t afi,
-			   safi_t safi, struct prefix_rd *prd, u_char *label)
-{
-  struct bgp_node *rn;
-  struct bgp_info *ri;
-
-  rn = bgp_afi_node_get (bgp->rib[afi][safi], afi, safi, p, prd);
-
-  /* Check selected route and self inserted route. */
-  for (ri = rn->info; ri; ri = ri->next)
-    if (ri->peer == bgp->peer_self 
-	&& ri->type == ZEBRA_ROUTE_BGP
-	&& ri->sub_type == BGP_ROUTE_STATIC)
-      break;
-
-  /* Withdraw static BGP route from routing table. */
-  if (ri)
-    {
-      bgp_aggregate_decrement (bgp, p, ri, afi, safi);
-      bgp_info_delete (rn, ri);
-      bgp_process (bgp, rn, afi, safi);
-    }
-
-  /* Unlock bgp_node_lookup. */
-  bgp_unlock_node (rn);
 }
 
 /* Configure static BGP network.  When user don't run zebra, static
@@ -3796,173 +3734,19 @@ bgp_static_delete (struct bgp *bgp)
   afi_t afi;
   safi_t safi;
   struct bgp_node *rn;
-  struct bgp_node *rm;
-  struct bgp_table *table;
   struct bgp_static *bgp_static;
 
   for (afi = AFI_IP; afi < AFI_MAX; afi++)
     for (safi = SAFI_UNICAST; safi < SAFI_MAX; safi++)
       for (rn = bgp_table_top (bgp->route[afi][safi]); rn; rn = bgp_route_next (rn))
 	if (rn->info != NULL)
-	  {      
-	    if (safi == SAFI_MPLS_VPN)
-	      {
-		table = rn->info;
-
-		for (rm = bgp_table_top (table); rm; rm = bgp_route_next (rm))
-		  {
-		    bgp_static = rn->info;
-		    bgp_static_withdraw_vpnv4 (bgp, &rm->p,
-					       AFI_IP, SAFI_MPLS_VPN,
-					       (struct prefix_rd *)&rn->p,
-					       bgp_static->label);
-		    bgp_static_free (bgp_static);
-		    rn->info = NULL;
-		    bgp_unlock_node (rn);
-		  }
-	      }
-	    else
-	      {
-		bgp_static = rn->info;
-		bgp_static_withdraw (bgp, &rn->p, afi, safi);
-		bgp_static_free (bgp_static);
-		rn->info = NULL;
-		bgp_unlock_node (rn);
-	      }
+	  {
+	    bgp_static = rn->info;
+	    bgp_static_withdraw (bgp, &rn->p, afi, safi);
+	    bgp_static_free (bgp_static);
+	    rn->info = NULL;
+	    bgp_unlock_node (rn);
 	  }
-}
-
-int
-bgp_static_set_vpnv4 (struct vty *vty, const char *ip_str, const char *rd_str,
-		      const char *label_str)
-{
-  int ret;
-  struct prefix p;
-  struct prefix_rd prd;
-  struct bgp *bgp;
-  struct bgp_node *prn;
-  struct bgp_node *rn;
-  struct bgp_table *table;
-  struct bgp_static *bgp_static;
-  u_char label[3];
-
-  bgp = vty->index;
-
-  ret = str2prefix (ip_str, &p);
-  if (! ret)
-    {
-      vty_out (vty, "%% Malformed prefix%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-  apply_mask (&p);
-
-  ret = str2prefix_rd (rd_str, &prd);
-  if (! ret)
-    {
-      vty_out (vty, "%% Malformed rd%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
-  ret = str2label (label_str, label);
-  if (! ret)
-    {
-      vty_out (vty, "%% Malformed label%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
-  prn = bgp_node_get (bgp->route[AFI_IP][SAFI_MPLS_VPN],
-			(struct prefix *)&prd);
-  if (prn->info == NULL)
-    prn->info = bgp_table_init (AFI_IP, SAFI_MPLS_VPN);
-  else
-    bgp_unlock_node (prn);
-  table = prn->info;
-
-  rn = bgp_node_get (table, &p);
-
-  if (rn->info)
-    {
-      vty_out (vty, "%% Same network configuration exists%s", VTY_NEWLINE);
-      bgp_unlock_node (rn);
-    }
-  else
-    {
-      /* New configuration. */
-      bgp_static = bgp_static_new ();
-      bgp_static->valid = 1;
-      memcpy (bgp_static->label, label, 3);
-      rn->info = bgp_static;
-
-      bgp_static_update_vpnv4 (bgp, &p, AFI_IP, SAFI_MPLS_VPN, &prd, label);
-    }
-
-  return CMD_SUCCESS;
-}
-
-/* Configure static BGP network. */
-int
-bgp_static_unset_vpnv4 (struct vty *vty, const char *ip_str, 
-                        const char *rd_str, const char *label_str)
-{
-  int ret;
-  struct bgp *bgp;
-  struct prefix p;
-  struct prefix_rd prd;
-  struct bgp_node *prn;
-  struct bgp_node *rn;
-  struct bgp_table *table;
-  struct bgp_static *bgp_static;
-  u_char label[3];
-
-  bgp = vty->index;
-
-  /* Convert IP prefix string to struct prefix. */
-  ret = str2prefix (ip_str, &p);
-  if (! ret)
-    {
-      vty_out (vty, "%% Malformed prefix%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-  apply_mask (&p);
-
-  ret = str2prefix_rd (rd_str, &prd);
-  if (! ret)
-    {
-      vty_out (vty, "%% Malformed rd%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
-  ret = str2label (label_str, label);
-  if (! ret)
-    {
-      vty_out (vty, "%% Malformed label%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
-
-  prn = bgp_node_get (bgp->route[AFI_IP][SAFI_MPLS_VPN],
-			(struct prefix *)&prd);
-  if (prn->info == NULL)
-    prn->info = bgp_table_init (AFI_IP, SAFI_MPLS_VPN);
-  else
-    bgp_unlock_node (prn);
-  table = prn->info;
-
-  rn = bgp_node_lookup (table, &p);
-
-  if (rn)
-    {
-      bgp_static_withdraw_vpnv4 (bgp, &p, AFI_IP, SAFI_MPLS_VPN, &prd, label);
-
-      bgp_static = rn->info;
-      bgp_static_free (bgp_static);
-      rn->info = NULL;
-      bgp_unlock_node (rn);
-      bgp_unlock_node (rn);
-    }
-  else
-    vty_out (vty, "%% Can't find the route%s", VTY_NEWLINE);
-
-  return CMD_SUCCESS;
 }
 
 DEFUN (bgp_network,
@@ -5898,45 +5682,6 @@ ALIAS (bgp_damp_unset,
        "Value to start suppressing a route\n"
        "Maximum duration to suppress a stable route\n")
 
-static int
-bgp_config_write_network_vpnv4 (struct vty *vty, struct bgp *bgp,
-				afi_t afi, safi_t safi, int *write)
-{
-  struct bgp_node *prn;
-  struct bgp_node *rn;
-  struct bgp_table *table;
-  struct prefix *p;
-  struct prefix_rd *prd;
-  struct bgp_static *bgp_static;
-  u_int32_t label;
-  char buf[SU_ADDRSTRLEN];
-  char rdbuf[RD_ADDRSTRLEN];
-  
-  /* Network configuration. */
-  for (prn = bgp_table_top (bgp->route[afi][safi]); prn; prn = bgp_route_next (prn))
-    if ((table = prn->info) != NULL)
-      for (rn = bgp_table_top (table); rn; rn = bgp_route_next (rn)) 
-	if ((bgp_static = rn->info) != NULL)
-	  {
-	    p = &rn->p;
-	    prd = (struct prefix_rd *) &prn->p;
-
-	    /* "address-family" display.  */
-	    bgp_config_write_family_header (vty, afi, safi, write);
-
-	    /* "network" configuration display.  */
-	    prefix_rd2str (prd, rdbuf, RD_ADDRSTRLEN);
-	    label = decode_label (bgp_static->label);
-
-	    vty_out (vty, " network %s/%d rd %s label %d",
-		     inet_ntop (p->family, &p->u.prefix, buf, SU_ADDRSTRLEN), 
-		     p->prefixlen,
-		     rdbuf, label);
-	    vty_out (vty, "%s", VTY_NEWLINE);
-	  }
-  return 0;
-}
-
 /* Configuration of static route announcement and aggregate
    information. */
 int
@@ -5949,9 +5694,6 @@ bgp_config_write_network (struct vty *vty, struct bgp *bgp,
   struct bgp_aggregate *bgp_aggregate;
   char buf[SU_ADDRSTRLEN];
   
-  if (afi == AFI_IP && safi == SAFI_MPLS_VPN)
-    return bgp_config_write_network_vpnv4 (vty, bgp, afi, safi, write);
-
   /* Network configuration. */
   for (rn = bgp_table_top (bgp->route[afi][safi]); rn; rn = bgp_route_next (rn)) 
     if ((bgp_static = rn->info) != NULL)

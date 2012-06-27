@@ -264,31 +264,6 @@ error:
   return 0;
 }
 
-int
-str2label (const char *str, u_char *label)
-{
-  unsigned long l;
-  char *endptr;
-  u_int32_t t;
-
-  if (*str == '-')
-    return 0;
-  
-  errno = 0;
-  l = strtoul (str, &endptr, 10);
-
-  if (*endptr != '\0' || errno || l > UINT32_MAX)
-    return 0;
-
-  t = (u_int32_t) l;
-  
-  label[0] = (u_char)(t >> 12);
-  label[1] = (u_char)(t >> 4);
-  label[2] = (u_char)(t << 4);
-
-  return 1;
-}
-
 char *
 prefix_rd2str (struct prefix_rd *prd, char *buf, size_t size)
 {
@@ -325,40 +300,4 @@ prefix_rd2str (struct prefix_rd *prd, char *buf, size_t size)
     }
 
   return NULL;
-}
-
-/* For testing purpose, static route of MPLS-VPN. */
-DEFUN (vpnv4_network,
-       vpnv4_network_cmd,
-       "network A.B.C.D/M rd ASN:nn_or_IP-address:nn label WORD",
-       "Specify a network to announce via BGP\n"
-       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
-       "Specify Route Distinguisher\n"
-       "VPN Route Distinguisher\n"
-       "BGP Label\n"
-       "Label value\n")
-{
-  return bgp_static_set_vpnv4 (vty, argv[0], argv[1], argv[2]);
-}
-
-/* For testing purpose, static route of MPLS-VPN. */
-DEFUN (no_vpnv4_network,
-       no_vpnv4_network_cmd,
-       "no network A.B.C.D/M rd ASN:nn_or_IP-address:nn label WORD",
-       NO_STR
-       "Specify a network to announce via BGP\n"
-       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
-       "Specify Route Distinguisher\n"
-       "VPN Route Distinguisher\n"
-       "BGP Label\n"
-       "Label value\n")
-{
-  return bgp_static_unset_vpnv4 (vty, argv[0], argv[1], argv[2]);
-}
-
-void
-bgp_mplsvpn_init (void)
-{
-  install_element (BGP_VPNV4_NODE, &vpnv4_network_cmd);
-  install_element (BGP_VPNV4_NODE, &no_vpnv4_network_cmd);
 }

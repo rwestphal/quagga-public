@@ -53,7 +53,6 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "bgpd/bgp_filter.h"
 #include "bgpd/bgp_nexthop.h"
 #include "bgpd/bgp_damp.h"
-#include "bgpd/bgp_mplsvpn.h"
 #include "bgpd/bgp_advertise.h"
 #include "bgpd/bgp_network.h"
 #include "bgpd/bgp_vty.h"
@@ -5367,7 +5366,6 @@ bgp_init (void)
   bgp_route_map_init ();
   bgp_address_init ();
   bgp_scan_init ();
-  bgp_mplsvpn_init ();
 
   /* Access list initialize. */
   access_list_init ();

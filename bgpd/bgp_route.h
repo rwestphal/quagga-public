@@ -119,9 +119,6 @@ struct bgp_static
     char *name;
     struct route_map *map;
   } rmap;
-
-  /* MPLS label.  */
-  u_char label[3];
 };
 
 /* Flags which indicate a route is unuseable in some form */
@@ -208,12 +205,6 @@ extern void bgp_static_delete (struct bgp *);
 extern void bgp_static_update (struct bgp *, struct prefix *, struct bgp_static *,
 			afi_t, safi_t);
 extern void bgp_static_withdraw (struct bgp *, struct prefix *, afi_t, safi_t);
-                     
-extern int bgp_static_set_vpnv4 (struct vty *vty, const char *, 
-                          const char *, const char *);
-
-extern int bgp_static_unset_vpnv4 (struct vty *, const char *, 
-                            const char *, const char *);
 
 /* this is primarily for MPLS-VPN */
 extern int bgp_update (struct peer *, struct prefix *, struct attr *,
