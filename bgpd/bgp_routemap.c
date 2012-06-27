@@ -532,11 +532,8 @@ route_match_metric_compile (const char *arg)
     return NULL;
     
   med = XMALLOC (MTYPE_ROUTE_MAP_COMPILED, sizeof (u_int32_t));
-  
-  if (!med)
-    return med;
-  
   *med = tmpval;
+
   return med;
 }
 
@@ -1007,10 +1004,6 @@ route_set_local_pref_compile (const char *arg)
     return NULL;
    
   local_pref = XMALLOC (MTYPE_ROUTE_MAP_COMPILED, sizeof (u_int32_t)); 
-  
-  if (!local_pref)
-    return local_pref;
-  
   *local_pref = tmp;
   
   return local_pref;
@@ -1076,10 +1069,6 @@ route_set_weight_compile (const char *arg)
     return NULL;
   
   weight = XMALLOC (MTYPE_ROUTE_MAP_COMPILED, sizeof (u_int32_t));
-  
-  if (weight == NULL)
-    return weight;
-  
   *weight = tmp;  
   
   return weight;

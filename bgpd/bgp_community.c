@@ -32,8 +32,7 @@ static struct hash *comhash;
 static struct community *
 community_new (void)
 {
-  return (struct community *) XCALLOC (MTYPE_COMMUNITY,
-				       sizeof (struct community));
+  return XCALLOC (MTYPE_COMMUNITY, sizeof (struct community));
 }
 
 /* Free communities value.  */

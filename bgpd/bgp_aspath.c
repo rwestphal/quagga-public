@@ -95,7 +95,7 @@ static struct stream *snmp_stream;
 static as_t *
 assegment_data_new (int num)
 {
-  return (XMALLOC (MTYPE_AS_SEG_DATA, ASSEGMENT_DATA_SIZE (num, 1)));
+  return XMALLOC (MTYPE_AS_SEG_DATA, ASSEGMENT_DATA_SIZE (num, 1));
 }
 
 /* Get a new segment. Note that 0 is an allowed length,
@@ -212,20 +212,15 @@ static struct assegment *
 assegment_append_asns (struct assegment *seg, as_t *asnos, int num)
 {
   as_t *newas;
-  
+
   newas = XREALLOC (MTYPE_AS_SEG_DATA, seg->as,
-		      ASSEGMENT_DATA_SIZE (seg->length + num, 1));
+		    ASSEGMENT_DATA_SIZE (seg->length + num, 1));
 
-  if (newas)
-    {
-      seg->as = newas;
-      memcpy (seg->as + seg->length, asnos, ASSEGMENT_DATA_SIZE(num, 1));
-      seg->length += num;
-      return seg;
-    }
+  seg->as = newas;
+  memcpy (seg->as + seg->length, asnos, ASSEGMENT_DATA_SIZE(num, 1));
+  seg->length += num;
 
-  assegment_free_all (seg);
-  return NULL;
+  return seg;
 }
 
 static int

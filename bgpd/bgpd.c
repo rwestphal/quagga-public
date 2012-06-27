@@ -1345,8 +1345,7 @@ peer_group_active (struct peer *peer)
 static struct peer_group *
 peer_group_new (void)
 {
-  return (struct peer_group *) XCALLOC (MTYPE_PEER_GROUP,
-					sizeof (struct peer_group));
+  return XCALLOC (MTYPE_PEER_GROUP, sizeof (struct peer_group));
 }
 
 static void
@@ -1935,9 +1934,7 @@ bgp_create (as_t *as, const char *name)
   afi_t afi;
   safi_t safi;
 
-  if ( (bgp = XCALLOC (MTYPE_BGP, sizeof (struct bgp))) == NULL)
-    return NULL;
-  
+  bgp = XCALLOC (MTYPE_BGP, sizeof (struct bgp));
   bgp_lock (bgp);
   bgp->peer_self = peer_new (bgp);
   bgp->peer_self->host = XSTRDUP (MTYPE_BGP_PEER_HOST, "Static announcement");

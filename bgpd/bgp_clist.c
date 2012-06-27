@@ -822,10 +822,8 @@ extcommunity_list_unset (struct community_list_handler *ch,
 struct community_list_handler *
 community_list_init (void)
 {
-  struct community_list_handler *ch;
-  ch = XCALLOC (MTYPE_COMMUNITY_LIST_HANDLER,
+  return XCALLOC (MTYPE_COMMUNITY_LIST_HANDLER,
                 sizeof (struct community_list_handler));
-  return ch;
 }
 
 /* Terminate community-list.  */

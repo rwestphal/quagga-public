@@ -42,8 +42,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 static struct bgp_advertise_attr *
 baa_new (void)
 {
-  return (struct bgp_advertise_attr *)
-    XCALLOC (MTYPE_BGP_ADVERTISE_ATTR, sizeof (struct bgp_advertise_attr));
+  return XCALLOC (MTYPE_BGP_ADVERTISE_ATTR, sizeof (struct bgp_advertise_attr));
 }
 
 static void
@@ -86,8 +85,7 @@ baa_hash_cmp (const void *p1, const void *p2)
 static struct bgp_advertise *
 bgp_advertise_new (void)
 {
-  return (struct bgp_advertise *) 
-    XCALLOC (MTYPE_BGP_ADVERTISE, sizeof (struct bgp_advertise));
+  return XCALLOC (MTYPE_BGP_ADVERTISE, sizeof (struct bgp_advertise));
 }
 
 static void

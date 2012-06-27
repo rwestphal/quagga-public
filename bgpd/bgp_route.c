@@ -90,9 +90,7 @@ bgp_afi_node_get (struct bgp_table *table, afi_t afi, safi_t safi, struct prefix
 static struct bgp_info_extra *
 bgp_info_extra_new (void)
 {
-  struct bgp_info_extra *new;
-  new = XCALLOC (MTYPE_BGP_ROUTE_EXTRA, sizeof (struct bgp_info_extra));
-  return new;
+  return XCALLOC (MTYPE_BGP_ROUTE_EXTRA, sizeof (struct bgp_info_extra));
 }
 
 static void
@@ -1666,8 +1664,6 @@ bgp_process (struct bgp *bgp, struct bgp_node *rn, afi_t afi, safi_t safi)
   
   pqnode = XCALLOC (MTYPE_BGP_PROCESS_QUEUE, 
                     sizeof (struct bgp_process_queue));
-  if (!pqnode)
-    return;
 
   /* all unlocked in bgp_processq_del */
   bgp_table_lock (rn->table);
