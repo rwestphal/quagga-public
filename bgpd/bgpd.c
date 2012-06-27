@@ -5357,6 +5357,7 @@ bgp_init (void)
   /* BGP VTY commands installation.  */
   bgp_vty_init ();
   bgp_vty_show_init ();
+  bgp_vty_clear_init ();
 
   /* Init zebra. */
   bgp_zebra_init ();

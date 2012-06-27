@@ -1,4 +1,4 @@
-/* BGP VTY interface.
+/* Functions used by the "clear bgp ..." CLI commands.
    Copyright (C) 1996, 97, 98, 99, 2000 Kunihiro Ishiguro
 
 This file is part of GNU Zebra.
@@ -18,15 +18,29 @@ along with GNU Zebra; see the file COPYING.  If not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.  */
 
-#ifndef _QUAGGA_BGP_VTY_H
-#define _QUAGGA_BGP_VTY_H
+#ifndef _QUAGGA_BGP_VTY_CLEAR_H
+#define _QUAGGA_BGP_VTY_CLEAR_H
 
-#define CMD_AS_RANGE "<1-4294967295>"
+#include "bgpd/bgp_vty.h"
 
-extern void bgp_vty_init (void);
-extern void bgp_vty_show_init (void);
-extern void bgp_vty_clear_init (void);
-extern const char *afi_safi_print (afi_t, safi_t);
-extern const char *community_direct_str (int);
+/* BGP clear sort. */
+enum clear_sort
+{
+  clear_all,
+  clear_peer,
+  clear_group,
+  clear_external,
+  clear_as
+};
 
-#endif /* _QUAGGA_BGP_VTY_H */
+extern int
+bgp_clear_vty (struct vty *vty, const char *name, afi_t afi, safi_t safi,
+               enum clear_sort sort, enum bgp_clear_type stype,
+               const char *arg);
+
+extern int
+bgp_clear_damp_route (struct vty *vty, const char *view_name,
+                      const char *ip_str, afi_t afi, safi_t safi,
+                      struct prefix_rd *prd, int prefix_check);
+
+#endif /* _QUAGGA_BGP_VTY_CLEAR_H */
