@@ -174,56 +174,75 @@ int
 str2prefix_rd (const char *str, struct prefix_rd *prd)
 {
   int ret;
-  char *p;
-  char *p2;
+  char *colon;
   struct stream *s;
-  char *half;
+  char *first_half;
+  char *second_half;
+  char *endptr = NULL;
   struct in_addr addr;
-
-  s = stream_new (8);
+  unsigned long v1;
+  unsigned long v2;
 
   prd->family = AF_UNSPEC;
   prd->prefixlen = 64;
 
-  p = strchr (str, ':');
-  if (! p)
+  colon = strchr (str, ':');
+  if (! colon)
     return 0;
 
-  if (! all_digit (p + 1))
-    return 0;
+  first_half = XMALLOC (MTYPE_TMP, (colon - str) + 1);
+  memcpy (first_half, str, (colon - str));
+  first_half[colon - str] = '\0';
+  second_half = colon + 1;
 
-  half = XMALLOC (MTYPE_TMP, (p - str) + 1);
-  memcpy (half, str, (p - str));
-  half[p - str] = '\0';
+  s = stream_new (8);
 
-  p2 = strchr (str, '.');
-
-  if (! p2)
+  /* RD type 0 */
+  if (! strchr (first_half, '.'))
     {
-      if (! all_digit (half))
-	{
-	  XFREE (MTYPE_TMP, half);
-	  return 0;
-	}
       stream_putw (s, RD_TYPE_AS);
-      stream_putw (s, atoi (half));
-      stream_putl (s, atol (p + 1));
+
+      errno = 0;
+      v1 = strtoul (first_half, &endptr, 10);
+      if (*endptr != '\0' || errno || v1 > UINT16_MAX)
+        goto error;
+
+      errno = 0;
+      v2 = strtoul (second_half, &endptr, 10);
+      if (*endptr != '\0' || errno || v2 > UINT32_MAX)
+        goto error;
+
+      stream_putw (s, (u_int16_t) v1);
+      stream_putl (s, v2);
     }
+  /* RD type 1 */
   else
     {
-      ret = inet_aton (half, &addr);
-      if (! ret)
-	{
-	  XFREE (MTYPE_TMP, half);
-	  return 0;
-	}
+      /* Use inet_pton to allow only the IPv4 dotted-quad notation. */
+      ret = inet_pton (AF_INET, first_half, &addr);
+      if (ret != 1)
+        goto error;
+
       stream_putw (s, RD_TYPE_IP);
+
+      errno = 0;
+      v2 = strtoul (second_half, &endptr, 10);
+      if (*endptr != '\0' || errno || v2 > UINT16_MAX)
+        goto error;
+
       stream_put_in_addr (s, &addr);
-      stream_putw (s, atol (p + 1));
+      stream_putw (s, (u_int16_t) v2);
     }
   memcpy (prd->val, s->data, 8);
 
+  stream_free (s);
+  XFREE (MTYPE_TMP, first_half);
   return 1;
+
+error:
+  stream_free (s);
+  XFREE (MTYPE_TMP, first_half);
+  return 0;
 }
 
 int
