@@ -40,6 +40,7 @@ extern int bgp_show_route_flap (struct vty *vty, struct vty_arg *args[]);
 extern int bgp_show_paths (struct vty *vty, struct vty_arg *args[]);
 extern int bgp_show_stats (struct vty *vty, struct vty_arg *args[]);
 extern int bgp_show_community_list (struct vty *vty, struct vty_arg *args[]);
+extern int bgp_show_ext_community_list (struct vty *vty, struct vty_arg *args[]);
 extern int bgp_show_adj (struct vty *vty, struct vty_arg *args[]);
 extern int bgp_show_received_prefix_filter (struct vty *vty, struct vty_arg *args[]);
 extern int bgp_peer_counts (struct vty *vty, struct vty_arg *args[]);

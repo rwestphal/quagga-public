@@ -77,6 +77,7 @@ enum bgp_show_type
   bgp_show_type_community_exact,
   bgp_show_type_community_list,
   bgp_show_type_community_list_exact,
+  bgp_show_type_ext_community_list,
   bgp_show_type_flap_address,
   bgp_show_type_flap_prefix,
   bgp_show_type_dampend_paths,
@@ -577,6 +578,16 @@ bgp_show_filter_route (struct bgp_node *rn, struct bgp_info *ri,
       if (! community_list_exact_match (ri->attr->community, clist))
 	return 1;
     }
+  if (type == bgp_show_type_ext_community_list)
+    {
+      struct community_list *ext_clist = output_arg;
+
+      if (! ri->attr->extra)
+        return 1;
+
+      if (! ecommunity_list_match (ri->attr->extra->ecommunity, ext_clist))
+        return 1;
+    }
   if (type == bgp_show_type_flap_address
       || type == bgp_show_type_flap_prefix)
     {
@@ -975,6 +986,22 @@ bgp_show_community_list (struct vty *vty, struct vty_arg *args[])
   return bgp_show (vty, args,
                    (exact ? bgp_show_type_community_list_exact :
                             bgp_show_type_community_list), clist);
+}
+
+/* Display routes matching the extcommunity-list. */
+int
+bgp_show_ext_community_list (struct vty *vty, struct vty_arg *args[])
+{
+  const char *ext_clist_str;
+  struct community_list *ext_clist;
+
+  ext_clist_str = vty_get_arg_value (args, "ext_clist");
+  ext_clist = community_list_lookup (bgp_clist, ext_clist_str,
+                                     EXTCOMMUNITY_LIST_MASTER);
+  if (! ext_clist)
+    return CMD_WARNING;
+
+  return bgp_show (vty, args, bgp_show_type_ext_community_list, ext_clist);
 }
 
 /* Display flap statistics of routes. */

@@ -266,6 +266,27 @@ DEFUN (show_bgp_ipv4_safi_community_list_word_exact_match,
   return bgp_show_community_list (vty, args);
 }
 
+DEFUN (show_bgp_ipv4_safi_extcommunity_list_word,
+       show_bgp_ipv4_safi_extcommunity_list_word_cmd,
+       "show bgp ipv4 (unicast|multicast) extcommunity-list WORD",
+       "Show running system information\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[1] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
+}
+
 DEFUN (show_bgp_ipv4_safi_neighbors,
        show_bgp_ipv4_safi_neighbors_cmd,
        "show bgp ipv4 (unicast|multicast) neighbors",
@@ -1225,6 +1246,27 @@ DEFUN (show_bgp_ipv6_safi_community_list_word_exact_match,
   return bgp_show_community_list (vty, args);
 }
 
+DEFUN (show_bgp_ipv6_safi_extcommunity_list_word,
+       show_bgp_ipv6_safi_extcommunity_list_word_cmd,
+       "show bgp ipv6 (unicast|multicast) extcommunity-list WORD",
+       "Show running system information\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[1] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
+}
+
 DEFUN (show_bgp_ipv6_safi_neighbors,
        show_bgp_ipv6_safi_neighbors_cmd,
        "show bgp ipv6 (unicast|multicast) neighbors",
@@ -1865,6 +1907,27 @@ DEFUN (show_bgp_vpnv4_unicast_all_community_list_word_exact_match,
       NULL
     };
   return bgp_show_community_list (vty, args);
+}
+
+DEFUN (show_bgp_vpnv4_unicast_all_extcommunity_list_word,
+       show_bgp_vpnv4_unicast_all_extcommunity_list_word_cmd,
+       "show bgp vpnv4 unicast all extcommunity-list WORD",
+       "Show running system information\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Display information about all VPN NLRIs\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[0] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
 }
 
 DEFUN (show_bgp_vpnv4_unicast_all_neighbors,
@@ -2527,6 +2590,29 @@ DEFUN (show_bgp_vpnv4_unicast_rd_rd_community_list_word_exact_match,
       NULL
     };
   return bgp_show_community_list (vty, args);
+}
+
+DEFUN (show_bgp_vpnv4_unicast_rd_rd_extcommunity_list_word,
+       show_bgp_vpnv4_unicast_rd_rd_extcommunity_list_word_cmd,
+       "show bgp vpnv4 unicast rd ASN:nn_or_IP-address:nn extcommunity-list WORD",
+       "Show running system information\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Display information for a route distinguisher\n"
+       "VPN Route Distinguisher\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "rd", .value = argv[0] },
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[1] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
 }
 
 DEFUN (show_bgp_vpnv4_unicast_rd_rd_neighbors,
@@ -3237,6 +3323,30 @@ DEFUN (show_bgp_view_word_ipv4_safi_community_list_word_exact_match,
       NULL
     };
   return bgp_show_community_list (vty, args);
+}
+
+DEFUN (show_bgp_view_word_ipv4_safi_extcommunity_list_word,
+       show_bgp_view_word_ipv4_safi_extcommunity_list_word_cmd,
+       "show bgp view WORD ipv4 (unicast|multicast) extcommunity-list WORD",
+       "Show running system information\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[2] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
 }
 
 DEFUN (show_bgp_view_word_ipv4_safi_neighbors,
@@ -4330,6 +4440,30 @@ DEFUN (show_bgp_view_word_ipv6_safi_community_list_word_exact_match,
   return bgp_show_community_list (vty, args);
 }
 
+DEFUN (show_bgp_view_word_ipv6_safi_extcommunity_list_word,
+       show_bgp_view_word_ipv6_safi_extcommunity_list_word_cmd,
+       "show bgp view WORD ipv6 (unicast|multicast) extcommunity-list WORD",
+       "Show running system information\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[2] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
+}
+
 DEFUN (show_bgp_view_word_ipv6_safi_neighbors,
        show_bgp_view_word_ipv6_safi_neighbors_cmd,
        "show bgp view WORD ipv6 (unicast|multicast) neighbors",
@@ -5060,6 +5194,30 @@ DEFUN (show_bgp_view_word_vpnv4_unicast_all_community_list_word_exact_match,
       NULL
     };
   return bgp_show_community_list (vty, args);
+}
+
+DEFUN (show_bgp_view_word_vpnv4_unicast_all_extcommunity_list_word,
+       show_bgp_view_word_vpnv4_unicast_all_extcommunity_list_word_cmd,
+       "show bgp view WORD vpnv4 unicast all extcommunity-list WORD",
+       "Show running system information\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Display information about all VPN NLRIs\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[1] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
 }
 
 DEFUN (show_bgp_view_word_vpnv4_unicast_all_neighbors,
@@ -5814,6 +5972,32 @@ DEFUN (show_bgp_view_word_vpnv4_unicast_rd_rd_community_list_word_exact_match,
   return bgp_show_community_list (vty, args);
 }
 
+DEFUN (show_bgp_view_word_vpnv4_unicast_rd_rd_extcommunity_list_word,
+       show_bgp_view_word_vpnv4_unicast_rd_rd_extcommunity_list_word_cmd,
+       "show bgp view WORD vpnv4 unicast rd ASN:nn_or_IP-address:nn extcommunity-list WORD",
+       "Show running system information\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Display information for a route distinguisher\n"
+       "VPN Route Distinguisher\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "rd", .value = argv[1] },
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[2] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
+}
+
 DEFUN (show_bgp_view_word_vpnv4_unicast_rd_rd_neighbors,
        show_bgp_view_word_vpnv4_unicast_rd_rd_neighbors_cmd,
        "show bgp view WORD vpnv4 unicast rd ASN:nn_or_IP-address:nn neighbors",
@@ -6488,6 +6672,23 @@ DEFUN (show_ip_bgp_community_list_word_exact_match,
   return bgp_show_community_list (vty, args);
 }
 
+DEFUN (show_ip_bgp_extcommunity_list_word,
+       show_ip_bgp_extcommunity_list_word_cmd,
+       "show ip bgp extcommunity-list WORD",
+       "Show running system information\n"
+       "IP information\n"
+       "BGP information\n"
+       "Display routes matching the extcommunity-list\n"
+       "extcommunity-list name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "ext_clist", .value = argv[0] },
+      NULL
+    };
+  return bgp_show_ext_community_list (vty, args);
+}
+
 DEFUN (show_ip_bgp_neighbors,
        show_ip_bgp_neighbors_cmd,
        "show ip bgp neighbors",
@@ -7087,6 +7288,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_bgp_ipv4_safi_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_bgp_ipv4_safi_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_bgp_ipv4_safi_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_bgp_ipv4_safi_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_bgp_ipv4_safi_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_bgp_ipv4_safi_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_bgp_ipv4_safi_neighbors_cmd);
   install_element (ENABLE_NODE, &show_bgp_ipv4_safi_neighbors_cmd);
   install_element (VIEW_NODE, &show_bgp_ipv4_safi_neighbors_cmd);
@@ -7224,6 +7428,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_bgp_ipv6_safi_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_bgp_ipv6_safi_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_bgp_ipv6_safi_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_bgp_ipv6_safi_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_bgp_ipv6_safi_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_bgp_ipv6_safi_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_bgp_ipv6_safi_neighbors_cmd);
   install_element (ENABLE_NODE, &show_bgp_ipv6_safi_neighbors_cmd);
   install_element (VIEW_NODE, &show_bgp_ipv6_safi_neighbors_cmd);
@@ -7315,6 +7522,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_bgp_vpnv4_unicast_all_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_bgp_vpnv4_unicast_all_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_bgp_vpnv4_unicast_all_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_bgp_vpnv4_unicast_all_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_bgp_vpnv4_unicast_all_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_bgp_vpnv4_unicast_all_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_bgp_vpnv4_unicast_all_neighbors_cmd);
   install_element (ENABLE_NODE, &show_bgp_vpnv4_unicast_all_neighbors_cmd);
   install_element (VIEW_NODE, &show_bgp_vpnv4_unicast_all_neighbors_cmd);
@@ -7407,6 +7617,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_bgp_vpnv4_unicast_rd_rd_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_bgp_vpnv4_unicast_rd_rd_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_bgp_vpnv4_unicast_rd_rd_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_bgp_vpnv4_unicast_rd_rd_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_bgp_vpnv4_unicast_rd_rd_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_bgp_vpnv4_unicast_rd_rd_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_bgp_vpnv4_unicast_rd_rd_neighbors_cmd);
   install_element (ENABLE_NODE, &show_bgp_vpnv4_unicast_rd_rd_neighbors_cmd);
   install_element (VIEW_NODE, &show_bgp_vpnv4_unicast_rd_rd_neighbors_cmd);
@@ -7499,6 +7712,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_bgp_view_word_ipv4_safi_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_bgp_view_word_ipv4_safi_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_bgp_view_word_ipv4_safi_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_bgp_view_word_ipv4_safi_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_bgp_view_word_ipv4_safi_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_bgp_view_word_ipv4_safi_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_bgp_view_word_ipv4_safi_neighbors_cmd);
   install_element (ENABLE_NODE, &show_bgp_view_word_ipv4_safi_neighbors_cmd);
   install_element (VIEW_NODE, &show_bgp_view_word_ipv4_safi_neighbors_cmd);
@@ -7636,6 +7852,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_bgp_view_word_ipv6_safi_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_bgp_view_word_ipv6_safi_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_bgp_view_word_ipv6_safi_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_bgp_view_word_ipv6_safi_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_bgp_view_word_ipv6_safi_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_bgp_view_word_ipv6_safi_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_bgp_view_word_ipv6_safi_neighbors_cmd);
   install_element (ENABLE_NODE, &show_bgp_view_word_ipv6_safi_neighbors_cmd);
   install_element (VIEW_NODE, &show_bgp_view_word_ipv6_safi_neighbors_cmd);
@@ -7727,6 +7946,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_bgp_view_word_vpnv4_unicast_all_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_bgp_view_word_vpnv4_unicast_all_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_bgp_view_word_vpnv4_unicast_all_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_bgp_view_word_vpnv4_unicast_all_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_bgp_view_word_vpnv4_unicast_all_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_bgp_view_word_vpnv4_unicast_all_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_bgp_view_word_vpnv4_unicast_all_neighbors_cmd);
   install_element (ENABLE_NODE, &show_bgp_view_word_vpnv4_unicast_all_neighbors_cmd);
   install_element (VIEW_NODE, &show_bgp_view_word_vpnv4_unicast_all_neighbors_cmd);
@@ -7819,6 +8041,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_neighbors_cmd);
   install_element (ENABLE_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_neighbors_cmd);
   install_element (VIEW_NODE, &show_bgp_view_word_vpnv4_unicast_rd_rd_neighbors_cmd);
@@ -7911,6 +8136,9 @@ bgp_vty_show_init (void)
   install_element (RESTRICTED_NODE, &show_ip_bgp_community_list_word_exact_match_cmd);
   install_element (ENABLE_NODE, &show_ip_bgp_community_list_word_exact_match_cmd);
   install_element (VIEW_NODE, &show_ip_bgp_community_list_word_exact_match_cmd);
+  install_element (RESTRICTED_NODE, &show_ip_bgp_extcommunity_list_word_cmd);
+  install_element (ENABLE_NODE, &show_ip_bgp_extcommunity_list_word_cmd);
+  install_element (VIEW_NODE, &show_ip_bgp_extcommunity_list_word_cmd);
   install_element (RESTRICTED_NODE, &show_ip_bgp_neighbors_cmd);
   install_element (ENABLE_NODE, &show_ip_bgp_neighbors_cmd);
   install_element (VIEW_NODE, &show_ip_bgp_neighbors_cmd);

@@ -56,6 +56,9 @@
         <exact-match arg="exact-match" help="Exact match of the communities" cmd="inherited"/>
       </input>
     </community-list>
+    <extcommunity-list help="Display routes matching the extcommunity-list">
+      <input arg="ext_clist" type="word" help="extcommunity-list name" cmd="bgp_show_ext_community_list"/>
+    </extcommunity-list>
     <neighbors help="Detailed information on TCP and BGP neighbor connections" cmd="bgp_show_neighbor">
       <input arg="address" type="ipv4" help="Neighbor to display information about" cmd="inherited">
         <include name="bgp_show_neighbors"/>
