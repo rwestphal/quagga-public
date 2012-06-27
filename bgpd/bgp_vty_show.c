@@ -459,9 +459,9 @@ route_vty_out_label (struct vty *vty, struct prefix *p,
 #endif /* HAVE_IPV6 */
     }
 
-  label = decode_label (binfo->extra->tag);
+  label = decode_label (binfo->extra->label);
 
-  vty_out (vty, "notag/%d", label);
+  vty_out (vty, "nolabel/%d", label);
 
   vty_out (vty, "%s", VTY_NEWLINE);
 }

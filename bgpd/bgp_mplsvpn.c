@@ -89,7 +89,7 @@ bgp_nlri_parse_vpnv4 (struct peer *peer, struct attr *attr,
   struct rd_as rd_as;
   struct rd_ip rd_ip;
   struct prefix_rd prd;
-  u_char *tagpnt;
+  u_char *labelpnt;
 
   /* Check peer status. */
   if (peer->status != Established)
@@ -121,7 +121,7 @@ bgp_nlri_parse_vpnv4 (struct peer *peer, struct attr *attr,
       label = decode_label (pnt);
 
       /* Copyr label to prefix. */
-      tagpnt = pnt;;
+      labelpnt = pnt;;
 
       /* Copy routing distinguisher to rd. */
       memcpy (&prd.val, pnt + 3, 8);
@@ -157,10 +157,10 @@ bgp_nlri_parse_vpnv4 (struct peer *peer, struct attr *attr,
 
       if (attr)
 	bgp_update (peer, &p, attr, AFI_IP, SAFI_MPLS_VPN,
-		    ZEBRA_ROUTE_BGP, BGP_ROUTE_NORMAL, &prd, tagpnt, 0);
+		    ZEBRA_ROUTE_BGP, BGP_ROUTE_NORMAL, &prd, labelpnt, 0);
       else
 	bgp_withdraw (peer, &p, attr, AFI_IP, SAFI_MPLS_VPN,
-		      ZEBRA_ROUTE_BGP, BGP_ROUTE_NORMAL, &prd, tagpnt);
+		      ZEBRA_ROUTE_BGP, BGP_ROUTE_NORMAL, &prd, labelpnt);
     }
 
   /* Packet length consistency check. */
@@ -246,7 +246,7 @@ error:
 }
 
 int
-str2tag (const char *str, u_char *tag)
+str2label (const char *str, u_char *label)
 {
   unsigned long l;
   char *endptr;
@@ -263,9 +263,9 @@ str2tag (const char *str, u_char *tag)
 
   t = (u_int32_t) l;
   
-  tag[0] = (u_char)(t >> 12);
-  tag[1] = (u_char)(t >> 4);
-  tag[2] = (u_char)(t << 4);
+  label[0] = (u_char)(t >> 12);
+  label[1] = (u_char)(t >> 4);
+  label[2] = (u_char)(t << 4);
 
   return 1;
 }
@@ -304,13 +304,13 @@ prefix_rd2str (struct prefix_rd *prd, char *buf, size_t size)
 /* For testing purpose, static route of MPLS-VPN. */
 DEFUN (vpnv4_network,
        vpnv4_network_cmd,
-       "network A.B.C.D/M rd ASN:nn_or_IP-address:nn tag WORD",
+       "network A.B.C.D/M rd ASN:nn_or_IP-address:nn label WORD",
        "Specify a network to announce via BGP\n"
        "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
        "Specify Route Distinguisher\n"
        "VPN Route Distinguisher\n"
-       "BGP tag\n"
-       "tag value\n")
+       "BGP Label\n"
+       "Label value\n")
 {
   return bgp_static_set_vpnv4 (vty, argv[0], argv[1], argv[2]);
 }
@@ -318,14 +318,14 @@ DEFUN (vpnv4_network,
 /* For testing purpose, static route of MPLS-VPN. */
 DEFUN (no_vpnv4_network,
        no_vpnv4_network_cmd,
-       "no network A.B.C.D/M rd ASN:nn_or_IP-address:nn tag WORD",
+       "no network A.B.C.D/M rd ASN:nn_or_IP-address:nn label WORD",
        NO_STR
        "Specify a network to announce via BGP\n"
        "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
        "Specify Route Distinguisher\n"
        "VPN Route Distinguisher\n"
-       "BGP tag\n"
-       "tag value\n")
+       "BGP Label\n"
+       "Label value\n")
 {
   return bgp_static_unset_vpnv4 (vty, argv[0], argv[1], argv[2]);
 }

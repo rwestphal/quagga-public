@@ -1822,7 +1822,7 @@ bgp_rib_withdraw (struct bgp_node *rn, struct bgp_info *ri, struct peer *peer,
 static void
 bgp_update_rsclient (struct peer *rsclient, afi_t afi, safi_t safi,
       struct attr *attr, struct peer *peer, struct prefix *p, int type,
-      int sub_type, struct prefix_rd *prd, u_char *tag)
+      int sub_type, struct prefix_rd *prd, u_char *label)
 {
   struct bgp_node *rn;
   struct bgp *bgp;
@@ -1944,9 +1944,9 @@ bgp_update_rsclient (struct peer *rsclient, afi_t afi, safi_t safi,
       bgp_attr_unintern (&ri->attr);
       ri->attr = attr_new;
 
-      /* Update MPLS tag.  */
+      /* Update MPLS label.  */
       if (safi == SAFI_MPLS_VPN)
-        memcpy ((bgp_info_extra_get (ri))->tag, tag, 3);
+        memcpy ((bgp_info_extra_get (ri))->label, label, 3);
 
       bgp_info_set_flag (rn, ri, BGP_INFO_VALID);
 
@@ -1974,9 +1974,9 @@ bgp_update_rsclient (struct peer *rsclient, afi_t afi, safi_t safi,
   new->attr = attr_new;
   new->uptime = bgp_clock ();
 
-  /* Update MPLS tag. */
+  /* Update MPLS label. */
   if (safi == SAFI_MPLS_VPN)
-    memcpy ((bgp_info_extra_get (new))->tag, tag, 3);
+    memcpy ((bgp_info_extra_get (new))->label, label, 3);
 
   bgp_info_set_flag (rn, new, BGP_INFO_VALID);
 
@@ -2012,7 +2012,7 @@ bgp_update_rsclient (struct peer *rsclient, afi_t afi, safi_t safi,
 static void
 bgp_withdraw_rsclient (struct peer *rsclient, afi_t afi, safi_t safi,
       struct peer *peer, struct prefix *p, int type, int sub_type,
-      struct prefix_rd *prd, u_char *tag)
+      struct prefix_rd *prd, u_char *label)
 {
   struct bgp_node *rn;
   struct bgp_info *ri;
@@ -2044,7 +2044,7 @@ bgp_withdraw_rsclient (struct peer *rsclient, afi_t afi, safi_t safi,
 static int
 bgp_update_main (struct peer *peer, struct prefix *p, struct attr *attr,
 	    afi_t afi, safi_t safi, int type, int sub_type,
-	    struct prefix_rd *prd, u_char *tag, int soft_reconfig)
+	    struct prefix_rd *prd, u_char *label, int soft_reconfig)
 {
   int ret;
   int aspath_loop_count = 0;
@@ -2247,9 +2247,9 @@ bgp_update_main (struct peer *peer, struct prefix *p, struct attr *attr,
       bgp_attr_unintern (&ri->attr);
       ri->attr = attr_new;
 
-      /* Update MPLS tag.  */
+      /* Update MPLS label.  */
       if (safi == SAFI_MPLS_VPN)
-        memcpy ((bgp_info_extra_get (ri))->tag, tag, 3);
+        memcpy ((bgp_info_extra_get (ri))->label, label, 3);
 
       /* Update bgp route dampening information.  */
       if (CHECK_FLAG (bgp->af_flags[afi][safi], BGP_CONFIG_DAMPENING)
@@ -2306,9 +2306,9 @@ bgp_update_main (struct peer *peer, struct prefix *p, struct attr *attr,
   new->attr = attr_new;
   new->uptime = bgp_clock ();
 
-  /* Update MPLS tag. */
+  /* Update MPLS label. */
   if (safi == SAFI_MPLS_VPN)
-    memcpy ((bgp_info_extra_get (new))->tag, tag, 3);
+    memcpy ((bgp_info_extra_get (new))->label, label, 3);
 
   /* Nexthop reachability check. */
   if ((afi == AFI_IP || afi == AFI_IP6)
@@ -2366,14 +2366,14 @@ bgp_update_main (struct peer *peer, struct prefix *p, struct attr *attr,
 int
 bgp_update (struct peer *peer, struct prefix *p, struct attr *attr,
             afi_t afi, safi_t safi, int type, int sub_type,
-            struct prefix_rd *prd, u_char *tag, int soft_reconfig)
+            struct prefix_rd *prd, u_char *label, int soft_reconfig)
 {
   struct peer *rsclient;
   struct listnode *node, *nnode;
   struct bgp *bgp;
   int ret;
 
-  ret = bgp_update_main (peer, p, attr, afi, safi, type, sub_type, prd, tag,
+  ret = bgp_update_main (peer, p, attr, afi, safi, type, sub_type, prd, label,
           soft_reconfig);
 
   bgp = peer->bgp;
@@ -2383,7 +2383,7 @@ bgp_update (struct peer *peer, struct prefix *p, struct attr *attr,
     {
       if (CHECK_FLAG (rsclient->af_flags[afi][safi], PEER_FLAG_RSERVER_CLIENT))
         bgp_update_rsclient (rsclient, afi, safi, attr, peer, p, type,
-                sub_type, prd, tag);
+                sub_type, prd, label);
     }
 
   return ret;
@@ -2392,7 +2392,7 @@ bgp_update (struct peer *peer, struct prefix *p, struct attr *attr,
 int
 bgp_withdraw (struct peer *peer, struct prefix *p, struct attr *attr, 
 	     afi_t afi, safi_t safi, int type, int sub_type, 
-	     struct prefix_rd *prd, u_char *tag)
+	     struct prefix_rd *prd, u_char *label)
 {
   struct bgp *bgp;
   char buf[SU_ADDRSTRLEN];
@@ -2407,7 +2407,7 @@ bgp_withdraw (struct peer *peer, struct prefix *p, struct attr *attr,
   for (ALL_LIST_ELEMENTS (bgp->rsclient, node, nnode, rsclient))
     {
       if (CHECK_FLAG (rsclient->af_flags[afi][safi], PEER_FLAG_RSERVER_CLIENT))
-        bgp_withdraw_rsclient (rsclient, afi, safi, peer, p, type, sub_type, prd, tag);
+        bgp_withdraw_rsclient (rsclient, afi, safi, peer, p, type, sub_type, prd, label);
     }
 
   /* Logging. */
@@ -2617,7 +2617,7 @@ bgp_soft_reconfig_table_rsclient (struct peer *rsclient, afi_t afi,
 
         bgp_update_rsclient (rsclient, afi, safi, ain->attr, ain->peer,
                 &rn->p, ZEBRA_ROUTE_BGP, BGP_ROUTE_NORMAL, prd,
-                (bgp_info_extra_get (ri))->tag);
+                (bgp_info_extra_get (ri))->label);
       }
 }
 
@@ -2664,7 +2664,7 @@ bgp_soft_reconfig_table (struct peer *peer, afi_t afi, safi_t safi,
 
 	    ret = bgp_update (peer, &rn->p, ain->attr, afi, safi,
 			      ZEBRA_ROUTE_BGP, BGP_ROUTE_NORMAL,
-			      prd, (bgp_info_extra_get (ri))->tag, 1);
+			      prd, (bgp_info_extra_get (ri))->label, 1);
 
 	    if (ret < 0)
 	      {
@@ -3539,7 +3539,7 @@ bgp_static_update (struct bgp *bgp, struct prefix *p,
 
 static void
 bgp_static_update_vpnv4 (struct bgp *bgp, struct prefix *p, afi_t afi,
-			 safi_t safi, struct prefix_rd *prd, u_char *tag)
+			 safi_t safi, struct prefix_rd *prd, u_char *label)
 {
   struct bgp_node *rn;
   struct bgp_info *new;
@@ -3555,7 +3555,7 @@ bgp_static_update_vpnv4 (struct bgp *bgp, struct prefix *p, afi_t afi,
   SET_FLAG (new->flags, BGP_INFO_VALID);
   new->uptime = bgp_clock ();
   new->extra = bgp_info_extra_new();
-  memcpy (new->extra->tag, tag, 3);
+  memcpy (new->extra->label, label, 3);
 
   /* Aggregate address increment. */
   bgp_aggregate_increment (bgp, p, new, afi, safi);
@@ -3620,7 +3620,7 @@ bgp_check_local_routes_rsclient (struct peer *rsclient, afi_t afi, safi_t safi)
 
 static void
 bgp_static_withdraw_vpnv4 (struct bgp *bgp, struct prefix *p, afi_t afi,
-			   safi_t safi, struct prefix_rd *prd, u_char *tag)
+			   safi_t safi, struct prefix_rd *prd, u_char *label)
 {
   struct bgp_node *rn;
   struct bgp_info *ri;
@@ -3819,7 +3819,7 @@ bgp_static_delete (struct bgp *bgp)
 		    bgp_static_withdraw_vpnv4 (bgp, &rm->p,
 					       AFI_IP, SAFI_MPLS_VPN,
 					       (struct prefix_rd *)&rn->p,
-					       bgp_static->tag);
+					       bgp_static->label);
 		    bgp_static_free (bgp_static);
 		    rn->info = NULL;
 		    bgp_unlock_node (rn);
@@ -3838,7 +3838,7 @@ bgp_static_delete (struct bgp *bgp)
 
 int
 bgp_static_set_vpnv4 (struct vty *vty, const char *ip_str, const char *rd_str,
-		      const char *tag_str)
+		      const char *label_str)
 {
   int ret;
   struct prefix p;
@@ -3848,7 +3848,7 @@ bgp_static_set_vpnv4 (struct vty *vty, const char *ip_str, const char *rd_str,
   struct bgp_node *rn;
   struct bgp_table *table;
   struct bgp_static *bgp_static;
-  u_char tag[3];
+  u_char label[3];
 
   bgp = vty->index;
 
@@ -3867,10 +3867,10 @@ bgp_static_set_vpnv4 (struct vty *vty, const char *ip_str, const char *rd_str,
       return CMD_WARNING;
     }
 
-  ret = str2tag (tag_str, tag);
+  ret = str2label (label_str, label);
   if (! ret)
     {
-      vty_out (vty, "%% Malformed tag%s", VTY_NEWLINE);
+      vty_out (vty, "%% Malformed label%s", VTY_NEWLINE);
       return CMD_WARNING;
     }
 
@@ -3894,10 +3894,10 @@ bgp_static_set_vpnv4 (struct vty *vty, const char *ip_str, const char *rd_str,
       /* New configuration. */
       bgp_static = bgp_static_new ();
       bgp_static->valid = 1;
-      memcpy (bgp_static->tag, tag, 3);
+      memcpy (bgp_static->label, label, 3);
       rn->info = bgp_static;
 
-      bgp_static_update_vpnv4 (bgp, &p, AFI_IP, SAFI_MPLS_VPN, &prd, tag);
+      bgp_static_update_vpnv4 (bgp, &p, AFI_IP, SAFI_MPLS_VPN, &prd, label);
     }
 
   return CMD_SUCCESS;
@@ -3906,7 +3906,7 @@ bgp_static_set_vpnv4 (struct vty *vty, const char *ip_str, const char *rd_str,
 /* Configure static BGP network. */
 int
 bgp_static_unset_vpnv4 (struct vty *vty, const char *ip_str, 
-                        const char *rd_str, const char *tag_str)
+                        const char *rd_str, const char *label_str)
 {
   int ret;
   struct bgp *bgp;
@@ -3916,7 +3916,7 @@ bgp_static_unset_vpnv4 (struct vty *vty, const char *ip_str,
   struct bgp_node *rn;
   struct bgp_table *table;
   struct bgp_static *bgp_static;
-  u_char tag[3];
+  u_char label[3];
 
   bgp = vty->index;
 
@@ -3936,10 +3936,10 @@ bgp_static_unset_vpnv4 (struct vty *vty, const char *ip_str,
       return CMD_WARNING;
     }
 
-  ret = str2tag (tag_str, tag);
+  ret = str2label (label_str, label);
   if (! ret)
     {
-      vty_out (vty, "%% Malformed tag%s", VTY_NEWLINE);
+      vty_out (vty, "%% Malformed label%s", VTY_NEWLINE);
       return CMD_WARNING;
     }
 
@@ -3955,7 +3955,7 @@ bgp_static_unset_vpnv4 (struct vty *vty, const char *ip_str,
 
   if (rn)
     {
-      bgp_static_withdraw_vpnv4 (bgp, &p, AFI_IP, SAFI_MPLS_VPN, &prd, tag);
+      bgp_static_withdraw_vpnv4 (bgp, &p, AFI_IP, SAFI_MPLS_VPN, &prd, label);
 
       bgp_static = rn->info;
       bgp_static_free (bgp_static);
@@ -5930,9 +5930,9 @@ bgp_config_write_network_vpnv4 (struct vty *vty, struct bgp *bgp,
 
 	    /* "network" configuration display.  */
 	    prefix_rd2str (prd, rdbuf, RD_ADDRSTRLEN);
-	    label = decode_label (bgp_static->tag);
+	    label = decode_label (bgp_static->label);
 
-	    vty_out (vty, " network %s/%d rd %s tag %d",
+	    vty_out (vty, " network %s/%d rd %s label %d",
 		     inet_ntop (p->family, &p->u.prefix, buf, SU_ADDRSTRLEN), 
 		     p->prefixlen,
 		     rdbuf, label);

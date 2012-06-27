@@ -71,7 +71,7 @@ o Cisco route-map
        length           :  (This will not be implemented by bgpd)
        metric           :  Done
        route-type       :  (This will not be implemented by bgpd)
-       tag              :  (This will not be implemented by bgpd)
+       label            :  (This will not be implemented by bgpd)
 
  set  as-path prepend   :  Done
       as-path tag       :  Not yet
@@ -90,7 +90,7 @@ o Cisco route-map
       metric            :  Done
       metric-type       :  Not yet
       origin            :  Done
-      tag               :  (This will not be implemented by bgpd)
+      label             :  (This will not be implemented by bgpd)
       weight            :  Done
 
 o Local extention

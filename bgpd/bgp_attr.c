@@ -2046,7 +2046,7 @@ bgp_size_t
 bgp_packet_attribute (struct bgp *bgp, struct peer *peer,
 		      struct stream *s, struct attr *attr, struct prefix *p,
 		      afi_t afi, safi_t safi, struct peer *from,
-		      struct prefix_rd *prd, u_char *tag)
+		      struct prefix_rd *prd, u_char *label)
 {
   size_t cp;
   size_t aspath_sizep;
@@ -2344,7 +2344,7 @@ bgp_packet_attribute (struct bgp *bgp, struct peer *peer,
 
       /* Tag, RD, Prefix write. */
       stream_putc (s, p->prefixlen + 88);
-      stream_put (s, tag, 3);
+      stream_put (s, label, 3);
       stream_put (s, prd->val, 8);
       stream_put (s, &p->u.prefix, PSIZE (p->prefixlen));
 
@@ -2476,7 +2476,7 @@ bgp_packet_attribute (struct bgp *bgp, struct peer *peer,
 bgp_size_t
 bgp_packet_withdraw (struct peer *peer, struct stream *s, struct prefix *p,
 		     afi_t afi, safi_t safi, struct prefix_rd *prd,
-		     u_char *tag)
+		     u_char *label)
 {
   unsigned long cp;
   unsigned long attrlen_pnt;
@@ -2499,7 +2499,7 @@ bgp_packet_withdraw (struct peer *peer, struct stream *s, struct prefix *p,
 
       /* prefix. */
       stream_putc (s, p->prefixlen + 88);
-      stream_put (s, tag, 3);
+      stream_put (s, label, 3);
       stream_put (s, prd->val, 8);
       stream_put (s, &p->u.prefix, PSIZE (p->prefixlen));
     }

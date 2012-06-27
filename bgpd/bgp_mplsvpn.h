@@ -47,7 +47,7 @@ extern u_int32_t decode_label (u_char *);
 extern int str2prefix_rd (const char *, struct prefix_rd *);
 extern void decode_rd_as (u_char *, struct rd_as *);
 extern void decode_rd_ip (u_char *, struct rd_ip *);
-extern int str2tag (const char *, u_char *);
+extern int str2label (const char *, u_char *);
 extern char *prefix_rd2str (struct prefix_rd *, char *, size_t);
 
 #endif /* _QUAGGA_BGP_MPLSVPN_H */

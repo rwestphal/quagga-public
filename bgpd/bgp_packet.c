@@ -171,7 +171,7 @@ bgp_update_packet (struct peer *peer, afi_t afi, safi_t safi)
       if (stream_empty (s))
 	{
 	  struct prefix_rd *prd = NULL;
-	  u_char *tag = NULL;
+	  u_char *label = NULL;
 	  struct peer *from = NULL;
 	  
 	  if (rn->prn)
@@ -180,7 +180,7 @@ bgp_update_packet (struct peer *peer, afi_t afi, safi_t safi)
             {
               from = binfo->peer;
               if (binfo->extra)
-                tag = binfo->extra->tag;
+                label = binfo->extra->label;
             }
           
 	  bgp_packet_set_marker (s, BGP_MSG_UPDATE);
@@ -190,7 +190,7 @@ bgp_update_packet (struct peer *peer, afi_t afi, safi_t safi)
 	  total_attr_len = bgp_packet_attribute (NULL, peer, s, 
 	                                         adv->baa->attr,
 	                                         &rn->p, afi, safi, 
-	                                         from, prd, tag);
+	                                         from, prd, label);
 	  stream_putw_at (s, pos, total_attr_len);
 	}
 

@@ -39,7 +39,7 @@ struct bgp_info_extra
   u_int32_t igpmetric;
 
   /* MPLS label.  */
-  u_char tag[3];  
+  u_char label[3];
 };
 
 struct bgp_info
@@ -121,7 +121,7 @@ struct bgp_static
   } rmap;
 
   /* MPLS label.  */
-  u_char tag[3];
+  u_char label[3];
 };
 
 /* Flags which indicate a route is unuseable in some form */
