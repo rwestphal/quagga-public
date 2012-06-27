@@ -27,6 +27,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "stream.h"
 
 #include "bgpd/bgpd.h"
+#include "bgpd/bgp_debug.h"
 #include "bgpd/bgp_table.h"
 #include "bgpd/bgp_route.h"
 #include "bgpd/bgp_attr.h"
@@ -75,6 +76,18 @@ decode_rd_ip (u_char *pnt, struct rd_ip *rd_ip)
   rd_ip->val |= (u_int16_t) *pnt;
 }
 
+void
+decode_rd_as4 (u_char *pnt, struct rd_as4 *rd_as4)
+{
+  rd_as4->as4 = ((u_int32_t) *pnt++ << 24);
+  rd_as4->as4 |= ((u_int32_t) *pnt++ << 16);
+  rd_as4->as4 |= ((u_int32_t) *pnt++ << 8);
+  rd_as4->as4 |= (u_int32_t) *pnt++;
+
+  rd_as4->val = (u_int16_t) *pnt++ << 8;
+  rd_as4->val |= (u_int16_t) *pnt;
+}
+
 int
 bgp_nlri_parse_vpnv4 (struct peer *peer, struct attr *attr, 
 		      struct bgp_nlri *packet)
@@ -88,6 +101,7 @@ bgp_nlri_parse_vpnv4 (struct peer *peer, struct attr *attr,
   u_int16_t type;
   struct rd_as rd_as;
   struct rd_ip rd_ip;
+  struct rd_as4 rd_as4;
   struct prefix_rd prd;
   u_char *labelpnt;
 
@@ -134,6 +148,8 @@ bgp_nlri_parse_vpnv4 (struct peer *peer, struct attr *attr,
 	decode_rd_as (pnt + 5, &rd_as);
       else if (type == RD_TYPE_IP)
 	decode_rd_ip (pnt + 5, &rd_ip);
+      else if (type == RD_TYPE_AS4)
+	decode_rd_as4 (pnt + 5, &rd_as4);
       else
 	{
 	  zlog_err ("Invalid RD type %d", type);
@@ -144,12 +160,15 @@ bgp_nlri_parse_vpnv4 (struct peer *peer, struct attr *attr,
       memcpy (&p.u.prefix, pnt + 11, psize - 11);
 
 #if 0
-      if (type == RD_TYPE_AS)
-	zlog_info ("prefix %ld:%ld:%ld:%s/%d", label, rd_as.as, rd_as.val,
-		   inet_ntoa (p.u.prefix4), p.prefixlen);
-      else if (type == RD_TYPE_IP)
-	zlog_info ("prefix %ld:%s:%ld:%s/%d", label, inet_ntoa (rd_ip.ip),
-		   rd_ip.val, inet_ntoa (p.u.prefix4), p.prefixlen);
+      /* Received Logging - this don't belong here. */
+      if (BGP_DEBUG (update, UPDATE_IN))
+	{
+	  char buf[RD_ADDRSTRLEN];
+
+	  zlog (peer->log, LOG_DEBUG, "%s rcvd %s:%s/%d, label %u", peer->host,
+		prefix_rd2str (&prd, buf, RD_ADDRSTRLEN), inet_ntoa (p.u.prefix4),
+		p.prefixlen, label);
+	}
 #endif /* 0 */
 
       if (pnt + psize > lim)
@@ -277,6 +296,7 @@ prefix_rd2str (struct prefix_rd *prd, char *buf, size_t size)
   u_int16_t type;
   struct rd_as rd_as;
   struct rd_ip rd_ip;
+  struct rd_as4 rd_as4;
 
   if (size < RD_ADDRSTRLEN)
     return NULL;
@@ -288,13 +308,19 @@ prefix_rd2str (struct prefix_rd *prd, char *buf, size_t size)
   if (type == RD_TYPE_AS)
     {
       decode_rd_as (pnt + 2, &rd_as);
-      snprintf (buf, size, "%u:%d", rd_as.as, rd_as.val);
+      snprintf (buf, size, "%u:%u", rd_as.as, rd_as.val);
       return buf;
     }
   else if (type == RD_TYPE_IP)
     {
       decode_rd_ip (pnt + 2, &rd_ip);
-      snprintf (buf, size, "%s:%d", inet_ntoa (rd_ip.ip), rd_ip.val);
+      snprintf (buf, size, "%s:%u", inet_ntoa (rd_ip.ip), rd_ip.val);
+      return buf;
+    }
+  else if (type == RD_TYPE_AS4)
+    {
+      decode_rd_as4 (pnt + 2, &rd_as4);
+      snprintf (buf, size, "%u:%u", rd_as4.as4, rd_as4.val);
       return buf;
     }
 

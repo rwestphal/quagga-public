@@ -647,6 +647,7 @@ bgp_show_header (struct vty *vty, struct in_addr *router_id, int def_originate,
       u_int16_t type;
       struct rd_as rd_as;
       struct rd_ip rd_ip;
+      struct rd_as4 rd_as4;
 
       /* Decode RD type. */
       type = decode_rd_type (*rd_header);
@@ -656,12 +657,16 @@ bgp_show_header (struct vty *vty, struct in_addr *router_id, int def_originate,
 	decode_rd_as (*rd_header + 2, &rd_as);
       else if (type == RD_TYPE_IP)
 	decode_rd_ip (*rd_header + 2, &rd_ip);
+      else if (type == RD_TYPE_AS4)
+	decode_rd_as4 (*rd_header + 2, &rd_as4);
 
       vty_out (vty, "Route Distinguisher: ");
       if (type == RD_TYPE_AS)
 	vty_out (vty, "%u:%u", rd_as.as, rd_as.val);
       else if (type == RD_TYPE_IP)
 	vty_out (vty, "%s:%u", inet_ntoa (rd_ip.ip), rd_ip.val);
+      else if (type == RD_TYPE_AS4)
+	vty_out (vty, "%u:%u", rd_as4.as4, rd_as4.val);
 
       vty_out (vty, "%s", VTY_NEWLINE);
       *rd_header = NULL;
