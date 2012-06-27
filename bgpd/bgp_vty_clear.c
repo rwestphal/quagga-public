@@ -40,64 +40,188 @@ bgp_clear_vty_error (struct vty *vty, struct peer *peer, afi_t afi,
   switch (error)
     {
     case BGP_ERR_AF_UNCONFIGURED:
-      vty_out (vty,
-	       "%%BGP: Enable %s %s address family for the neighbor %s%s",
-	       afi == AFI_IP6 ? "IPv6" : safi == SAFI_MPLS_VPN ? "VPNv4" : "IPv4",
-	       safi == SAFI_MULTICAST ? "Multicast" : "Unicast",
-	       peer->host, VTY_NEWLINE);
+      vty_out (vty, "%% BGP: Enable %s address family for the neighbor %s%s",
+	       afi_safi_print (afi, safi), peer->host, VTY_NEWLINE);
       break;
     case BGP_ERR_SOFT_RECONFIG_UNCONFIGURED:
-      vty_out (vty, "%%BGP: Inbound soft reconfig for %s not possible as it%s      has neither refresh capability, nor inbound soft reconfig%s", peer->host, VTY_NEWLINE, VTY_NEWLINE);
+      vty_out (vty, "%% BGP: Inbound soft reconfig for %s not possible as it%s      "
+	       "has neither refresh capability, nor inbound soft reconfig%s",
+	       peer->host, VTY_NEWLINE, VTY_NEWLINE);
       break;
     default:
       break;
     }
 }
 
-/* `clear ip bgp' functions. */
-static int
-bgp_clear (struct vty *vty, struct bgp *bgp,  afi_t afi, safi_t safi,
-           enum clear_sort sort,enum bgp_clear_type stype, const char *arg)
+static enum bgp_clear_type
+bgp_clear_type (struct vty_arg *args[])
 {
-  int ret;
+  if (vty_get_arg_value (args, "soft_in"))
+    return BGP_CLEAR_SOFT_IN;
+  else if (vty_get_arg_value (args, "soft_out"))
+    return BGP_CLEAR_SOFT_OUT;
+  else if (vty_get_arg_value (args, "soft_pefix_filter"))
+    return BGP_CLEAR_SOFT_IN_ORF_PREFIX;
+  else if (vty_get_arg_value (args, "soft"))
+    return BGP_CLEAR_SOFT_BOTH;
+  else if (vty_get_arg_value (args, "soft_rsclient"))
+    return BGP_CLEAR_SOFT_RSCLIENT;
+
+  return BGP_CLEAR_SOFT_NONE;
+}
+
+int
+bgp_clear_all (struct vty *vty, struct vty_arg *args[])
+{
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
+  enum bgp_clear_type stype;
   struct peer *peer;
-  struct listnode *node, *nnode;
+  struct listnode *node;
+  int ret;
 
-  /* Clear all neighbors. */
-  if (sort == clear_all)
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+  stype = bgp_clear_type (args);
+
+  for (ALL_LIST_ELEMENTS_RO (bgp->peer, node, peer))
     {
-      for (ALL_LIST_ELEMENTS (bgp->peer, node, nnode, peer))
-	{
-	  if (stype == BGP_CLEAR_SOFT_NONE)
-	    ret = peer_clear (peer);
-	  else
-	    ret = peer_clear_soft (peer, afi, safi, stype);
+      if (stype == BGP_CLEAR_SOFT_NONE)
+	ret = peer_clear (peer);
+      else
+	ret = peer_clear_soft (peer, afi, safi, stype);
 
-	  if (ret < 0)
-	    bgp_clear_vty_error (vty, peer, afi, safi, ret);
-	}
-      return CMD_SUCCESS;
+      if (ret < 0 && ret != BGP_ERR_AF_UNCONFIGURED)
+	bgp_clear_vty_error (vty, peer, afi, safi, ret);
     }
 
-  /* Clear specified neighbors. */
-  if (sort == clear_peer)
-    {
-      union sockunion su;
-      int ret;
+  return CMD_SUCCESS;
+}
 
-      /* Make sockunion for lookup. */
-      ret = str2sockunion (arg, &su);
-      if (ret < 0)
-	{
-	  vty_out (vty, "Malformed address: %s%s", arg, VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
-      peer = peer_lookup (bgp, &su);
-      if (! peer)
-	{
-	  vty_out (vty, "%%BGP: Unknown neighbor - \"%s\"%s", arg, VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
+int
+bgp_clear_asn (struct vty *vty, struct vty_arg *args[])
+{
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
+  const char *as_str;
+  enum bgp_clear_type stype;
+  struct peer *peer;
+  struct listnode *node;
+  as_t as;
+  int find = 0;
+  int ret;
+
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+  stype = bgp_clear_type (args);
+  as_str = vty_get_arg_value (args, "asn");
+
+  VTY_GET_INTEGER_RANGE ("AS", as, as_str, 1, BGP_AS4_MAX);
+
+  for (ALL_LIST_ELEMENTS_RO (bgp->peer, node, peer))
+    {
+      if (peer->as != as)
+	continue;
+
+      find = 1;
+      if (stype == BGP_CLEAR_SOFT_NONE)
+	ret = peer_clear (peer);
+      else
+	ret = peer_clear_soft (peer, afi, safi, stype);
+
+      if (ret < 0 && ret != BGP_ERR_AF_UNCONFIGURED)
+	bgp_clear_vty_error (vty, peer, afi, safi, ret);
+    }
+  if (! find)
+    vty_out (vty, "%% BGP: No peer is configured with AS %s%s", as_str,
+	     VTY_NEWLINE);
+
+  return CMD_SUCCESS;
+}
+
+int
+bgp_clear_neighbor (struct vty *vty, struct vty_arg *args[])
+{
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
+  const char *addr_str;
+  enum bgp_clear_type stype;
+  struct peer *peer;
+  union sockunion su;
+  int ret;
+
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+  stype = bgp_clear_type (args);
+  addr_str = vty_get_arg_value (args, "address");
+
+  /* Make sockunion for lookup. */
+  ret = str2sockunion (addr_str, &su);
+  if (ret < 0)
+    {
+      vty_out (vty, "%% Malformed address: %s%s", addr_str, VTY_NEWLINE);
+      return CMD_WARNING;
+    }
+  peer = peer_lookup (bgp, &su);
+  if (! peer)
+    {
+      vty_out (vty, "%% BGP: Unknown neighbor - \"%s\"%s", addr_str, VTY_NEWLINE);
+      return CMD_WARNING;
+    }
+
+  if (stype == BGP_CLEAR_SOFT_NONE)
+    ret = peer_clear (peer);
+  else
+    ret = peer_clear_soft (peer, afi, safi, stype);
+
+  if (ret < 0)
+    bgp_clear_vty_error (vty, peer, afi, safi, ret);
+
+  return CMD_SUCCESS;
+}
+
+int
+bgp_clear_external (struct vty *vty, struct vty_arg *args[])
+{
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
+  enum bgp_clear_type stype;
+  struct peer *peer;
+  struct listnode *node;
+  int ret;
+
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+  stype = bgp_clear_type (args);
+
+  for (ALL_LIST_ELEMENTS_RO (bgp->peer, node, peer))
+    {
+      if (peer->sort == BGP_PEER_IBGP)
+	continue;
 
       if (stype == BGP_CLEAR_SOFT_NONE)
 	ret = peer_clear (peer);
@@ -106,156 +230,93 @@ bgp_clear (struct vty *vty, struct bgp *bgp,  afi_t afi, safi_t safi,
 
       if (ret < 0)
 	bgp_clear_vty_error (vty, peer, afi, safi, ret);
-
-      return CMD_SUCCESS;
-    }
-
-  /* Clear all peer-group members. */
-  if (sort == clear_group)
-    {
-      struct peer_group *group;
-
-      group = peer_group_lookup (bgp, arg);
-      if (! group)
-	{
-	  vty_out (vty, "%%BGP: No such peer-group %s%s", arg, VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
-
-      for (ALL_LIST_ELEMENTS (group->peer, node, nnode, peer))
-	{
-	  if (stype == BGP_CLEAR_SOFT_NONE)
-	    {
-	      ret = peer_clear (peer);
-	      continue;
-	    }
-
-	  if (! peer->af_group[afi][safi])
-	    continue;
-
-	  ret = peer_clear_soft (peer, afi, safi, stype);
-
-	  if (ret < 0)
-	    bgp_clear_vty_error (vty, peer, afi, safi, ret);
-	}
-      return CMD_SUCCESS;
-    }
-
-  if (sort == clear_external)
-    {
-      for (ALL_LIST_ELEMENTS (bgp->peer, node, nnode, peer))
-	{
-	  if (peer->sort == BGP_PEER_IBGP)
-	    continue;
-
-	  if (stype == BGP_CLEAR_SOFT_NONE)
-	    ret = peer_clear (peer);
-	  else
-	    ret = peer_clear_soft (peer, afi, safi, stype);
-
-	  if (ret < 0)
-	    bgp_clear_vty_error (vty, peer, afi, safi, ret);
-	}
-      return CMD_SUCCESS;
-    }
-
-  if (sort == clear_as)
-    {
-      as_t as;
-      int find = 0;
-
-      VTY_GET_INTEGER_RANGE ("AS", as, arg, 1, BGP_AS4_MAX);
-
-      for (ALL_LIST_ELEMENTS (bgp->peer, node, nnode, peer))
-	{
-	  if (peer->as != as)
-	    continue;
-
-	  find = 1;
-	  if (stype == BGP_CLEAR_SOFT_NONE)
-	    ret = peer_clear (peer);
-	  else
-	    ret = peer_clear_soft (peer, afi, safi, stype);
-
-	  if (ret < 0)
-	    bgp_clear_vty_error (vty, peer, afi, safi, ret);
-	}
-      if (! find)
-	vty_out (vty, "%%BGP: No peer is configured with AS %s%s", arg,
-		 VTY_NEWLINE);
-      return CMD_SUCCESS;
     }
 
   return CMD_SUCCESS;
 }
 
 int
-bgp_clear_vty (struct vty *vty, const char *name, afi_t afi, safi_t safi,
-               enum clear_sort sort, enum bgp_clear_type stype,
-               const char *arg)
+bgp_clear_peer_group (struct vty *vty, struct vty_arg *args[])
 {
+  afi_t afi;
+  safi_t safi;
+  const char *view;
   struct bgp *bgp;
+  const char *group_str;
+  enum bgp_clear_type stype;
+  struct peer *peer;
+  struct listnode *node;
+  struct peer_group *group;
+  int ret;
 
-  /* BGP structure lookup. */
-  if (name)
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+  stype = bgp_clear_type (args);
+  group_str = vty_get_arg_value (args, "peer_group");
+
+  group = peer_group_lookup (bgp, group_str);
+  if (! group)
     {
-      bgp = bgp_lookup_by_name (name);
-      if (bgp == NULL)
-        {
-          vty_out (vty, "Can't find BGP view %s%s", name, VTY_NEWLINE);
-          return CMD_WARNING;
-        }
-    }
-  else
-    {
-      bgp = bgp_get_default ();
-      if (bgp == NULL)
-        {
-          vty_out (vty, "No BGP process is configured%s", VTY_NEWLINE);
-          return CMD_WARNING;
-        }
+      vty_out (vty, "%% BGP: No such peer-group %s%s", group_str, VTY_NEWLINE);
+      return CMD_WARNING;
     }
 
-  return bgp_clear (vty, bgp, afi, safi, sort, stype, arg);
+  for (ALL_LIST_ELEMENTS_RO (group->peer, node, peer))
+    {
+      if (stype == BGP_CLEAR_SOFT_NONE)
+	{
+	  ret = peer_clear (peer);
+	  continue;
+	}
+
+      if (! peer->af_group[afi][safi])
+	continue;
+
+      ret = peer_clear_soft (peer, afi, safi, stype);
+
+      if (ret < 0)
+	bgp_clear_vty_error (vty, peer, afi, safi, ret);
+    }
+
+  return CMD_SUCCESS;
 }
 
-/* Display specified route of BGP table. */
 int
-bgp_clear_damp_route (struct vty *vty, const char *view_name,
-                      const char *ip_str, afi_t afi, safi_t safi,
-                      struct prefix_rd *prd, int prefix_check)
+bgp_clear_dampening (struct vty *vty, struct vty_arg *args[])
 {
-  int ret;
+  afi_t afi;
+  safi_t safi;
+  const char *view;
+  struct bgp *bgp;
+  const char *prefix_str;
+  const char *network_str;
   struct prefix match;
   struct bgp_node *rn;
-  struct bgp_node *rm;
   struct bgp_info *ri;
   struct bgp_info *ri_temp;
-  struct bgp *bgp;
-  struct bgp_table *table;
+  int ret;
 
-  /* BGP structure lookup. */
-  if (view_name)
+  if (vty_get_arg_afi_safi (vty, args, &afi, &safi) < 0)
+    return CMD_WARNING;
+  view = vty_get_arg_value (args, "view");
+  bgp = vty_bgp_get (vty, view);
+  if (! bgp)
+    return CMD_WARNING;
+
+  prefix_str = vty_get_arg_value (args, "prefix");
+  network_str = vty_get_arg_value (args, "network");
+  if (! prefix_str && ! network_str)
     {
-      bgp = bgp_lookup_by_name (view_name);
-      if (bgp == NULL)
-	{
-	  vty_out (vty, "%% Can't find BGP view %s%s", view_name, VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
-    }
-  else
-    {
-      bgp = bgp_get_default ();
-      if (bgp == NULL)
-	{
-	  vty_out (vty, "%% No BGP process is configured%s", VTY_NEWLINE);
-	  return CMD_WARNING;
-	}
+      bgp_damp_info_clean ();
+      return CMD_SUCCESS;
     }
 
   /* Check IP address argument. */
-  ret = str2prefix (ip_str, &match);
+  ret = str2prefix (prefix_str ? prefix_str : network_str, &match);
   if (! ret)
     {
       vty_out (vty, "%% address is malformed%s", VTY_NEWLINE);
@@ -264,58 +325,25 @@ bgp_clear_damp_route (struct vty *vty, const char *view_name,
 
   match.family = afi2family (afi);
 
-  if (safi == SAFI_MPLS_VPN)
+  if ((rn = bgp_node_match (bgp->rib[afi][safi], &match)) != NULL)
     {
-      for (rn = bgp_table_top (bgp->rib[AFI_IP][SAFI_MPLS_VPN]); rn; rn = bgp_route_next (rn))
-        {
-          if (prd && memcmp (rn->p.u.val, prd->val, 8) != 0)
-            continue;
+      if (network_str || rn->p.prefixlen == match.prefixlen)
+	{
+	  ri = rn->info;
+	  while (ri)
+	    {
+	      if (ri->extra && ri->extra->damp_info)
+		{
+		  ri_temp = ri->next;
+		  bgp_damp_info_free (ri->extra->damp_info, 1);
+		  ri = ri_temp;
+		}
+	      else
+		ri = ri->next;
+	    }
+	}
 
-	  if ((table = rn->info) != NULL)
-	    if ((rm = bgp_node_match (table, &match)) != NULL)
-              {
-                if (! prefix_check || rm->p.prefixlen == match.prefixlen)
-                  {
-                    ri = rm->info;
-                    while (ri)
-                      {
-                        if (ri->extra && ri->extra->damp_info)
-                          {
-                            ri_temp = ri->next;
-                            bgp_damp_info_free (ri->extra->damp_info, 1);
-                            ri = ri_temp;
-                          }
-                        else
-                          ri = ri->next;
-                      }
-                  }
-
-                bgp_unlock_node (rm);
-              }
-        }
-    }
-  else
-    {
-      if ((rn = bgp_node_match (bgp->rib[afi][safi], &match)) != NULL)
-        {
-          if (! prefix_check || rn->p.prefixlen == match.prefixlen)
-            {
-              ri = rn->info;
-              while (ri)
-                {
-                  if (ri->extra && ri->extra->damp_info)
-                    {
-                      ri_temp = ri->next;
-                      bgp_damp_info_free (ri->extra->damp_info, 1);
-                      ri = ri_temp;
-                    }
-                  else
-                    ri = ri->next;
-                }
-            }
-
-          bgp_unlock_node (rn);
-        }
+      bgp_unlock_node (rn);
     }
 
   return CMD_SUCCESS;

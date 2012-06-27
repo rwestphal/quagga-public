@@ -1,2576 +1,10592 @@
-/* BGP VTY interface.
-   Copyright (C) 1996, 97, 98, 99, 2000 Kunihiro Ishiguro
-
-This file is part of GNU Zebra.
-
-GNU Zebra is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2, or (at your option) any
-later version.
-
-GNU Zebra is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with GNU Zebra; see the file COPYING.  If not, write to the Free
-Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-02111-1307, USA.  */
+/* Auto-generated from bgp_vty_clear.xml. */
+/* Do not edit! */
 
 #include <zebra.h>
 
 #include "command.h"
-#include "prefix.h"
+#include "vty.h"
+#include "bgp_vty_clear.h"
 
-#include "bgpd/bgpd.h"
-#include "bgpd/bgp_damp.h"
-#include "bgpd/bgp_vty.h"
-#include "bgpd/bgp_vty_clear.h"
+DEFUN (clear_bgp_ipv4_safi_all,
+       clear_bgp_ipv4_safi_all_cmd,
+       "clear bgp ipv4 (unicast|multicast) *",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_all_in,
+       clear_bgp_ipv4_safi_all_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) * in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_all_in_prefix_filter,
+       clear_bgp_ipv4_safi_all_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) * in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_all_out,
+       clear_bgp_ipv4_safi_all_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) * out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_all_soft,
+       clear_bgp_ipv4_safi_all_soft_cmd,
+       "clear bgp ipv4 (unicast|multicast) * soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_all_soft_in,
+       clear_bgp_ipv4_safi_all_soft_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) * soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_all_soft_in_prefix_filter,
+       clear_bgp_ipv4_safi_all_soft_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) * soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_all_soft_out,
+       clear_bgp_ipv4_safi_all_soft_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) * soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_all_rsclient,
+       clear_bgp_ipv4_safi_all_rsclient_cmd,
+       "clear bgp ipv4 (unicast|multicast) * rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn,
+       clear_bgp_ipv4_safi_asn_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295>",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn_in,
+       clear_bgp_ipv4_safi_asn_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295> in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn_in_prefix_filter,
+       clear_bgp_ipv4_safi_asn_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295> in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn_out,
+       clear_bgp_ipv4_safi_asn_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295> out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn_soft,
+       clear_bgp_ipv4_safi_asn_soft_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295> soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn_soft_in,
+       clear_bgp_ipv4_safi_asn_soft_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295> soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn_soft_in_prefix_filter,
+       clear_bgp_ipv4_safi_asn_soft_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295> soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn_soft_out,
+       clear_bgp_ipv4_safi_asn_soft_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295> soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_asn_rsclient,
+       clear_bgp_ipv4_safi_asn_rsclient_cmd,
+       "clear bgp ipv4 (unicast|multicast) <1-4294967295> rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4,
+       clear_bgp_ipv4_safi_ipv4_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4_in,
+       clear_bgp_ipv4_safi_ipv4_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4_in_prefix_filter,
+       clear_bgp_ipv4_safi_ipv4_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4_out,
+       clear_bgp_ipv4_safi_ipv4_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4_soft,
+       clear_bgp_ipv4_safi_ipv4_soft_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4_soft_in,
+       clear_bgp_ipv4_safi_ipv4_soft_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4_soft_in_prefix_filter,
+       clear_bgp_ipv4_safi_ipv4_soft_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4_soft_out,
+       clear_bgp_ipv4_safi_ipv4_soft_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv4_rsclient,
+       clear_bgp_ipv4_safi_ipv4_rsclient_cmd,
+       "clear bgp ipv4 (unicast|multicast) A.B.C.D rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6,
+       clear_bgp_ipv4_safi_ipv6_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6_in,
+       clear_bgp_ipv4_safi_ipv6_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6_in_prefix_filter,
+       clear_bgp_ipv4_safi_ipv6_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6_out,
+       clear_bgp_ipv4_safi_ipv6_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6_soft,
+       clear_bgp_ipv4_safi_ipv6_soft_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6_soft_in,
+       clear_bgp_ipv4_safi_ipv6_soft_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6_soft_in_prefix_filter,
+       clear_bgp_ipv4_safi_ipv6_soft_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6_soft_out,
+       clear_bgp_ipv4_safi_ipv6_soft_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_ipv6_rsclient,
+       clear_bgp_ipv4_safi_ipv6_rsclient_cmd,
+       "clear bgp ipv4 (unicast|multicast) X:X::X:X rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external,
+       clear_bgp_ipv4_safi_external_cmd,
+       "clear bgp ipv4 (unicast|multicast) external",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external_in,
+       clear_bgp_ipv4_safi_external_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) external in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external_in_prefix_filter,
+       clear_bgp_ipv4_safi_external_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) external in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external_out,
+       clear_bgp_ipv4_safi_external_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) external out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external_soft,
+       clear_bgp_ipv4_safi_external_soft_cmd,
+       "clear bgp ipv4 (unicast|multicast) external soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external_soft_in,
+       clear_bgp_ipv4_safi_external_soft_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) external soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external_soft_in_prefix_filter,
+       clear_bgp_ipv4_safi_external_soft_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) external soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external_soft_out,
+       clear_bgp_ipv4_safi_external_soft_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) external soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_external_rsclient,
+       clear_bgp_ipv4_safi_external_rsclient_cmd,
+       "clear bgp ipv4 (unicast|multicast) external rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word,
+       clear_bgp_ipv4_safi_peer_group_word_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word_in,
+       clear_bgp_ipv4_safi_peer_group_word_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word_in_prefix_filter,
+       clear_bgp_ipv4_safi_peer_group_word_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word_out,
+       clear_bgp_ipv4_safi_peer_group_word_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word_soft,
+       clear_bgp_ipv4_safi_peer_group_word_soft_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word_soft_in,
+       clear_bgp_ipv4_safi_peer_group_word_soft_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word_soft_in_prefix_filter,
+       clear_bgp_ipv4_safi_peer_group_word_soft_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word_soft_out,
+       clear_bgp_ipv4_safi_peer_group_word_soft_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_peer_group_word_rsclient,
+       clear_bgp_ipv4_safi_peer_group_word_rsclient_cmd,
+       "clear bgp ipv4 (unicast|multicast) peer-group WORD rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening,
+       clear_bgp_ipv4_safi_dampening_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4,
+       clear_bgp_ipv4_safi_dampening_ipv4_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4_in,
+       clear_bgp_ipv4_safi_dampening_ipv4_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4_in_prefix_filter,
+       clear_bgp_ipv4_safi_dampening_ipv4_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4_out,
+       clear_bgp_ipv4_safi_dampening_ipv4_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4_soft,
+       clear_bgp_ipv4_safi_dampening_ipv4_soft_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4_soft_in,
+       clear_bgp_ipv4_safi_dampening_ipv4_soft_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4_soft_in_prefix_filter,
+       clear_bgp_ipv4_safi_dampening_ipv4_soft_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4_soft_out,
+       clear_bgp_ipv4_safi_dampening_ipv4_soft_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4_rsclient,
+       clear_bgp_ipv4_safi_dampening_ipv4_rsclient_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m,
+       clear_bgp_ipv4_safi_dampening_ipv4m_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m_in,
+       clear_bgp_ipv4_safi_dampening_ipv4m_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m_in_prefix_filter,
+       clear_bgp_ipv4_safi_dampening_ipv4m_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m_out,
+       clear_bgp_ipv4_safi_dampening_ipv4m_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m_soft,
+       clear_bgp_ipv4_safi_dampening_ipv4m_soft_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m_soft_in,
+       clear_bgp_ipv4_safi_dampening_ipv4m_soft_in_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m_soft_in_prefix_filter,
+       clear_bgp_ipv4_safi_dampening_ipv4m_soft_in_prefix_filter_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m_soft_out,
+       clear_bgp_ipv4_safi_dampening_ipv4m_soft_out_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv4_safi_dampening_ipv4m_rsclient,
+       clear_bgp_ipv4_safi_dampening_ipv4m_rsclient_cmd,
+       "clear bgp ipv4 (unicast|multicast) dampening A.B.C.D/M rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all,
+       clear_bgp_ipv6_safi_all_cmd,
+       "clear bgp ipv6 (unicast|multicast) *",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all_in,
+       clear_bgp_ipv6_safi_all_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) * in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all_in_prefix_filter,
+       clear_bgp_ipv6_safi_all_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) * in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all_out,
+       clear_bgp_ipv6_safi_all_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) * out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all_soft,
+       clear_bgp_ipv6_safi_all_soft_cmd,
+       "clear bgp ipv6 (unicast|multicast) * soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all_soft_in,
+       clear_bgp_ipv6_safi_all_soft_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) * soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all_soft_in_prefix_filter,
+       clear_bgp_ipv6_safi_all_soft_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) * soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all_soft_out,
+       clear_bgp_ipv6_safi_all_soft_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) * soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_all_rsclient,
+       clear_bgp_ipv6_safi_all_rsclient_cmd,
+       "clear bgp ipv6 (unicast|multicast) * rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn,
+       clear_bgp_ipv6_safi_asn_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295>",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn_in,
+       clear_bgp_ipv6_safi_asn_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295> in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn_in_prefix_filter,
+       clear_bgp_ipv6_safi_asn_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295> in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn_out,
+       clear_bgp_ipv6_safi_asn_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295> out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn_soft,
+       clear_bgp_ipv6_safi_asn_soft_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295> soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn_soft_in,
+       clear_bgp_ipv6_safi_asn_soft_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295> soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn_soft_in_prefix_filter,
+       clear_bgp_ipv6_safi_asn_soft_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295> soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn_soft_out,
+       clear_bgp_ipv6_safi_asn_soft_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295> soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_asn_rsclient,
+       clear_bgp_ipv6_safi_asn_rsclient_cmd,
+       "clear bgp ipv6 (unicast|multicast) <1-4294967295> rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4,
+       clear_bgp_ipv6_safi_ipv4_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4_in,
+       clear_bgp_ipv6_safi_ipv4_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4_in_prefix_filter,
+       clear_bgp_ipv6_safi_ipv4_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4_out,
+       clear_bgp_ipv6_safi_ipv4_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4_soft,
+       clear_bgp_ipv6_safi_ipv4_soft_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4_soft_in,
+       clear_bgp_ipv6_safi_ipv4_soft_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4_soft_in_prefix_filter,
+       clear_bgp_ipv6_safi_ipv4_soft_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4_soft_out,
+       clear_bgp_ipv6_safi_ipv4_soft_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv4_rsclient,
+       clear_bgp_ipv6_safi_ipv4_rsclient_cmd,
+       "clear bgp ipv6 (unicast|multicast) A.B.C.D rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6,
+       clear_bgp_ipv6_safi_ipv6_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6_in,
+       clear_bgp_ipv6_safi_ipv6_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6_in_prefix_filter,
+       clear_bgp_ipv6_safi_ipv6_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6_out,
+       clear_bgp_ipv6_safi_ipv6_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6_soft,
+       clear_bgp_ipv6_safi_ipv6_soft_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6_soft_in,
+       clear_bgp_ipv6_safi_ipv6_soft_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6_soft_in_prefix_filter,
+       clear_bgp_ipv6_safi_ipv6_soft_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6_soft_out,
+       clear_bgp_ipv6_safi_ipv6_soft_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_ipv6_rsclient,
+       clear_bgp_ipv6_safi_ipv6_rsclient_cmd,
+       "clear bgp ipv6 (unicast|multicast) X:X::X:X rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external,
+       clear_bgp_ipv6_safi_external_cmd,
+       "clear bgp ipv6 (unicast|multicast) external",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external_in,
+       clear_bgp_ipv6_safi_external_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) external in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external_in_prefix_filter,
+       clear_bgp_ipv6_safi_external_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) external in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external_out,
+       clear_bgp_ipv6_safi_external_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) external out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external_soft,
+       clear_bgp_ipv6_safi_external_soft_cmd,
+       "clear bgp ipv6 (unicast|multicast) external soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external_soft_in,
+       clear_bgp_ipv6_safi_external_soft_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) external soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external_soft_in_prefix_filter,
+       clear_bgp_ipv6_safi_external_soft_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) external soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external_soft_out,
+       clear_bgp_ipv6_safi_external_soft_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) external soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_external_rsclient,
+       clear_bgp_ipv6_safi_external_rsclient_cmd,
+       "clear bgp ipv6 (unicast|multicast) external rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word,
+       clear_bgp_ipv6_safi_peer_group_word_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word_in,
+       clear_bgp_ipv6_safi_peer_group_word_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word_in_prefix_filter,
+       clear_bgp_ipv6_safi_peer_group_word_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word_out,
+       clear_bgp_ipv6_safi_peer_group_word_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word_soft,
+       clear_bgp_ipv6_safi_peer_group_word_soft_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word_soft_in,
+       clear_bgp_ipv6_safi_peer_group_word_soft_in_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word_soft_in_prefix_filter,
+       clear_bgp_ipv6_safi_peer_group_word_soft_in_prefix_filter_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word_soft_out,
+       clear_bgp_ipv6_safi_peer_group_word_soft_out_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_ipv6_safi_peer_group_word_rsclient,
+       clear_bgp_ipv6_safi_peer_group_word_rsclient_cmd,
+       "clear bgp ipv6 (unicast|multicast) peer-group WORD rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[0] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all,
+       clear_bgp_vpnv4_unicast_all_cmd,
+       "clear bgp vpnv4 unicast *",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all_in,
+       clear_bgp_vpnv4_unicast_all_in_cmd,
+       "clear bgp vpnv4 unicast * in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_all_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast * in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all_out,
+       clear_bgp_vpnv4_unicast_all_out_cmd,
+       "clear bgp vpnv4 unicast * out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all_soft,
+       clear_bgp_vpnv4_unicast_all_soft_cmd,
+       "clear bgp vpnv4 unicast * soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all_soft_in,
+       clear_bgp_vpnv4_unicast_all_soft_in_cmd,
+       "clear bgp vpnv4 unicast * soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all_soft_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_all_soft_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast * soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all_soft_out,
+       clear_bgp_vpnv4_unicast_all_soft_out_cmd,
+       "clear bgp vpnv4 unicast * soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_all_rsclient,
+       clear_bgp_vpnv4_unicast_all_rsclient_cmd,
+       "clear bgp vpnv4 unicast * rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn,
+       clear_bgp_vpnv4_unicast_asn_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295>",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn_in,
+       clear_bgp_vpnv4_unicast_asn_in_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295> in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_asn_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295> in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn_out,
+       clear_bgp_vpnv4_unicast_asn_out_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295> out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn_soft,
+       clear_bgp_vpnv4_unicast_asn_soft_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295> soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn_soft_in,
+       clear_bgp_vpnv4_unicast_asn_soft_in_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295> soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn_soft_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_asn_soft_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295> soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn_soft_out,
+       clear_bgp_vpnv4_unicast_asn_soft_out_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295> soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_asn_rsclient,
+       clear_bgp_vpnv4_unicast_asn_rsclient_cmd,
+       "clear bgp vpnv4 unicast <1-4294967295> rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4,
+       clear_bgp_vpnv4_unicast_ipv4_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4_in,
+       clear_bgp_vpnv4_unicast_ipv4_in_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_ipv4_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4_out,
+       clear_bgp_vpnv4_unicast_ipv4_out_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4_soft,
+       clear_bgp_vpnv4_unicast_ipv4_soft_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4_soft_in,
+       clear_bgp_vpnv4_unicast_ipv4_soft_in_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4_soft_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_ipv4_soft_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4_soft_out,
+       clear_bgp_vpnv4_unicast_ipv4_soft_out_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv4_rsclient,
+       clear_bgp_vpnv4_unicast_ipv4_rsclient_cmd,
+       "clear bgp vpnv4 unicast A.B.C.D rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6,
+       clear_bgp_vpnv4_unicast_ipv6_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6_in,
+       clear_bgp_vpnv4_unicast_ipv6_in_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_ipv6_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6_out,
+       clear_bgp_vpnv4_unicast_ipv6_out_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6_soft,
+       clear_bgp_vpnv4_unicast_ipv6_soft_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6_soft_in,
+       clear_bgp_vpnv4_unicast_ipv6_soft_in_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6_soft_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_ipv6_soft_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6_soft_out,
+       clear_bgp_vpnv4_unicast_ipv6_soft_out_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_ipv6_rsclient,
+       clear_bgp_vpnv4_unicast_ipv6_rsclient_cmd,
+       "clear bgp vpnv4 unicast X:X::X:X rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external,
+       clear_bgp_vpnv4_unicast_external_cmd,
+       "clear bgp vpnv4 unicast external",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external_in,
+       clear_bgp_vpnv4_unicast_external_in_cmd,
+       "clear bgp vpnv4 unicast external in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_external_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast external in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external_out,
+       clear_bgp_vpnv4_unicast_external_out_cmd,
+       "clear bgp vpnv4 unicast external out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external_soft,
+       clear_bgp_vpnv4_unicast_external_soft_cmd,
+       "clear bgp vpnv4 unicast external soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external_soft_in,
+       clear_bgp_vpnv4_unicast_external_soft_in_cmd,
+       "clear bgp vpnv4 unicast external soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external_soft_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_external_soft_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast external soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external_soft_out,
+       clear_bgp_vpnv4_unicast_external_soft_out_cmd,
+       "clear bgp vpnv4 unicast external soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_external_rsclient,
+       clear_bgp_vpnv4_unicast_external_rsclient_cmd,
+       "clear bgp vpnv4 unicast external rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word,
+       clear_bgp_vpnv4_unicast_peer_group_word_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word_in,
+       clear_bgp_vpnv4_unicast_peer_group_word_in_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_peer_group_word_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word_out,
+       clear_bgp_vpnv4_unicast_peer_group_word_out_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word_soft,
+       clear_bgp_vpnv4_unicast_peer_group_word_soft_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word_soft_in,
+       clear_bgp_vpnv4_unicast_peer_group_word_soft_in_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word_soft_in_prefix_filter,
+       clear_bgp_vpnv4_unicast_peer_group_word_soft_in_prefix_filter_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word_soft_out,
+       clear_bgp_vpnv4_unicast_peer_group_word_soft_out_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_vpnv4_unicast_peer_group_word_rsclient,
+       clear_bgp_vpnv4_unicast_peer_group_word_rsclient_cmd,
+       "clear bgp vpnv4 unicast peer-group WORD rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all,
+       clear_bgp_view_word_ipv4_safi_all_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) *",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all_in,
+       clear_bgp_view_word_ipv4_safi_all_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) * in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_all_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) * in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all_out,
+       clear_bgp_view_word_ipv4_safi_all_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) * out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all_soft,
+       clear_bgp_view_word_ipv4_safi_all_soft_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) * soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all_soft_in,
+       clear_bgp_view_word_ipv4_safi_all_soft_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) * soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_all_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) * soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all_soft_out,
+       clear_bgp_view_word_ipv4_safi_all_soft_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) * soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_all_rsclient,
+       clear_bgp_view_word_ipv4_safi_all_rsclient_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) * rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn,
+       clear_bgp_view_word_ipv4_safi_asn_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295>",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn_in,
+       clear_bgp_view_word_ipv4_safi_asn_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295> in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_asn_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295> in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn_out,
+       clear_bgp_view_word_ipv4_safi_asn_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295> out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn_soft,
+       clear_bgp_view_word_ipv4_safi_asn_soft_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295> soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn_soft_in,
+       clear_bgp_view_word_ipv4_safi_asn_soft_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295> soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_asn_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295> soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn_soft_out,
+       clear_bgp_view_word_ipv4_safi_asn_soft_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295> soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_asn_rsclient,
+       clear_bgp_view_word_ipv4_safi_asn_rsclient_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) <1-4294967295> rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4,
+       clear_bgp_view_word_ipv4_safi_ipv4_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4_in,
+       clear_bgp_view_word_ipv4_safi_ipv4_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_ipv4_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4_out,
+       clear_bgp_view_word_ipv4_safi_ipv4_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4_soft,
+       clear_bgp_view_word_ipv4_safi_ipv4_soft_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4_soft_in,
+       clear_bgp_view_word_ipv4_safi_ipv4_soft_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_ipv4_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4_soft_out,
+       clear_bgp_view_word_ipv4_safi_ipv4_soft_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv4_rsclient,
+       clear_bgp_view_word_ipv4_safi_ipv4_rsclient_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) A.B.C.D rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6,
+       clear_bgp_view_word_ipv4_safi_ipv6_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6_in,
+       clear_bgp_view_word_ipv4_safi_ipv6_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_ipv6_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6_out,
+       clear_bgp_view_word_ipv4_safi_ipv6_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6_soft,
+       clear_bgp_view_word_ipv4_safi_ipv6_soft_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6_soft_in,
+       clear_bgp_view_word_ipv4_safi_ipv6_soft_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_ipv6_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6_soft_out,
+       clear_bgp_view_word_ipv4_safi_ipv6_soft_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_ipv6_rsclient,
+       clear_bgp_view_word_ipv4_safi_ipv6_rsclient_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) X:X::X:X rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external,
+       clear_bgp_view_word_ipv4_safi_external_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external_in,
+       clear_bgp_view_word_ipv4_safi_external_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_external_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external_out,
+       clear_bgp_view_word_ipv4_safi_external_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external_soft,
+       clear_bgp_view_word_ipv4_safi_external_soft_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external_soft_in,
+       clear_bgp_view_word_ipv4_safi_external_soft_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_external_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external_soft_out,
+       clear_bgp_view_word_ipv4_safi_external_soft_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_external_rsclient,
+       clear_bgp_view_word_ipv4_safi_external_rsclient_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) external rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word_in,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word_out,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word_soft,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_soft_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word_soft_in,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_soft_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word_soft_out,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_soft_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_peer_group_word_rsclient,
+       clear_bgp_view_word_ipv4_safi_peer_group_word_rsclient_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) peer-group WORD rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening,
+       clear_bgp_view_word_ipv4_safi_dampening_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4_in,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4_out,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_in,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_out,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4_rsclient,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4_rsclient_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m_in,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m_out,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_in,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_in_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_out,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_out_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv4_safi_dampening_ipv4m_rsclient,
+       clear_bgp_view_word_ipv4_safi_dampening_ipv4m_rsclient_cmd,
+       "clear bgp view WORD ipv4 (unicast|multicast) dampening A.B.C.D/M rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv4" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all,
+       clear_bgp_view_word_ipv6_safi_all_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) *",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all_in,
+       clear_bgp_view_word_ipv6_safi_all_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) * in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_all_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) * in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all_out,
+       clear_bgp_view_word_ipv6_safi_all_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) * out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all_soft,
+       clear_bgp_view_word_ipv6_safi_all_soft_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) * soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all_soft_in,
+       clear_bgp_view_word_ipv6_safi_all_soft_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) * soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_all_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) * soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all_soft_out,
+       clear_bgp_view_word_ipv6_safi_all_soft_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) * soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_all_rsclient,
+       clear_bgp_view_word_ipv6_safi_all_rsclient_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) * rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn,
+       clear_bgp_view_word_ipv6_safi_asn_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295>",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn_in,
+       clear_bgp_view_word_ipv6_safi_asn_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295> in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_asn_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295> in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn_out,
+       clear_bgp_view_word_ipv6_safi_asn_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295> out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn_soft,
+       clear_bgp_view_word_ipv6_safi_asn_soft_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295> soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn_soft_in,
+       clear_bgp_view_word_ipv6_safi_asn_soft_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295> soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_asn_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295> soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn_soft_out,
+       clear_bgp_view_word_ipv6_safi_asn_soft_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295> soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_asn_rsclient,
+       clear_bgp_view_word_ipv6_safi_asn_rsclient_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) <1-4294967295> rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "asn", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4,
+       clear_bgp_view_word_ipv6_safi_ipv4_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4_in,
+       clear_bgp_view_word_ipv6_safi_ipv4_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_ipv4_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4_out,
+       clear_bgp_view_word_ipv6_safi_ipv4_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4_soft,
+       clear_bgp_view_word_ipv6_safi_ipv4_soft_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4_soft_in,
+       clear_bgp_view_word_ipv6_safi_ipv4_soft_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_ipv4_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4_soft_out,
+       clear_bgp_view_word_ipv6_safi_ipv4_soft_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv4_rsclient,
+       clear_bgp_view_word_ipv6_safi_ipv4_rsclient_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) A.B.C.D rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6,
+       clear_bgp_view_word_ipv6_safi_ipv6_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6_in,
+       clear_bgp_view_word_ipv6_safi_ipv6_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_ipv6_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6_out,
+       clear_bgp_view_word_ipv6_safi_ipv6_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6_soft,
+       clear_bgp_view_word_ipv6_safi_ipv6_soft_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6_soft_in,
+       clear_bgp_view_word_ipv6_safi_ipv6_soft_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_ipv6_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6_soft_out,
+       clear_bgp_view_word_ipv6_safi_ipv6_soft_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_ipv6_rsclient,
+       clear_bgp_view_word_ipv6_safi_ipv6_rsclient_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) X:X::X:X rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "address", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external,
+       clear_bgp_view_word_ipv6_safi_external_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external_in,
+       clear_bgp_view_word_ipv6_safi_external_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_external_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external_out,
+       clear_bgp_view_word_ipv6_safi_external_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external_soft,
+       clear_bgp_view_word_ipv6_safi_external_soft_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external_soft_in,
+       clear_bgp_view_word_ipv6_safi_external_soft_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_external_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external_soft_out,
+       clear_bgp_view_word_ipv6_safi_external_soft_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_external_rsclient,
+       clear_bgp_view_word_ipv6_safi_external_rsclient_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) external rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word_in,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word_out,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word_soft,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_soft_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word_soft_in,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_soft_in_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word_soft_in_prefix_filter,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word_soft_out,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_soft_out_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_ipv6_safi_peer_group_word_rsclient,
+       clear_bgp_view_word_ipv6_safi_peer_group_word_rsclient_cmd,
+       "clear bgp view WORD ipv6 (unicast|multicast) peer-group WORD rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "ipv6" },
+      &(struct vty_arg) { .name = "safi", .value = argv[1] },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[2] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all,
+       clear_bgp_view_word_vpnv4_unicast_all_cmd,
+       "clear bgp view WORD vpnv4 unicast *",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all_in,
+       clear_bgp_view_word_vpnv4_unicast_all_in_cmd,
+       "clear bgp view WORD vpnv4 unicast * in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_all_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast * in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all_out,
+       clear_bgp_view_word_vpnv4_unicast_all_out_cmd,
+       "clear bgp view WORD vpnv4 unicast * out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all_soft,
+       clear_bgp_view_word_vpnv4_unicast_all_soft_cmd,
+       "clear bgp view WORD vpnv4 unicast * soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all_soft_in,
+       clear_bgp_view_word_vpnv4_unicast_all_soft_in_cmd,
+       "clear bgp view WORD vpnv4 unicast * soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all_soft_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_all_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast * soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all_soft_out,
+       clear_bgp_view_word_vpnv4_unicast_all_soft_out_cmd,
+       "clear bgp view WORD vpnv4 unicast * soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_all_rsclient,
+       clear_bgp_view_word_vpnv4_unicast_all_rsclient_cmd,
+       "clear bgp view WORD vpnv4 unicast * rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn,
+       clear_bgp_view_word_vpnv4_unicast_asn_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295>",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn_in,
+       clear_bgp_view_word_vpnv4_unicast_asn_in_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295> in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_asn_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295> in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn_out,
+       clear_bgp_view_word_vpnv4_unicast_asn_out_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295> out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn_soft,
+       clear_bgp_view_word_vpnv4_unicast_asn_soft_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295> soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn_soft_in,
+       clear_bgp_view_word_vpnv4_unicast_asn_soft_in_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295> soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn_soft_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_asn_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295> soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn_soft_out,
+       clear_bgp_view_word_vpnv4_unicast_asn_soft_out_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295> soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_asn_rsclient,
+       clear_bgp_view_word_vpnv4_unicast_asn_rsclient_cmd,
+       "clear bgp view WORD vpnv4 unicast <1-4294967295> rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "asn", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4_in,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_in_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4_out,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_out_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4_soft,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_soft_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4_soft_in,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_soft_in_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4_soft_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4_soft_out,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_soft_out_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv4_rsclient,
+       clear_bgp_view_word_vpnv4_unicast_ipv4_rsclient_cmd,
+       "clear bgp view WORD vpnv4 unicast A.B.C.D rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6_in,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_in_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6_out,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_out_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6_soft,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_soft_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6_soft_in,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_soft_in_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6_soft_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6_soft_out,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_soft_out_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_ipv6_rsclient,
+       clear_bgp_view_word_vpnv4_unicast_ipv6_rsclient_cmd,
+       "clear bgp view WORD vpnv4 unicast X:X::X:X rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "address", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external,
+       clear_bgp_view_word_vpnv4_unicast_external_cmd,
+       "clear bgp view WORD vpnv4 unicast external",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external_in,
+       clear_bgp_view_word_vpnv4_unicast_external_in_cmd,
+       "clear bgp view WORD vpnv4 unicast external in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_external_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast external in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external_out,
+       clear_bgp_view_word_vpnv4_unicast_external_out_cmd,
+       "clear bgp view WORD vpnv4 unicast external out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external_soft,
+       clear_bgp_view_word_vpnv4_unicast_external_soft_cmd,
+       "clear bgp view WORD vpnv4 unicast external soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external_soft_in,
+       clear_bgp_view_word_vpnv4_unicast_external_soft_in_cmd,
+       "clear bgp view WORD vpnv4 unicast external soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external_soft_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_external_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast external soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external_soft_out,
+       clear_bgp_view_word_vpnv4_unicast_external_soft_out_cmd,
+       "clear bgp view WORD vpnv4 unicast external soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_external_rsclient,
+       clear_bgp_view_word_vpnv4_unicast_external_rsclient_cmd,
+       "clear bgp view WORD vpnv4 unicast external rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all external peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word_in,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_in_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word_out,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_out_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD soft",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_in,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_in_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD soft in",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_in_prefix_filter,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_in_prefix_filter_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD soft in prefix-filter",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_out,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_out_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD soft out",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_bgp_view_word_vpnv4_unicast_peer_group_word_rsclient,
+       clear_bgp_view_word_vpnv4_unicast_peer_group_word_rsclient_cmd,
+       "clear bgp view WORD vpnv4 unicast peer-group WORD rsclient",
+       "Reset functions\n"
+       "BGP information\n"
+       "BGP view\n"
+       "View name\n"
+       "Address family\n"
+       "Address Family modifier\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "view", .value = argv[0] },
+      &(struct vty_arg) { .name = "afi", .value = "vpnv4" },
+      &(struct vty_arg) { .name = "safi", .value = "unicast" },
+      &(struct vty_arg) { .name = "peer_group", .value = argv[1] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
 
 DEFUN (clear_ip_bgp_all,
        clear_ip_bgp_all_cmd,
        "clear ip bgp *",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n")
 {
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], 0, 0, clear_all, BGP_CLEAR_SOFT_NONE, NULL);
-
-  return bgp_clear_vty (vty, NULL, 0, 0, clear_all, BGP_CLEAR_SOFT_NONE, NULL);
+  struct vty_arg *args[] = { NULL };
+  return bgp_clear_all (vty, args);
 }
 
-ALIAS (clear_ip_bgp_all,
-       clear_bgp_all_cmd,
-       "clear bgp *",
-       CLEAR_STR
-       BGP_STR
-       "Clear all peers\n")
-
-ALIAS (clear_ip_bgp_all,
-       clear_bgp_ipv6_all_cmd,
-       "clear bgp ipv6 *",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all peers\n")
-
-ALIAS (clear_ip_bgp_all,
-       clear_ip_bgp_instance_all_cmd,
-       "clear ip bgp view WORD *",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n")
-
-ALIAS (clear_ip_bgp_all,
-       clear_bgp_instance_all_cmd,
-       "clear bgp view WORD *",
-       CLEAR_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n")
-
-DEFUN (clear_ip_bgp_peer,
-       clear_ip_bgp_peer_cmd,
-       "clear ip bgp (A.B.C.D|X:X::X:X)",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor IP address to clear\n"
-       "BGP IPv6 neighbor to clear\n")
-{
-  return bgp_clear_vty (vty, NULL, 0, 0, clear_peer, BGP_CLEAR_SOFT_NONE, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer,
-       clear_bgp_peer_cmd,
-       "clear bgp (A.B.C.D|X:X::X:X)",
-       CLEAR_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n")
-
-ALIAS (clear_ip_bgp_peer,
-       clear_bgp_ipv6_peer_cmd,
-       "clear bgp ipv6 (A.B.C.D|X:X::X:X)",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n")
-
-DEFUN (clear_ip_bgp_peer_group,
-       clear_ip_bgp_peer_group_cmd,
-       "clear ip bgp peer-group WORD",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n")
-{
-  return bgp_clear_vty (vty, NULL, 0, 0, clear_group, BGP_CLEAR_SOFT_NONE, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_group,
-       clear_bgp_peer_group_cmd,
-       "clear bgp peer-group WORD",
-       CLEAR_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n")
-
-ALIAS (clear_ip_bgp_peer_group,
-       clear_bgp_ipv6_peer_group_cmd,
-       "clear bgp ipv6 peer-group WORD",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n")
-
-DEFUN (clear_ip_bgp_external,
-       clear_ip_bgp_external_cmd,
-       "clear ip bgp external",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n")
-{
-  return bgp_clear_vty (vty, NULL, 0, 0, clear_external, BGP_CLEAR_SOFT_NONE, NULL);
-}
-
-ALIAS (clear_ip_bgp_external,
-       clear_bgp_external_cmd,
-       "clear bgp external",
-       CLEAR_STR
-       BGP_STR
-       "Clear all external peers\n")
-
-ALIAS (clear_ip_bgp_external,
-       clear_bgp_ipv6_external_cmd,
-       "clear bgp ipv6 external",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all external peers\n")
-
-DEFUN (clear_ip_bgp_as,
-       clear_ip_bgp_as_cmd,
-       "clear ip bgp " CMD_AS_RANGE,
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n")
-{
-  return bgp_clear_vty (vty, NULL, 0, 0, clear_as, BGP_CLEAR_SOFT_NONE, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_as,
-       clear_bgp_as_cmd,
-       "clear bgp " CMD_AS_RANGE,
-       CLEAR_STR
-       BGP_STR
-       "Clear peers with the AS number\n")
-
-ALIAS (clear_ip_bgp_as,
-       clear_bgp_ipv6_as_cmd,
-       "clear bgp ipv6 " CMD_AS_RANGE,
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear peers with the AS number\n")
-
-/* Outbound soft-reconfiguration */
-DEFUN (clear_ip_bgp_all_soft_out,
-       clear_ip_bgp_all_soft_out_cmd,
-       "clear ip bgp * soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_all,
-                          BGP_CLEAR_SOFT_OUT, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_OUT, NULL);
-}
-
-ALIAS (clear_ip_bgp_all_soft_out,
-       clear_ip_bgp_all_out_cmd,
-       "clear ip bgp * out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_ip_bgp_all_soft_out,
-       clear_ip_bgp_instance_all_soft_out_cmd,
-       "clear ip bgp view WORD * soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_all_ipv4_soft_out,
-       clear_ip_bgp_all_ipv4_soft_out_cmd,
-       "clear ip bgp * ipv4 (unicast|multicast) soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  if (strncmp (argv[0], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_all,
-			  BGP_CLEAR_SOFT_OUT, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_OUT, NULL);
-}
-
-ALIAS (clear_ip_bgp_all_ipv4_soft_out,
-       clear_ip_bgp_all_ipv4_out_cmd,
-       "clear ip bgp * ipv4 (unicast|multicast) out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_instance_all_ipv4_soft_out,
-       clear_ip_bgp_instance_all_ipv4_soft_out_cmd,
-       "clear ip bgp view WORD * ipv4 (unicast|multicast) soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig outbound update\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_MULTICAST, clear_all,
-                          BGP_CLEAR_SOFT_OUT, NULL);
-
-  return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_OUT, NULL);
-}
-
-DEFUN (clear_ip_bgp_all_vpnv4_soft_out,
-       clear_ip_bgp_all_vpnv4_soft_out_cmd,
-       "clear ip bgp * vpnv4 unicast soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_all,
-			BGP_CLEAR_SOFT_OUT, NULL);
-}
-
-ALIAS (clear_ip_bgp_all_vpnv4_soft_out,
-       clear_ip_bgp_all_vpnv4_out_cmd,
-       "clear ip bgp * vpnv4 unicast out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_bgp_all_soft_out,
-       clear_bgp_all_soft_out_cmd,
-       "clear bgp * soft out",
-       CLEAR_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP6, SAFI_UNICAST, clear_all,
-                          BGP_CLEAR_SOFT_OUT, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_OUT, NULL);
-}
-
-ALIAS (clear_bgp_all_soft_out,
-       clear_bgp_instance_all_soft_out_cmd,
-       "clear bgp view WORD * soft out",
-       CLEAR_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_all_soft_out,
-       clear_bgp_all_out_cmd,
-       "clear bgp * out",
-       CLEAR_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_all_soft_out,
-       clear_bgp_ipv6_all_soft_out_cmd,
-       "clear bgp ipv6 * soft out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_all_soft_out,
-       clear_bgp_ipv6_all_out_cmd,
-       "clear bgp ipv6 * out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all peers\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_peer_soft_out,
-       clear_ip_bgp_peer_soft_out_cmd,
-       "clear ip bgp A.B.C.D soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_soft_out,
-       clear_ip_bgp_peer_out_cmd,
-       "clear ip bgp A.B.C.D out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_peer_ipv4_soft_out,
-       clear_ip_bgp_peer_ipv4_soft_out_cmd,
-       "clear ip bgp A.B.C.D ipv4 (unicast|multicast) soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_peer,
-			  BGP_CLEAR_SOFT_OUT, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_ipv4_soft_out,
-       clear_ip_bgp_peer_ipv4_out_cmd,
-       "clear ip bgp A.B.C.D ipv4 (unicast|multicast) out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_peer_vpnv4_soft_out,
-       clear_ip_bgp_peer_vpnv4_soft_out_cmd,
-       "clear ip bgp A.B.C.D vpnv4 unicast soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_peer,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_vpnv4_soft_out,
-       clear_ip_bgp_peer_vpnv4_out_cmd,
-       "clear ip bgp A.B.C.D vpnv4 unicast out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_bgp_peer_soft_out,
-       clear_bgp_peer_soft_out_cmd,
-       "clear bgp (A.B.C.D|X:X::X:X) soft out",
-       CLEAR_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_bgp_peer_soft_out,
-       clear_bgp_ipv6_peer_soft_out_cmd,
-       "clear bgp ipv6 (A.B.C.D|X:X::X:X) soft out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_peer_soft_out,
-       clear_bgp_peer_out_cmd,
-       "clear bgp (A.B.C.D|X:X::X:X) out",
-       CLEAR_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_peer_soft_out,
-       clear_bgp_ipv6_peer_out_cmd,
-       "clear bgp ipv6 (A.B.C.D|X:X::X:X) out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_peer_group_soft_out,
-       clear_ip_bgp_peer_group_soft_out_cmd,
-       "clear ip bgp peer-group WORD soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_group_soft_out,
-       clear_ip_bgp_peer_group_out_cmd,
-       "clear ip bgp peer-group WORD out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_peer_group_ipv4_soft_out,
-       clear_ip_bgp_peer_group_ipv4_soft_out_cmd,
-       "clear ip bgp peer-group WORD ipv4 (unicast|multicast) soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_group,
-			  BGP_CLEAR_SOFT_OUT, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_group_ipv4_soft_out,
-       clear_ip_bgp_peer_group_ipv4_out_cmd,
-       "clear ip bgp peer-group WORD ipv4 (unicast|multicast) out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_bgp_peer_group_soft_out,
-       clear_bgp_peer_group_soft_out_cmd,
-       "clear bgp peer-group WORD soft out",
-       CLEAR_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_bgp_peer_group_soft_out,
-       clear_bgp_ipv6_peer_group_soft_out_cmd,
-       "clear bgp ipv6 peer-group WORD soft out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_peer_group_soft_out,
-       clear_bgp_peer_group_out_cmd,
-       "clear bgp peer-group WORD out",
-       CLEAR_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_peer_group_soft_out,
-       clear_bgp_ipv6_peer_group_out_cmd,
-       "clear bgp ipv6 peer-group WORD out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_external_soft_out,
-       clear_ip_bgp_external_soft_out_cmd,
-       "clear ip bgp external soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_OUT, NULL);
-}
-
-ALIAS (clear_ip_bgp_external_soft_out,
-       clear_ip_bgp_external_out_cmd,
-       "clear ip bgp external out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_external_ipv4_soft_out,
-       clear_ip_bgp_external_ipv4_soft_out_cmd,
-       "clear ip bgp external ipv4 (unicast|multicast) soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  if (strncmp (argv[0], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_external,
-			  BGP_CLEAR_SOFT_OUT, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_OUT, NULL);
-}
-
-ALIAS (clear_ip_bgp_external_ipv4_soft_out,
-       clear_ip_bgp_external_ipv4_out_cmd,
-       "clear ip bgp external ipv4 (unicast|multicast) out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_bgp_external_soft_out,
-       clear_bgp_external_soft_out_cmd,
-       "clear bgp external soft out",
-       CLEAR_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_OUT, NULL);
-}
-
-ALIAS (clear_bgp_external_soft_out,
-       clear_bgp_ipv6_external_soft_out_cmd,
-       "clear bgp ipv6 external soft out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all external peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_external_soft_out,
-       clear_bgp_external_out_cmd,
-       "clear bgp external out",
-       CLEAR_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_external_soft_out,
-       clear_bgp_ipv6_external_out_cmd,
-       "clear bgp ipv6 external WORD out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all external peers\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_as_soft_out,
-       clear_ip_bgp_as_soft_out_cmd,
-       "clear ip bgp " CMD_AS_RANGE " soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_as_soft_out,
-       clear_ip_bgp_as_out_cmd,
-       "clear ip bgp " CMD_AS_RANGE " out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_as_ipv4_soft_out,
-       clear_ip_bgp_as_ipv4_soft_out_cmd,
-       "clear ip bgp " CMD_AS_RANGE " ipv4 (unicast|multicast) soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_as,
-			  BGP_CLEAR_SOFT_OUT, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_as_ipv4_soft_out,
-       clear_ip_bgp_as_ipv4_out_cmd,
-       "clear ip bgp " CMD_AS_RANGE " ipv4 (unicast|multicast) out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_ip_bgp_as_vpnv4_soft_out,
-       clear_ip_bgp_as_vpnv4_soft_out_cmd,
-       "clear ip bgp " CMD_AS_RANGE " vpnv4 unicast soft out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_as,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_as_vpnv4_soft_out,
-       clear_ip_bgp_as_vpnv4_out_cmd,
-       "clear ip bgp " CMD_AS_RANGE " vpnv4 unicast out",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Soft reconfig outbound update\n")
-
-DEFUN (clear_bgp_as_soft_out,
-       clear_bgp_as_soft_out_cmd,
-       "clear bgp " CMD_AS_RANGE " soft out",
-       CLEAR_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_OUT, argv[0]);
-}
-
-ALIAS (clear_bgp_as_soft_out,
-       clear_bgp_ipv6_as_soft_out_cmd,
-       "clear bgp ipv6 " CMD_AS_RANGE " soft out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_as_soft_out,
-       clear_bgp_as_out_cmd,
-       "clear bgp " CMD_AS_RANGE " out",
-       CLEAR_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig outbound update\n")
-
-ALIAS (clear_bgp_as_soft_out,
-       clear_bgp_ipv6_as_out_cmd,
-       "clear bgp ipv6 " CMD_AS_RANGE " out",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear peers with the AS number\n"
-       "Soft reconfig outbound update\n")
-
-/* Inbound soft-reconfiguration */
-DEFUN (clear_ip_bgp_all_soft_in,
-       clear_ip_bgp_all_soft_in_cmd,
-       "clear ip bgp * soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_all,
-                          BGP_CLEAR_SOFT_IN, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_IN, NULL);
-}
-
-ALIAS (clear_ip_bgp_all_soft_in,
-       clear_ip_bgp_instance_all_soft_in_cmd,
-       "clear ip bgp view WORD * soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_ip_bgp_all_soft_in,
+DEFUN (clear_ip_bgp_all_in,
        clear_ip_bgp_all_in_cmd,
        "clear ip bgp * in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n"
-       "Soft reconfig inbound update\n")
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
 
 DEFUN (clear_ip_bgp_all_in_prefix_filter,
        clear_ip_bgp_all_in_prefix_filter_cmd,
        "clear ip bgp * in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n"
-       "Soft reconfig inbound update\n"
+       "Soft reconfig inbound updates\n"
        "Push out prefix-list ORF and do inbound soft reconfig\n")
 {
-  if (argc== 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_all,
-                          BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
 }
 
-ALIAS (clear_ip_bgp_all_in_prefix_filter,
-       clear_ip_bgp_instance_all_in_prefix_filter_cmd,
-       "clear ip bgp view WORD * in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
+DEFUN (clear_ip_bgp_all_out,
+       clear_ip_bgp_all_out_cmd,
+       "clear ip bgp * out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-
-
-DEFUN (clear_ip_bgp_all_ipv4_soft_in,
-       clear_ip_bgp_all_ipv4_soft_in_cmd,
-       "clear ip bgp * ipv4 (unicast|multicast) soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
+       "Soft reconfig outbound updates\n")
 {
-  if (strncmp (argv[0], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_all,
-			  BGP_CLEAR_SOFT_IN, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_IN, NULL);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
 }
 
-ALIAS (clear_ip_bgp_all_ipv4_soft_in,
-       clear_ip_bgp_all_ipv4_in_cmd,
-       "clear ip bgp * ipv4 (unicast|multicast) in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_instance_all_ipv4_soft_in,
-       clear_ip_bgp_instance_all_ipv4_soft_in_cmd,
-       "clear ip bgp view WORD * ipv4 (unicast|multicast) soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_MULTICAST, clear_all,
-                          BGP_CLEAR_SOFT_IN, NULL);
-
-  return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_IN, NULL);
-}
-
-DEFUN (clear_ip_bgp_all_ipv4_in_prefix_filter,
-       clear_ip_bgp_all_ipv4_in_prefix_filter_cmd,
-       "clear ip bgp * ipv4 (unicast|multicast) in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  if (strncmp (argv[0], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_all,
-			  BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-}
-
-DEFUN (clear_ip_bgp_instance_all_ipv4_in_prefix_filter,
-       clear_ip_bgp_instance_all_ipv4_in_prefix_filter_cmd,
-       "clear ip bgp view WORD * ipv4 (unicast|multicast) in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_MULTICAST, clear_all,
-                          BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-
-  return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-}
-
-DEFUN (clear_ip_bgp_all_vpnv4_soft_in,
-       clear_ip_bgp_all_vpnv4_soft_in_cmd,
-       "clear ip bgp * vpnv4 unicast soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_all,
-			BGP_CLEAR_SOFT_IN, NULL);
-}
-
-ALIAS (clear_ip_bgp_all_vpnv4_soft_in,
-       clear_ip_bgp_all_vpnv4_in_cmd,
-       "clear ip bgp * vpnv4 unicast in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_bgp_all_soft_in,
-       clear_bgp_all_soft_in_cmd,
-       "clear bgp * soft in",
-       CLEAR_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP6, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_IN, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_IN, NULL);
-}
-
-ALIAS (clear_bgp_all_soft_in,
-       clear_bgp_instance_all_soft_in_cmd,
-       "clear bgp view WORD * soft in",
-       CLEAR_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_all_soft_in,
-       clear_bgp_ipv6_all_soft_in_cmd,
-       "clear bgp ipv6 * soft in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_all_soft_in,
-       clear_bgp_all_in_cmd,
-       "clear bgp * in",
-       CLEAR_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_all_soft_in,
-       clear_bgp_ipv6_all_in_cmd,
-       "clear bgp ipv6 * in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all peers\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_bgp_all_in_prefix_filter,
-       clear_bgp_all_in_prefix_filter_cmd,
-       "clear bgp * in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-}
-
-ALIAS (clear_bgp_all_in_prefix_filter,
-       clear_bgp_ipv6_all_in_prefix_filter_cmd,
-       "clear bgp ipv6 * in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all peers\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-
-DEFUN (clear_ip_bgp_peer_soft_in,
-       clear_ip_bgp_peer_soft_in_cmd,
-       "clear ip bgp A.B.C.D soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_soft_in,
-       clear_ip_bgp_peer_in_cmd,
-       "clear ip bgp A.B.C.D in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_peer_in_prefix_filter,
-       clear_ip_bgp_peer_in_prefix_filter_cmd,
-       "clear ip bgp A.B.C.D in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Soft reconfig inbound update\n"
-       "Push out the existing ORF prefix-list\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_peer_ipv4_soft_in,
-       clear_ip_bgp_peer_ipv4_soft_in_cmd,
-       "clear ip bgp A.B.C.D ipv4 (unicast|multicast) soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_peer,
-			  BGP_CLEAR_SOFT_IN, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_ipv4_soft_in,
-       clear_ip_bgp_peer_ipv4_in_cmd,
-       "clear ip bgp A.B.C.D ipv4 (unicast|multicast) in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_peer_ipv4_in_prefix_filter,
-       clear_ip_bgp_peer_ipv4_in_prefix_filter_cmd,
-       "clear ip bgp A.B.C.D ipv4 (unicast|multicast) in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n"
-       "Push out the existing ORF prefix-list\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_peer,
-			  BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_peer_vpnv4_soft_in,
-       clear_ip_bgp_peer_vpnv4_soft_in_cmd,
-       "clear ip bgp A.B.C.D vpnv4 unicast soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_peer,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_vpnv4_soft_in,
-       clear_ip_bgp_peer_vpnv4_in_cmd,
-       "clear ip bgp A.B.C.D vpnv4 unicast in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_bgp_peer_soft_in,
-       clear_bgp_peer_soft_in_cmd,
-       "clear bgp (A.B.C.D|X:X::X:X) soft in",
-       CLEAR_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_bgp_peer_soft_in,
-       clear_bgp_ipv6_peer_soft_in_cmd,
-       "clear bgp ipv6 (A.B.C.D|X:X::X:X) soft in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_peer_soft_in,
-       clear_bgp_peer_in_cmd,
-       "clear bgp (A.B.C.D|X:X::X:X) in",
-       CLEAR_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_peer_soft_in,
-       clear_bgp_ipv6_peer_in_cmd,
-       "clear bgp ipv6 (A.B.C.D|X:X::X:X) in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_bgp_peer_in_prefix_filter,
-       clear_bgp_peer_in_prefix_filter_cmd,
-       "clear bgp (A.B.C.D|X:X::X:X) in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig inbound update\n"
-       "Push out the existing ORF prefix-list\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-ALIAS (clear_bgp_peer_in_prefix_filter,
-       clear_bgp_ipv6_peer_in_prefix_filter_cmd,
-       "clear bgp ipv6 (A.B.C.D|X:X::X:X) in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig inbound update\n"
-       "Push out the existing ORF prefix-list\n")
-
-DEFUN (clear_ip_bgp_peer_group_soft_in,
-       clear_ip_bgp_peer_group_soft_in_cmd,
-       "clear ip bgp peer-group WORD soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_group_soft_in,
-       clear_ip_bgp_peer_group_in_cmd,
-       "clear ip bgp peer-group WORD in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_peer_group_in_prefix_filter,
-       clear_ip_bgp_peer_group_in_prefix_filter_cmd,
-       "clear ip bgp peer-group WORD in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_peer_group_ipv4_soft_in,
-       clear_ip_bgp_peer_group_ipv4_soft_in_cmd,
-       "clear ip bgp peer-group WORD ipv4 (unicast|multicast) soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_group,
-			  BGP_CLEAR_SOFT_IN, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_peer_group_ipv4_soft_in,
-       clear_ip_bgp_peer_group_ipv4_in_cmd,
-       "clear ip bgp peer-group WORD ipv4 (unicast|multicast) in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_peer_group_ipv4_in_prefix_filter,
-       clear_ip_bgp_peer_group_ipv4_in_prefix_filter_cmd,
-       "clear ip bgp peer-group WORD ipv4 (unicast|multicast) in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_group,
-			  BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-DEFUN (clear_bgp_peer_group_soft_in,
-       clear_bgp_peer_group_soft_in_cmd,
-       "clear bgp peer-group WORD soft in",
-       CLEAR_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_bgp_peer_group_soft_in,
-       clear_bgp_ipv6_peer_group_soft_in_cmd,
-       "clear bgp ipv6 peer-group WORD soft in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_peer_group_soft_in,
-       clear_bgp_peer_group_in_cmd,
-       "clear bgp peer-group WORD in",
-       CLEAR_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_peer_group_soft_in,
-       clear_bgp_ipv6_peer_group_in_cmd,
-       "clear bgp ipv6 peer-group WORD in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_bgp_peer_group_in_prefix_filter,
-       clear_bgp_peer_group_in_prefix_filter_cmd,
-       "clear bgp peer-group WORD in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-ALIAS (clear_bgp_peer_group_in_prefix_filter,
-       clear_bgp_ipv6_peer_group_in_prefix_filter_cmd,
-       "clear bgp ipv6 peer-group WORD in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-
-DEFUN (clear_ip_bgp_external_soft_in,
-       clear_ip_bgp_external_soft_in_cmd,
-       "clear ip bgp external soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_IN, NULL);
-}
-
-ALIAS (clear_ip_bgp_external_soft_in,
-       clear_ip_bgp_external_in_cmd,
-       "clear ip bgp external in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_external_in_prefix_filter,
-       clear_ip_bgp_external_in_prefix_filter_cmd,
-       "clear ip bgp external in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-}
-
-DEFUN (clear_ip_bgp_external_ipv4_soft_in,
-       clear_ip_bgp_external_ipv4_soft_in_cmd,
-       "clear ip bgp external ipv4 (unicast|multicast) soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  if (strncmp (argv[0], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_external,
-			  BGP_CLEAR_SOFT_IN, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_IN, NULL);
-}
-
-ALIAS (clear_ip_bgp_external_ipv4_soft_in,
-       clear_ip_bgp_external_ipv4_in_cmd,
-       "clear ip bgp external ipv4 (unicast|multicast) in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_external_ipv4_in_prefix_filter,
-       clear_ip_bgp_external_ipv4_in_prefix_filter_cmd,
-       "clear ip bgp external ipv4 (unicast|multicast) in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  if (strncmp (argv[0], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_external,
-			  BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-}
-
-DEFUN (clear_bgp_external_soft_in,
-       clear_bgp_external_soft_in_cmd,
-       "clear bgp external soft in",
-       CLEAR_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_IN, NULL);
-}
-
-ALIAS (clear_bgp_external_soft_in,
-       clear_bgp_ipv6_external_soft_in_cmd,
-       "clear bgp ipv6 external soft in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all external peers\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_external_soft_in,
-       clear_bgp_external_in_cmd,
-       "clear bgp external in",
-       CLEAR_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_external_soft_in,
-       clear_bgp_ipv6_external_in_cmd,
-       "clear bgp ipv6 external WORD in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all external peers\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_bgp_external_in_prefix_filter,
-       clear_bgp_external_in_prefix_filter_cmd,
-       "clear bgp external in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, NULL);
-}
-
-ALIAS (clear_bgp_external_in_prefix_filter,
-       clear_bgp_ipv6_external_in_prefix_filter_cmd,
-       "clear bgp ipv6 external in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all external peers\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-
-DEFUN (clear_ip_bgp_as_soft_in,
-       clear_ip_bgp_as_soft_in_cmd,
-       "clear ip bgp " CMD_AS_RANGE " soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_as_soft_in,
-       clear_ip_bgp_as_in_cmd,
-       "clear ip bgp " CMD_AS_RANGE " in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_as_in_prefix_filter,
-       clear_ip_bgp_as_in_prefix_filter_cmd,
-       "clear ip bgp " CMD_AS_RANGE " in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_as_ipv4_soft_in,
-       clear_ip_bgp_as_ipv4_soft_in_cmd,
-       "clear ip bgp " CMD_AS_RANGE " ipv4 (unicast|multicast) soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_as,
-			  BGP_CLEAR_SOFT_IN, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_as_ipv4_soft_in,
-       clear_ip_bgp_as_ipv4_in_cmd,
-       "clear ip bgp " CMD_AS_RANGE " ipv4 (unicast|multicast) in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_ip_bgp_as_ipv4_in_prefix_filter,
-       clear_ip_bgp_as_ipv4_in_prefix_filter_cmd,
-       "clear ip bgp " CMD_AS_RANGE " ipv4 (unicast|multicast) in prefix-filter",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_as,
-			  BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_as_vpnv4_soft_in,
-       clear_ip_bgp_as_vpnv4_soft_in_cmd,
-       "clear ip bgp " CMD_AS_RANGE " vpnv4 unicast soft in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_as,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_ip_bgp_as_vpnv4_soft_in,
-       clear_ip_bgp_as_vpnv4_in_cmd,
-       "clear ip bgp " CMD_AS_RANGE " vpnv4 unicast in",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_bgp_as_soft_in,
-       clear_bgp_as_soft_in_cmd,
-       "clear bgp " CMD_AS_RANGE " soft in",
-       CLEAR_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_IN, argv[0]);
-}
-
-ALIAS (clear_bgp_as_soft_in,
-       clear_bgp_ipv6_as_soft_in_cmd,
-       "clear bgp ipv6 " CMD_AS_RANGE " soft in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_as_soft_in,
-       clear_bgp_as_in_cmd,
-       "clear bgp " CMD_AS_RANGE " in",
-       CLEAR_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig inbound update\n")
-
-ALIAS (clear_bgp_as_soft_in,
-       clear_bgp_ipv6_as_in_cmd,
-       "clear bgp ipv6 " CMD_AS_RANGE " in",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear peers with the AS number\n"
-       "Soft reconfig inbound update\n")
-
-DEFUN (clear_bgp_as_in_prefix_filter,
-       clear_bgp_as_in_prefix_filter_cmd,
-       "clear bgp " CMD_AS_RANGE " in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_IN_ORF_PREFIX, argv[0]);
-}
-
-ALIAS (clear_bgp_as_in_prefix_filter,
-       clear_bgp_ipv6_as_in_prefix_filter_cmd,
-       "clear bgp ipv6 " CMD_AS_RANGE " in prefix-filter",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear peers with the AS number\n"
-       "Soft reconfig inbound update\n"
-       "Push out prefix-list ORF and do inbound soft reconfig\n")
-
-/* Both soft-reconfiguration */
 DEFUN (clear_ip_bgp_all_soft,
        clear_ip_bgp_all_soft_cmd,
        "clear ip bgp * soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n"
-       "Soft reconfig\n")
+       "Soft reconfig inbound and outbound updates\n")
 {
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_BOTH, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_BOTH, NULL);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
 }
 
-ALIAS (clear_ip_bgp_all_soft,
-       clear_ip_bgp_instance_all_soft_cmd,
-       "clear ip bgp view WORD * soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
+DEFUN (clear_ip_bgp_all_soft_in,
+       clear_ip_bgp_all_soft_in_cmd,
+       "clear ip bgp * soft in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n"
-       "Soft reconfig\n")
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
+}
 
-
-DEFUN (clear_ip_bgp_all_ipv4_soft,
-       clear_ip_bgp_all_ipv4_soft_cmd,
-       "clear ip bgp * ipv4 (unicast|multicast) soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+DEFUN (clear_ip_bgp_all_soft_in_prefix_filter,
+       clear_ip_bgp_all_soft_in_prefix_filter_cmd,
+       "clear ip bgp * soft in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n")
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
 {
-  if (strncmp (argv[0], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_all,
-			  BGP_CLEAR_SOFT_BOTH, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_BOTH, NULL);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
 }
 
-DEFUN (clear_ip_bgp_instance_all_ipv4_soft,
-       clear_ip_bgp_instance_all_ipv4_soft_cmd,
-       "clear ip bgp view WORD * ipv4 (unicast|multicast) soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
+DEFUN (clear_ip_bgp_all_soft_out,
+       clear_ip_bgp_all_soft_out_cmd,
+       "clear ip bgp * soft out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n")
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
 {
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_all,
-                          BGP_CLEAR_SOFT_BOTH, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_BOTH, NULL);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
 }
-
-DEFUN (clear_ip_bgp_all_vpnv4_soft,
-       clear_ip_bgp_all_vpnv4_soft_cmd,
-       "clear ip bgp * vpnv4 unicast soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_all,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_bgp_all_soft,
-       clear_bgp_all_soft_cmd,
-       "clear bgp * soft",
-       CLEAR_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig\n")
-{
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP6, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_BOTH, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_all,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-ALIAS (clear_bgp_all_soft,
-       clear_bgp_instance_all_soft_cmd,
-       "clear bgp view WORD * soft",
-       CLEAR_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Soft reconfig\n")
-
-ALIAS (clear_bgp_all_soft,
-       clear_bgp_ipv6_all_soft_cmd,
-       "clear bgp ipv6 * soft",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all peers\n"
-       "Soft reconfig\n")
-
-DEFUN (clear_ip_bgp_peer_soft,
-       clear_ip_bgp_peer_soft_cmd,
-       "clear ip bgp A.B.C.D soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_peer_ipv4_soft,
-       clear_ip_bgp_peer_ipv4_soft_cmd,
-       "clear ip bgp A.B.C.D ipv4 (unicast|multicast) soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_peer,
-			  BGP_CLEAR_SOFT_BOTH, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_peer_vpnv4_soft,
-       clear_ip_bgp_peer_vpnv4_soft_cmd,
-       "clear ip bgp A.B.C.D vpnv4 unicast soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_peer,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_bgp_peer_soft,
-       clear_bgp_peer_soft_cmd,
-       "clear bgp (A.B.C.D|X:X::X:X) soft",
-       CLEAR_STR
-       BGP_STR
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_peer,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-ALIAS (clear_bgp_peer_soft,
-       clear_bgp_ipv6_peer_soft_cmd,
-       "clear bgp ipv6 (A.B.C.D|X:X::X:X) soft",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP neighbor address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig\n")
-
-DEFUN (clear_ip_bgp_peer_group_soft,
-       clear_ip_bgp_peer_group_soft_cmd,
-       "clear ip bgp peer-group WORD soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_peer_group_ipv4_soft,
-       clear_ip_bgp_peer_group_ipv4_soft_cmd,
-       "clear ip bgp peer-group WORD ipv4 (unicast|multicast) soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_group,
-			  BGP_CLEAR_SOFT_BOTH, argv[0]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_bgp_peer_group_soft,
-       clear_bgp_peer_group_soft_cmd,
-       "clear bgp peer-group WORD soft",
-       CLEAR_STR
-       BGP_STR
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_group,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-ALIAS (clear_bgp_peer_group_soft,
-       clear_bgp_ipv6_peer_group_soft_cmd,
-       "clear bgp ipv6 peer-group WORD soft",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all members of peer-group\n"
-       "BGP peer-group name\n"
-       "Soft reconfig\n")
-
-DEFUN (clear_ip_bgp_external_soft,
-       clear_ip_bgp_external_soft_cmd,
-       "clear ip bgp external soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_BOTH, NULL);
-}
-
-DEFUN (clear_ip_bgp_external_ipv4_soft,
-       clear_ip_bgp_external_ipv4_soft_cmd,
-       "clear ip bgp external ipv4 (unicast|multicast) soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Address family\n"
-       "Address Family modifier\n"
-       "Address Family modifier\n"
-       "Soft reconfig\n")
-{
-  if (strncmp (argv[0], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_external,
-			  BGP_CLEAR_SOFT_BOTH, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_BOTH, NULL);
-}
-
-DEFUN (clear_bgp_external_soft,
-       clear_bgp_external_soft_cmd,
-       "clear bgp external soft",
-       CLEAR_STR
-       BGP_STR
-       "Clear all external peers\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_external,
-			BGP_CLEAR_SOFT_BOTH, NULL);
-}
-
-ALIAS (clear_bgp_external_soft,
-       clear_bgp_ipv6_external_soft_cmd,
-       "clear bgp ipv6 external soft",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all external peers\n"
-       "Soft reconfig\n")
-
-DEFUN (clear_ip_bgp_as_soft,
-       clear_ip_bgp_as_soft_cmd,
-       "clear ip bgp " CMD_AS_RANGE " soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_as_ipv4_soft,
-       clear_ip_bgp_as_ipv4_soft_cmd,
-       "clear ip bgp " CMD_AS_RANGE " ipv4 (unicast|multicast) soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n")
-{
-  if (strncmp (argv[1], "m", 1) == 0)
-    return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MULTICAST, clear_as,
-			  BGP_CLEAR_SOFT_BOTH, argv[0]);
-
-  return bgp_clear_vty (vty, NULL,AFI_IP, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_ip_bgp_as_vpnv4_soft,
-       clear_ip_bgp_as_vpnv4_soft_cmd,
-       "clear ip bgp " CMD_AS_RANGE " vpnv4 unicast soft",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Address family\n"
-       "Address Family Modifier\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_MPLS_VPN, clear_as,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-DEFUN (clear_bgp_as_soft,
-       clear_bgp_as_soft_cmd,
-       "clear bgp " CMD_AS_RANGE " soft",
-       CLEAR_STR
-       BGP_STR
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n")
-{
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_as,
-			BGP_CLEAR_SOFT_BOTH, argv[0]);
-}
-
-ALIAS (clear_bgp_as_soft,
-       clear_bgp_ipv6_as_soft_cmd,
-       "clear bgp ipv6 " CMD_AS_RANGE " soft",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear peers with the AS number\n"
-       "Soft reconfig\n")
-
-/* RS-client soft reconfiguration. */
-#ifdef HAVE_IPV6
-DEFUN (clear_bgp_all_rsclient,
-       clear_bgp_all_rsclient_cmd,
-       "clear bgp * rsclient",
-       CLEAR_STR
-       BGP_STR
-       "Clear all peers\n"
-       "Soft reconfig for rsclient RIB\n")
-{
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP6, SAFI_UNICAST, clear_all,
-                          BGP_CLEAR_SOFT_RSCLIENT, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_RSCLIENT, NULL);
-}
-
-ALIAS (clear_bgp_all_rsclient,
-       clear_bgp_ipv6_all_rsclient_cmd,
-       "clear bgp ipv6 * rsclient",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "Clear all peers\n"
-       "Soft reconfig for rsclient RIB\n")
-
-ALIAS (clear_bgp_all_rsclient,
-       clear_bgp_instance_all_rsclient_cmd,
-       "clear bgp view WORD * rsclient",
-       CLEAR_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Soft reconfig for rsclient RIB\n")
-
-ALIAS (clear_bgp_all_rsclient,
-       clear_bgp_ipv6_instance_all_rsclient_cmd,
-       "clear bgp ipv6 view WORD * rsclient",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Soft reconfig for rsclient RIB\n")
-#endif /* HAVE_IPV6 */
 
 DEFUN (clear_ip_bgp_all_rsclient,
        clear_ip_bgp_all_rsclient_cmd,
        "clear ip bgp * rsclient",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear all peers\n"
        "Soft reconfig for rsclient RIB\n")
 {
-  if (argc == 1)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_all,
-                          BGP_CLEAR_SOFT_RSCLIENT, NULL);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_all,
-                        BGP_CLEAR_SOFT_RSCLIENT, NULL);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_all (vty, args);
 }
 
-ALIAS (clear_ip_bgp_all_rsclient,
-       clear_ip_bgp_instance_all_rsclient_cmd,
-       "clear ip bgp view WORD * rsclient",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "Clear all peers\n"
-       "Soft reconfig for rsclient RIB\n")
+DEFUN (clear_ip_bgp_asn,
+       clear_ip_bgp_asn_cmd,
+       "clear ip bgp <1-4294967295>",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
 
-#ifdef HAVE_IPV6
-DEFUN (clear_bgp_peer_rsclient,
-       clear_bgp_peer_rsclient_cmd,
-       "clear bgp (A.B.C.D|X:X::X:X) rsclient",
-       CLEAR_STR
-       BGP_STR
-       "BGP neighbor IP address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
+DEFUN (clear_ip_bgp_asn_in,
+       clear_ip_bgp_asn_in_cmd,
+       "clear ip bgp <1-4294967295> in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_ip_bgp_asn_in_prefix_filter,
+       clear_ip_bgp_asn_in_prefix_filter_cmd,
+       "clear ip bgp <1-4294967295> in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_ip_bgp_asn_out,
+       clear_ip_bgp_asn_out_cmd,
+       "clear ip bgp <1-4294967295> out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_ip_bgp_asn_soft,
+       clear_ip_bgp_asn_soft_cmd,
+       "clear ip bgp <1-4294967295> soft",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_ip_bgp_asn_soft_in,
+       clear_ip_bgp_asn_soft_in_cmd,
+       "clear ip bgp <1-4294967295> soft in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_ip_bgp_asn_soft_in_prefix_filter,
+       clear_ip_bgp_asn_soft_in_prefix_filter_cmd,
+       "clear ip bgp <1-4294967295> soft in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_ip_bgp_asn_soft_out,
+       clear_ip_bgp_asn_soft_out_cmd,
+       "clear ip bgp <1-4294967295> soft out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
+}
+
+DEFUN (clear_ip_bgp_asn_rsclient,
+       clear_ip_bgp_asn_rsclient_cmd,
+       "clear ip bgp <1-4294967295> rsclient",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear peers with the AS number\n"
        "Soft reconfig for rsclient RIB\n")
 {
-  if (argc == 2)
-    return bgp_clear_vty (vty, argv[0], AFI_IP6, SAFI_UNICAST, clear_peer,
-                          BGP_CLEAR_SOFT_RSCLIENT, argv[1]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP6, SAFI_UNICAST, clear_peer,
-                        BGP_CLEAR_SOFT_RSCLIENT, argv[0]);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "asn", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_asn (vty, args);
 }
 
-ALIAS (clear_bgp_peer_rsclient,
-       clear_bgp_ipv6_peer_rsclient_cmd,
-       "clear bgp ipv6 (A.B.C.D|X:X::X:X) rsclient",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP neighbor IP address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig for rsclient RIB\n")
+DEFUN (clear_ip_bgp_ipv4,
+       clear_ip_bgp_ipv4_cmd,
+       "clear ip bgp A.B.C.D",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
 
-ALIAS (clear_bgp_peer_rsclient,
-       clear_bgp_instance_peer_rsclient_cmd,
-       "clear bgp view WORD (A.B.C.D|X:X::X:X) rsclient",
-       CLEAR_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "BGP neighbor IP address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig for rsclient RIB\n")
+DEFUN (clear_ip_bgp_ipv4_in,
+       clear_ip_bgp_ipv4_in_cmd,
+       "clear ip bgp A.B.C.D in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
 
-ALIAS (clear_bgp_peer_rsclient,
-       clear_bgp_ipv6_instance_peer_rsclient_cmd,
-       "clear bgp ipv6 view WORD (A.B.C.D|X:X::X:X) rsclient",
-       CLEAR_STR
-       BGP_STR
-       "Address family\n"
-       "BGP view\n"
-       "view name\n"
-       "BGP neighbor IP address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
-       "Soft reconfig for rsclient RIB\n")
-#endif /* HAVE_IPV6 */
+DEFUN (clear_ip_bgp_ipv4_in_prefix_filter,
+       clear_ip_bgp_ipv4_in_prefix_filter_cmd,
+       "clear ip bgp A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
 
-DEFUN (clear_ip_bgp_peer_rsclient,
-       clear_ip_bgp_peer_rsclient_cmd,
-       "clear ip bgp (A.B.C.D|X:X::X:X) rsclient",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP neighbor IP address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
+DEFUN (clear_ip_bgp_ipv4_out,
+       clear_ip_bgp_ipv4_out_cmd,
+       "clear ip bgp A.B.C.D out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv4_soft,
+       clear_ip_bgp_ipv4_soft_cmd,
+       "clear ip bgp A.B.C.D soft",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv4_soft_in,
+       clear_ip_bgp_ipv4_soft_in_cmd,
+       "clear ip bgp A.B.C.D soft in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv4_soft_in_prefix_filter,
+       clear_ip_bgp_ipv4_soft_in_prefix_filter_cmd,
+       "clear ip bgp A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv4_soft_out,
+       clear_ip_bgp_ipv4_soft_out_cmd,
+       "clear ip bgp A.B.C.D soft out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv4_rsclient,
+       clear_ip_bgp_ipv4_rsclient_cmd,
+       "clear ip bgp A.B.C.D rsclient",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
        "Soft reconfig for rsclient RIB\n")
 {
-  if (argc == 2)
-    return bgp_clear_vty (vty, argv[0], AFI_IP, SAFI_UNICAST, clear_peer,
-                          BGP_CLEAR_SOFT_RSCLIENT, argv[1]);
-
-  return bgp_clear_vty (vty, NULL, AFI_IP, SAFI_UNICAST, clear_peer,
-                        BGP_CLEAR_SOFT_RSCLIENT, argv[0]);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
 }
 
-ALIAS (clear_ip_bgp_peer_rsclient,
-       clear_ip_bgp_instance_peer_rsclient_cmd,
-       "clear ip bgp view WORD (A.B.C.D|X:X::X:X) rsclient",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "BGP view\n"
-       "view name\n"
-       "BGP neighbor IP address to clear\n"
-       "BGP IPv6 neighbor to clear\n"
+DEFUN (clear_ip_bgp_ipv6,
+       clear_ip_bgp_ipv6_cmd,
+       "clear ip bgp X:X::X:X",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv6_in,
+       clear_ip_bgp_ipv6_in_cmd,
+       "clear ip bgp X:X::X:X in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv6_in_prefix_filter,
+       clear_ip_bgp_ipv6_in_prefix_filter_cmd,
+       "clear ip bgp X:X::X:X in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv6_out,
+       clear_ip_bgp_ipv6_out_cmd,
+       "clear ip bgp X:X::X:X out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv6_soft,
+       clear_ip_bgp_ipv6_soft_cmd,
+       "clear ip bgp X:X::X:X soft",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv6_soft_in,
+       clear_ip_bgp_ipv6_soft_in_cmd,
+       "clear ip bgp X:X::X:X soft in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv6_soft_in_prefix_filter,
+       clear_ip_bgp_ipv6_soft_in_prefix_filter_cmd,
+       "clear ip bgp X:X::X:X soft in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv6_soft_out,
+       clear_ip_bgp_ipv6_soft_out_cmd,
+       "clear ip bgp X:X::X:X soft out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_ipv6_rsclient,
+       clear_ip_bgp_ipv6_rsclient_cmd,
+       "clear ip bgp X:X::X:X rsclient",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "BGP neighbor address to clear\n"
        "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "address", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_neighbor (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external,
+       clear_ip_bgp_external_cmd,
+       "clear ip bgp external",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n")
+{
+  struct vty_arg *args[] = { NULL };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external_in,
+       clear_ip_bgp_external_in_cmd,
+       "clear ip bgp external in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external_in_prefix_filter,
+       clear_ip_bgp_external_in_prefix_filter_cmd,
+       "clear ip bgp external in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external_out,
+       clear_ip_bgp_external_out_cmd,
+       "clear ip bgp external out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external_soft,
+       clear_ip_bgp_external_soft_cmd,
+       "clear ip bgp external soft",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external_soft_in,
+       clear_ip_bgp_external_soft_in_cmd,
+       "clear ip bgp external soft in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external_soft_in_prefix_filter,
+       clear_ip_bgp_external_soft_in_prefix_filter_cmd,
+       "clear ip bgp external soft in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external_soft_out,
+       clear_ip_bgp_external_soft_out_cmd,
+       "clear ip bgp external soft out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_external_rsclient,
+       clear_ip_bgp_external_rsclient_cmd,
+       "clear ip bgp external rsclient",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all external peers\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_external (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word,
+       clear_ip_bgp_peer_group_word_cmd,
+       "clear ip bgp peer-group WORD",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word_in,
+       clear_ip_bgp_peer_group_word_in_cmd,
+       "clear ip bgp peer-group WORD in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word_in_prefix_filter,
+       clear_ip_bgp_peer_group_word_in_prefix_filter_cmd,
+       "clear ip bgp peer-group WORD in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word_out,
+       clear_ip_bgp_peer_group_word_out_cmd,
+       "clear ip bgp peer-group WORD out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word_soft,
+       clear_ip_bgp_peer_group_word_soft_cmd,
+       "clear ip bgp peer-group WORD soft",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word_soft_in,
+       clear_ip_bgp_peer_group_word_soft_in_cmd,
+       "clear ip bgp peer-group WORD soft in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word_soft_in_prefix_filter,
+       clear_ip_bgp_peer_group_word_soft_in_prefix_filter_cmd,
+       "clear ip bgp peer-group WORD soft in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word_soft_out,
+       clear_ip_bgp_peer_group_word_soft_out_cmd,
+       "clear ip bgp peer-group WORD soft out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
+
+DEFUN (clear_ip_bgp_peer_group_word_rsclient,
+       clear_ip_bgp_peer_group_word_rsclient_cmd,
+       "clear ip bgp peer-group WORD rsclient",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear all members of peer-group\n"
+       "BGP peer-group name\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "peer_group", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_peer_group (vty, args);
+}
 
 DEFUN (clear_ip_bgp_dampening,
        clear_ip_bgp_dampening_cmd,
        "clear ip bgp dampening",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear route flap dampening information\n")
 {
-  bgp_damp_info_clean ();
-  return CMD_SUCCESS;
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
 }
 
-DEFUN (clear_ip_bgp_dampening_prefix,
-       clear_ip_bgp_dampening_prefix_cmd,
-       "clear ip bgp dampening A.B.C.D/M",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
-       "Clear route flap dampening information\n"
-       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n")
-{
-  return bgp_clear_damp_route (vty, NULL, argv[0], AFI_IP,
-			       SAFI_UNICAST, NULL, 1);
-}
-
-DEFUN (clear_ip_bgp_dampening_address,
-       clear_ip_bgp_dampening_address_cmd,
+DEFUN (clear_ip_bgp_dampening_ipv4,
+       clear_ip_bgp_dampening_ipv4_cmd,
        "clear ip bgp dampening A.B.C.D",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear route flap dampening information\n"
        "Network to clear damping information\n")
 {
-  return bgp_clear_damp_route (vty, NULL, argv[0], AFI_IP,
-			       SAFI_UNICAST, NULL, 0);
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
 }
 
-DEFUN (clear_ip_bgp_dampening_address_mask,
-       clear_ip_bgp_dampening_address_mask_cmd,
-       "clear ip bgp dampening A.B.C.D A.B.C.D",
-       CLEAR_STR
-       IP_STR
-       BGP_STR
+DEFUN (clear_ip_bgp_dampening_ipv4_in,
+       clear_ip_bgp_dampening_ipv4_in_cmd,
+       "clear ip bgp dampening A.B.C.D in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
        "Clear route flap dampening information\n"
        "Network to clear damping information\n"
-       "Network mask\n")
+       "Soft reconfig inbound updates\n")
 {
-  int ret;
-  char prefix_str[BUFSIZ];
-
-  ret = netmask_str2prefix_str (argv[0], argv[1], prefix_str);
-  if (! ret)
+  struct vty_arg *args[] =
     {
-      vty_out (vty, "%% Inconsistent address and mask%s", VTY_NEWLINE);
-      return CMD_WARNING;
-    }
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
 
-  return bgp_clear_damp_route (vty, NULL, prefix_str, AFI_IP,
-			       SAFI_UNICAST, NULL, 0);
+DEFUN (clear_ip_bgp_dampening_ipv4_in_prefix_filter,
+       clear_ip_bgp_dampening_ipv4_in_prefix_filter_cmd,
+       "clear ip bgp dampening A.B.C.D in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4_out,
+       clear_ip_bgp_dampening_ipv4_out_cmd,
+       "clear ip bgp dampening A.B.C.D out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4_soft,
+       clear_ip_bgp_dampening_ipv4_soft_cmd,
+       "clear ip bgp dampening A.B.C.D soft",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4_soft_in,
+       clear_ip_bgp_dampening_ipv4_soft_in_cmd,
+       "clear ip bgp dampening A.B.C.D soft in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4_soft_in_prefix_filter,
+       clear_ip_bgp_dampening_ipv4_soft_in_prefix_filter_cmd,
+       "clear ip bgp dampening A.B.C.D soft in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4_soft_out,
+       clear_ip_bgp_dampening_ipv4_soft_out_cmd,
+       "clear ip bgp dampening A.B.C.D soft out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4_rsclient,
+       clear_ip_bgp_dampening_ipv4_rsclient_cmd,
+       "clear ip bgp dampening A.B.C.D rsclient",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "Network to clear damping information\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "network", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m,
+       clear_ip_bgp_dampening_ipv4m_cmd,
+       "clear ip bgp dampening A.B.C.D/M",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m_in,
+       clear_ip_bgp_dampening_ipv4m_in_cmd,
+       "clear ip bgp dampening A.B.C.D/M in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m_in_prefix_filter,
+       clear_ip_bgp_dampening_ipv4m_in_prefix_filter_cmd,
+       "clear ip bgp dampening A.B.C.D/M in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m_out,
+       clear_ip_bgp_dampening_ipv4m_out_cmd,
+       "clear ip bgp dampening A.B.C.D/M out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m_soft,
+       clear_ip_bgp_dampening_ipv4m_soft_cmd,
+       "clear ip bgp dampening A.B.C.D/M soft",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m_soft_in,
+       clear_ip_bgp_dampening_ipv4m_soft_in_cmd,
+       "clear ip bgp dampening A.B.C.D/M soft in",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m_soft_in_prefix_filter,
+       clear_ip_bgp_dampening_ipv4m_soft_in_prefix_filter_cmd,
+       "clear ip bgp dampening A.B.C.D/M soft in prefix-filter",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig inbound updates\n"
+       "Push out prefix-list ORF and do inbound soft reconfig\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_in", .value = "in" },
+      &(struct vty_arg) { .name = "soft_pefix_filter", .value = "prefix-filter" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m_soft_out,
+       clear_ip_bgp_dampening_ipv4m_soft_out_cmd,
+       "clear ip bgp dampening A.B.C.D/M soft out",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig inbound and outbound updates\n"
+       "Soft reconfig outbound updates\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft", .value = "soft" },
+      &(struct vty_arg) { .name = "soft_out", .value = "out" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
+}
+
+DEFUN (clear_ip_bgp_dampening_ipv4m_rsclient,
+       clear_ip_bgp_dampening_ipv4m_rsclient_cmd,
+       "clear ip bgp dampening A.B.C.D/M rsclient",
+       "Reset functions\n"
+       "IP information\n"
+       "BGP information\n"
+       "Clear route flap dampening information\n"
+       "IP prefix <network>/<length>, e.g., 35.0.0.0/8\n"
+       "Soft reconfig for rsclient RIB\n")
+{
+  struct vty_arg *args[] =
+    {
+      &(struct vty_arg) { .name = "dampening", .value = "dampening" },
+      &(struct vty_arg) { .name = "prefix", .value = argv[0] },
+      &(struct vty_arg) { .name = "soft_rsclient", .value = "rsclient" },
+      NULL
+    };
+  return bgp_clear_dampening (vty, args);
 }
 
 void
 bgp_vty_clear_init (void)
 {
-  /* "clear ip bgp commands" */
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_all_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_asn_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv4_rsclient_cmd);
 #ifdef HAVE_IPV6
-  install_element (ENABLE_NODE, &clear_bgp_all_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_instance_all_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_all_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_group_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_group_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_external_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_external_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_as_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_as_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_ipv6_rsclient_cmd);
 #endif /* HAVE_IPV6 */
-
-  /* "clear ip bgp neighbor soft in" */
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_external_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_peer_group_word_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv4_safi_dampening_ipv4m_rsclient_cmd);
+#ifdef HAVE_IPV6
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_all_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_asn_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv4_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_ipv6_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_external_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_ipv6_safi_peer_group_word_rsclient_cmd);
+#endif /* HAVE_IPV6 */
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_all_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_asn_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv4_rsclient_cmd);
+#ifdef HAVE_IPV6
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_ipv6_rsclient_cmd);
+#endif /* HAVE_IPV6 */
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_external_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_vpnv4_unicast_peer_group_word_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_all_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_asn_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv4_rsclient_cmd);
+#ifdef HAVE_IPV6
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_ipv6_rsclient_cmd);
+#endif /* HAVE_IPV6 */
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_external_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_peer_group_word_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv4_safi_dampening_ipv4m_rsclient_cmd);
+#ifdef HAVE_IPV6
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_all_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_asn_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv4_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_ipv6_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_external_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_ipv6_safi_peer_group_word_rsclient_cmd);
+#endif /* HAVE_IPV6 */
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_all_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_asn_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv4_rsclient_cmd);
+#ifdef HAVE_IPV6
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_ipv6_rsclient_cmd);
+#endif /* HAVE_IPV6 */
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_external_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_bgp_view_word_vpnv4_unicast_peer_group_word_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_all_cmd);
   install_element (ENABLE_NODE, &clear_ip_bgp_all_in_cmd);
   install_element (ENABLE_NODE, &clear_ip_bgp_all_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_all_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_all_soft_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_all_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_all_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_all_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_all_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_soft_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_asn_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv4_rsclient_cmd);
+#ifdef HAVE_IPV6
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_soft_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_ipv6_rsclient_cmd);
+#endif /* HAVE_IPV6 */
+  install_element (ENABLE_NODE, &clear_ip_bgp_external_cmd);
   install_element (ENABLE_NODE, &clear_ip_bgp_external_in_cmd);
   install_element (ENABLE_NODE, &clear_ip_bgp_external_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_ipv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_ipv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_ipv4_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_ipv4_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_ipv4_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_ipv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_ipv4_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_ipv4_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_ipv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_ipv4_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_ipv4_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_ipv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_ipv4_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_ipv4_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_ipv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_ipv4_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_ipv4_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_vpnv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_vpnv4_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_vpnv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_vpnv4_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_vpnv4_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_vpnv4_in_cmd);
-#ifdef HAVE_IPV6
-  install_element (ENABLE_NODE, &clear_bgp_all_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_instance_all_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_all_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_all_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_group_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_group_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_group_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_external_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_external_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_external_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_as_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_as_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_as_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_all_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_all_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_all_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_group_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_group_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_group_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_external_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_external_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_external_in_prefix_filter_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_as_soft_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_as_in_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_as_in_prefix_filter_cmd);
-#endif /* HAVE_IPV6 */
-
-  /* "clear ip bgp neighbor soft out" */
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_soft_out_cmd);
   install_element (ENABLE_NODE, &clear_ip_bgp_external_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_ipv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_ipv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_ipv4_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_ipv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_ipv4_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_ipv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_ipv4_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_ipv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_ipv4_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_ipv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_ipv4_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_vpnv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_vpnv4_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_vpnv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_vpnv4_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_vpnv4_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_vpnv4_out_cmd);
-#ifdef HAVE_IPV6
-  install_element (ENABLE_NODE, &clear_bgp_all_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_instance_all_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_all_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_group_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_group_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_external_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_external_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_as_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_as_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_all_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_all_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_group_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_group_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_external_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_external_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_as_soft_out_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_as_out_cmd);
-#endif /* HAVE_IPV6 */
-
-  /* "clear ip bgp neighbor soft" */
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_soft_cmd);
   install_element (ENABLE_NODE, &clear_ip_bgp_external_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_ipv4_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_ipv4_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_ipv4_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_ipv4_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_external_ipv4_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_ipv4_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_vpnv4_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_vpnv4_soft_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_as_vpnv4_soft_cmd);
-#ifdef HAVE_IPV6
-  install_element (ENABLE_NODE, &clear_bgp_all_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_instance_all_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_group_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_external_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_as_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_all_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_group_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_external_soft_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_as_soft_cmd);
-#endif /* HAVE_IPV6 */
-
-  /* "clear ip bgp neighbor rsclient" */
-  install_element (ENABLE_NODE, &clear_ip_bgp_all_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_all_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_peer_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_instance_peer_rsclient_cmd);
-#ifdef HAVE_IPV6
-  install_element (ENABLE_NODE, &clear_bgp_all_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_instance_all_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_all_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_instance_all_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_peer_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_instance_peer_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_peer_rsclient_cmd);
-  install_element (ENABLE_NODE, &clear_bgp_ipv6_instance_peer_rsclient_cmd);
-#endif /* HAVE_IPV6 */
-
- /* BGP dampening clear commands */
+  install_element (ENABLE_NODE, &clear_ip_bgp_external_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_external_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_external_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_external_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_soft_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_peer_group_word_rsclient_cmd);
   install_element (ENABLE_NODE, &clear_ip_bgp_dampening_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_prefix_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_address_cmd);
-  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_address_mask_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_soft_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4_rsclient_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_soft_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_soft_in_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_soft_in_prefix_filter_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_soft_out_cmd);
+  install_element (ENABLE_NODE, &clear_ip_bgp_dampening_ipv4m_rsclient_cmd);
 }

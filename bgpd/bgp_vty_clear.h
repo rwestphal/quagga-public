@@ -23,24 +23,11 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 #include "bgpd/bgp_vty.h"
 
-/* BGP clear sort. */
-enum clear_sort
-{
-  clear_all,
-  clear_peer,
-  clear_group,
-  clear_external,
-  clear_as
-};
-
-extern int
-bgp_clear_vty (struct vty *vty, const char *name, afi_t afi, safi_t safi,
-               enum clear_sort sort, enum bgp_clear_type stype,
-               const char *arg);
-
-extern int
-bgp_clear_damp_route (struct vty *vty, const char *view_name,
-                      const char *ip_str, afi_t afi, safi_t safi,
-                      struct prefix_rd *prd, int prefix_check);
+extern int bgp_clear_all (struct vty *vty, struct vty_arg *args[]);
+extern int bgp_clear_asn (struct vty *vty, struct vty_arg *args[]);
+extern int bgp_clear_neighbor (struct vty *vty, struct vty_arg *args[]);
+extern int bgp_clear_dampening (struct vty *vty, struct vty_arg *args[]);
+extern int bgp_clear_external (struct vty *vty, struct vty_arg *args[]);
+extern int bgp_clear_peer_group (struct vty *vty, struct vty_arg *args[]);
 
 #endif /* _QUAGGA_BGP_VTY_CLEAR_H */

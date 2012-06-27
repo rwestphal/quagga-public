@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<file init="bgp_vty_clear_init" header="bgp_vty_clear.h">
+  <!--SAFI options -->
+  <options name="safi">
+    <unicast help="Address Family modifier"/>
+    <multicast help="Address Family modifier"/>
+  </options>
+  <!-- "clear bgp" type -->
+  <subtree name="bgp_clear_type">
+    <in arg="soft_in" help="Soft reconfig inbound updates" cmd="inherited">
+      <prefix-filter arg="soft_pefix_filter" help="Push out prefix-list ORF and do inbound soft reconfig" cmd="inherited"/>
+    </in>
+    <out arg="soft_out" help="Soft reconfig outbound updates" cmd="inherited"/>
+    <soft arg="soft" help="Soft reconfig inbound and outbound updates" cmd="inherited">
+      <in arg="soft_in" help="Soft reconfig inbound updates" cmd="inherited">
+        <prefix-filter arg="soft_pefix_filter" help="Push out prefix-list ORF and do inbound soft reconfig" cmd="inherited"/>
+      </in>
+      <out arg="soft_out" help="Soft reconfig outbound updates" cmd="inherited"/>
+    </soft>
+    <rsclient arg="soft_rsclient" help="Soft reconfig for rsclient RIB" cmd="inherited"/>
+  </subtree>
+  <!-- "clear bgp" options -->
+  <subtree name="bgp_clear_options">
+    <all realname="*" help="Clear all peers" cmd="bgp_clear_all">
+      <include name="bgp_clear_type"/>
+    </all>
+    <input arg="asn" type="asn" help="Clear peers with the AS number" cmd="bgp_clear_asn">
+      <include name="bgp_clear_type"/>
+    </input>
+    <input arg="address" type="ipv4" help="BGP neighbor address to clear" cmd="bgp_clear_neighbor">
+      <include name="bgp_clear_type"/>
+    </input>
+    <input arg="address" type="ipv6" help="BGP neighbor address to clear" cmd="bgp_clear_neighbor" ifdef="HAVE_IPV6">
+      <include name="bgp_clear_type"/>
+    </input>
+    <external help="Clear all external peers" cmd="bgp_clear_external">
+      <include name="bgp_clear_type"/>
+    </external>
+    <peer-group help="Clear all members of peer-group">
+      <input arg="peer_group" type="word" help="BGP peer-group name" cmd="bgp_clear_peer_group">
+        <include name="bgp_clear_type"/>
+      </input>
+    </peer-group>
+  </subtree>
+  <!-- "clear bgp" ipv4 specific options -->
+  <subtree name="bgp_clear_options_ipv4">
+    <dampening arg="dampening" help="Clear route flap dampening information" cmd="bgp_clear_dampening">
+      <input arg="network" type="ipv4" help="Network to clear damping information" cmd="inherited">
+        <include name="bgp_clear_type"/>
+      </input>
+      <input arg="prefix" type="ipv4m" help="IP prefix &lt;network&gt;/&lt;length&gt;, e.g., 35.0.0.0/8" cmd="inherited">
+        <include name="bgp_clear_type"/>
+      </input>
+    </dampening>
+  </subtree>
+  <!-- "clear bgp afi/safi" commands -->
+  <subtree name="bgp_clear">
+    <ipv4 arg="afi" help="Address family">
+      <select name="safi" arg="safi">
+        <include name="bgp_clear_options"/>
+        <include name="bgp_clear_options_ipv4"/>
+      </select>
+    </ipv4>
+    <ipv6 arg="afi" help="Address family" ifdef="HAVE_IPV6">
+      <select name="safi" arg="safi">
+        <include name="bgp_clear_options"/>
+      </select>
+    </ipv6>
+    <vpnv4 arg="afi" help="Address family">
+      <unicast arg="safi" help="Address Family modifier">
+        <include name="bgp_clear_options"/>
+      </unicast>
+    </vpnv4>
+  </subtree>
+  <!-- "clear" commands -->
+  <clear nodes="ENABLE=1" help="Reset functions">
+    <bgp help="BGP information">
+      <include name="bgp_clear"/>
+      <view help="BGP view">
+        <input arg="view" type="word" help="View name">
+          <include name="bgp_clear"/>
+        </input>
+      </view>
+    </bgp>
+    <!-- old commands for compatibility -->
+    <ip help="IP information">
+      <bgp help="BGP information">
+        <include name="bgp_clear_options"/>
+        <include name="bgp_clear_options_ipv4"/>
+      </bgp>
+    </ip>
+  </clear>
+</file>
