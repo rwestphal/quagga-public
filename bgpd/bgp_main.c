@@ -49,6 +49,7 @@ Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 #include "bgpd/bgp_debug.h"
 #include "bgpd/bgp_filter.h"
 #include "bgpd/bgp_zebra.h"
+#include "bgpd/bgp_netflow.h"
 
 /* bgpd options, we use GNU getopt library. */
 static const struct option longopts[] = 
@@ -454,6 +455,9 @@ main (int argc, char **argv)
 
   /* Make bgp vty socket. */
   vty_serv_sock (vty_addr, vty_port, BGP_VTYSH_PATH);
+
+  /* Socket to send BGP information to a Netflow collector. */
+  bgp_netflow_socket ();
 
   /* Print banner. */
   zlog_notice ("BGPd %s starting: vty@%d, bgp@%s:%d", QUAGGA_VERSION,
