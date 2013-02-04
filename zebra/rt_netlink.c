@@ -42,20 +42,19 @@
 #include "zebra/redistribute.h"
 #include "zebra/interface.h"
 #include "zebra/debug.h"
+#ifdef HAVE_MPLS
+#include <linux/mpls.h>
+#include "zebra/mpls_lib.h"
+#endif
 
 #include "rt_netlink.h"
 
 /* Socket interface to kernel */
-struct nlsock
-{
-  int sock;
-  int seq;
-  struct sockaddr_nl snl;
-  const char *name;
-} netlink      = { -1, 0, {0}, "netlink-listen"},     /* kernel messages */
+static struct nlsock
+  netlink      = { -1, 0, {0}, "netlink-listen"},     /* kernel messages */
   netlink_cmd  = { -1, 0, {0}, "netlink-cmd"};        /* command channel */
 
-static const struct message nlmsg_str[] = {
+const struct message nlmsg_str[] = {
   {RTM_NEWROUTE, "RTM_NEWROUTE"},
   {RTM_DELROUTE, "RTM_DELROUTE"},
   {RTM_GETROUTE, "RTM_GETROUTE"},
@@ -153,7 +152,7 @@ netlink_recvbuf (struct nlsock *nl, uint32_t newsize)
 }
 
 /* Make socket for Linux netlink interface. */
-static int
+int
 netlink_socket (struct nlsock *nl, unsigned long groups)
 {
   int ret;
@@ -1235,6 +1234,21 @@ netlink_route_read (void)
 /* Utility function  comes from iproute2. 
    Authors:	Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru> */
 int
+addraw_l (struct nlmsghdr *n, int maxlen, void *data, int len)
+{
+  struct rtattr *rta;
+
+  if (NLMSG_ALIGN (n->nlmsg_len) + NLMSG_ALIGN(len) > maxlen)
+    return -1;
+
+  memcpy (NLMSG_TAIL (n), data, len);
+  memset (NLMSG_TAIL (n) + len, 0, NLMSG_ALIGN(len) - len);
+  n->nlmsg_len = NLMSG_ALIGN (n->nlmsg_len) + NLMSG_ALIGN(len);
+
+  return 0;
+}
+
+int
 addattr_l (struct nlmsghdr *n, int maxlen, int type, void *data, int alen)
 {
   int len;
@@ -1327,7 +1341,7 @@ netlink_talk_filter (struct sockaddr_nl *snl, struct nlmsghdr *h)
 }
 
 /* sendmsg() to netlink socket then recvmsg(). */
-static int
+int
 netlink_talk (struct nlmsghdr *n, struct nlsock *nl)
 {
   int status;
@@ -1446,6 +1460,44 @@ netlink_route (int cmd, int family, void *dest, int length, void *gate,
   return 0;
 }
 
+#ifdef HAVE_MPLS
+static void
+mpls_kernel_netlink_route_shim (struct nlmsghdr *n, size_t maxlen,
+                                struct mpls_lsp *lsp)
+{
+  struct rtattr *rta;
+  struct mpls_hdr push = {0};
+  struct rtattr *rta2;
+
+  rta = addattr_nest (n, maxlen, RTA_MPLS);
+
+  /* push MPLS label */
+  if (IS_ZEBRA_DEBUG_KERNEL)
+    zlog_debug ("mpls_kernel_netlink_route_shim(): push label %u",
+		lsp->remote_label);
+
+  mpls_hdr_set_label (&push, lsp->remote_label);
+  rta2 = addattr_nest (n, maxlen, MPLSA_PUSH);
+  addraw_l (n, maxlen, &push, sizeof (push));
+  addattr_nest_end (n, rta2);
+
+  /* nexthop address */
+    {
+      struct sockaddr_in sin;
+
+      if (IS_ZEBRA_DEBUG_KERNEL)
+	zlog_debug ("mpls_kernel_netlink_route_shim(): nexthop ipv4 %s",
+		    inet_ntoa (lsp->addr));
+
+      sin.sin_family = AF_INET;
+      sin.sin_addr = lsp->addr;
+      addattr_l (n, maxlen, MPLSA_NEXTHOP_ADDR, &sin, sizeof (sin));
+    }
+
+  addattr_nest_end (n, rta);
+}
+#endif /* HAVE_MPLS */
+
 /* Routing table change via netlink interface. */
 static int
 netlink_route_multipath (int cmd, unsigned flags, struct prefix *p,
@@ -1556,6 +1608,26 @@ netlink_route_multipath (int cmd, unsigned flags, struct prefix *p,
       if (multipath)
 	rtnh = addnexthop (&req.n, sizeof req);
 
+#if defined(HAVE_MPLS)
+      if (nexthop->lsp && nexthop->lsp->remote_label != MPLS_IMPLICIT_NULL)
+	{
+	  struct interface *mpls_dev = if_lookup_by_name (MPLS_MASTER_DEV);
+	  if (! mpls_dev)
+	    {
+	      zlog_err ("netlink_route_multipath(): MPLS master device (%s) "
+			"not found", MPLS_MASTER_DEV);
+	      return -1;
+	    }
+	  if (multipath)
+	    rtnh->rtnh_ifindex = mpls_dev->ifindex;
+	  else
+	    addattr32 (&req.n, sizeof (req), RTA_OIF, mpls_dev->ifindex);
+
+	  mpls_kernel_netlink_route_shim (&req.n, sizeof (req), nexthop->lsp);
+	  goto nexthop_next;
+	}
+#endif /* HAVE_MPLS */
+
       /* IPv4 nexthop */
       if (type == NEXTHOP_TYPE_IPV4
 	  || type == NEXTHOP_TYPE_IPV4_IFINDEX)
@@ -1604,6 +1676,7 @@ netlink_route_multipath (int cmd, unsigned flags, struct prefix *p,
       else if (multipath)
 	rtnh->rtnh_ifindex = 0;
 
+nexthop_next:
       nexthop_num++;
       if (cmd == RTM_NEWROUTE)
 	SET_FLAG (nexthop->flags, NEXTHOP_FLAG_FIB);
@@ -1643,6 +1716,12 @@ int
 kernel_delete_ipv4 (struct prefix *p, struct rib *rib)
 {
   return netlink_route_multipath (RTM_DELROUTE, 0, p, rib, AF_INET);
+}
+
+int
+kernel_change_ipv4 (struct prefix *p, struct rib *rib)
+{
+  return netlink_route_multipath (RTM_NEWROUTE, NLM_F_CREATE|NLM_F_REPLACE, p, rib, AF_INET);
 }
 
 #ifdef HAVE_IPV6

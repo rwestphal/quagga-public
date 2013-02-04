@@ -425,7 +425,11 @@ struct in_pktinfo
 #define ZEBRA_ROUTER_ID_DELETE            21
 #define ZEBRA_ROUTER_ID_UPDATE            22
 #define ZEBRA_HELLO                       23
-#define ZEBRA_MESSAGE_MAX                 24
+#define ZEBRA_MPLS_CHANGE_IN_LABEL        24
+#define ZEBRA_MPLS_ADD_LSP                25
+#define ZEBRA_MPLS_DELETE_LSP             26
+#define ZEBRA_MPLS_REQUEST_LABEL          27
+#define ZEBRA_MESSAGE_MAX                 28
 
 /* Marker value used in new Zserv, in the byte location corresponding
  * the command value in the old zserv header. To allow old and new

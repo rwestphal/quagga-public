@@ -163,6 +163,9 @@ typedef struct rib_dest_t_
 #define RNODE_FOREACH_RIB_SAFE(rn, rib, next)				\
   RIB_DEST_FOREACH_ROUTE_SAFE (rib_dest_from_rnode (rn), rib, next)
 
+#define RIB_SYSTEM_ROUTE(R) \
+  ((R)->type == ZEBRA_ROUTE_KERNEL || (R)->type == ZEBRA_ROUTE_CONNECT)
+
 /* Static route information. */
 struct static_ipv4
 {
@@ -258,10 +261,15 @@ struct nexthop
   union g_addr gate;
 
   /* Recursive lookup nexthop. */
-  u_char rtype;
+  enum nexthop_types_t rtype;
   unsigned int rifindex;
   union g_addr rgate;
   union g_addr src;
+
+#ifdef HAVE_MPLS
+  /* MPLS LSP. */
+  struct mpls_lsp *lsp;
+#endif
 };
 
 /* Routing table instance.  */

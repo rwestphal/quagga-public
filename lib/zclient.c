@@ -395,6 +395,11 @@ zclient_start (struct zclient *zclient)
   if (zclient->default_information)
     zebra_message_send (zclient, ZEBRA_REDISTRIBUTE_DEFAULT_ADD);
 
+#ifdef HAVE_MPLS
+  if (zclient->redist_default == ZEBRA_ROUTE_LDP)
+    zebra_redistribute_send (ZEBRA_REDISTRIBUTE_ADD, zclient, ZEBRA_ROUTE_LDP);
+#endif
+
   return 0;
 }
 
@@ -957,6 +962,12 @@ zclient_read (struct thread *thread)
       if (zclient->ipv6_route_delete)
 	(*zclient->ipv6_route_delete) (command, zclient, length);
       break;
+#ifdef HAVE_MPLS
+    case ZEBRA_MPLS_CHANGE_IN_LABEL:
+      if (zclient->mpls_change_in_label)
+	(*zclient->mpls_change_in_label) (command, zclient, length);
+      break;
+#endif
     default:
       break;
     }

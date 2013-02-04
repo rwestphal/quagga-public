@@ -36,6 +36,9 @@
 #include "zebra/redistribute.h"
 #include "zebra/debug.h"
 #include "zebra/router-id.h"
+#ifdef HAVE_MPLS
+#include "zebra/mpls_lib.h"
+#endif
 
 /* master zebra server structure */
 extern struct zebra_t zebrad;
@@ -238,6 +241,29 @@ redistribute_delete (struct prefix *p, struct rib *rib)
     }
 }
 
+#ifdef HAVE_MPLS
+/* Redistribute MPLS information. */
+static void
+zebra_redistribute_mpls (struct zserv *client)
+{
+  struct route_table *table;
+  struct route_node *rn;
+  struct label_bindings *lb;
+
+  table = vrf_table (AFI_IP, SAFI_UNICAST, 0);
+  if (! table)
+    return;
+
+  for (rn = route_top (table); rn; rn = route_next (rn))
+    if (rn->mpls)
+      {
+        lb = rn->mpls;
+        if (lb->static_in_label != NO_LABEL)
+          zsend_prefix_in_label (client, rn);
+      }
+}
+#endif /* HAVE_MPLS */
+
 void
 zebra_redistribute_add (int command, struct zserv *client, int length)
 {
@@ -247,6 +273,18 @@ zebra_redistribute_add (int command, struct zserv *client, int length)
 
   if (type == 0 || type >= ZEBRA_ROUTE_MAX)
     return;
+
+#ifdef HAVE_MPLS
+  if (type == ZEBRA_ROUTE_LDP)
+    {
+      if (! client->redist_mpls)
+        {
+          client->redist_mpls = 1;
+          zebra_redistribute_mpls (client);
+        }
+      return;
+    }
+#endif /* HAVE_MPLS */
 
   if (! client->redist[type])
     {

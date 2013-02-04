@@ -42,6 +42,9 @@
 #include "zebra/redistribute.h"
 #include "zebra/debug.h"
 #include "zebra/ipforward.h"
+#ifdef HAVE_MPLS
+#include "zebra/mpls_lib.h"
+#endif
 
 /* Event list of zebra. */
 enum event { ZEBRA_SERV, ZEBRA_READ, ZEBRA_WRITE };
@@ -671,6 +674,111 @@ zsend_router_id_update (struct zserv *client, struct prefix *p)
   return zebra_server_send_message(client);
 }
 
+#ifdef HAVE_MPLS
+int
+zsend_prefix_in_label (struct zserv *client, struct route_node *rn)
+{
+  int psize;
+  struct stream *s;
+  struct prefix *p;
+  struct label_bindings *lb;
+
+  /* Reset stream. */
+  s = client->obuf;
+  stream_reset (s);
+  zserv_create_header (s, ZEBRA_MPLS_CHANGE_IN_LABEL);
+
+  /* Prefix. */
+  p = &rn->p;
+  psize = PSIZE (p->prefixlen);
+  stream_putc (s, p->prefixlen);
+  stream_write (s, (u_char *) &p->u.prefix, psize);
+
+  /* Put input label. */
+  lb = rn->mpls;
+  stream_putl (s, lb->static_in_label);
+
+  /* Write packet size. */
+  stream_putw_at (s, 0, stream_get_endp (s));
+
+  return zebra_server_send_message (client);
+}
+
+static int
+zread_prefix_input_label (struct zserv *client, u_short length)
+{
+  struct stream *s;
+  struct prefix_ipv4 p;
+  u_int32_t label;
+
+  /* Get input stream.  */
+  s = client->ibuf;
+
+  /* IPv4 prefix. */
+  memset (&p, 0, sizeof (struct prefix_ipv4));
+  p.family = AF_INET;
+  p.prefixlen = stream_getc (s);
+  stream_get (&p.prefix, s, PSIZE (p.prefixlen));
+
+  /* Prefix input label. */
+  label = stream_getl (s);
+
+  mpls_prefix_set_ldp_input_label ((struct prefix *) &p, label);
+
+  return 0;
+}
+
+static int
+zread_ipv4_lsp (int command, struct zserv *client, u_short length)
+{
+  struct stream *s;
+  struct prefix_ipv4 p;
+  struct in_addr nexthop;
+  u_int32_t label;
+
+  /* Get input stream.  */
+  s = client->ibuf;
+
+  /* IPv4 prefix. */
+  memset (&p, 0, sizeof (struct prefix_ipv4));
+  p.family = AF_INET;
+  p.prefixlen = stream_getc (s);
+  stream_get (&p.prefix, s, PSIZE (p.prefixlen));
+
+  /* Nexthop address. */
+  nexthop.s_addr = stream_get_ipv4 (s);
+
+  /* Prefix input label. */
+  label = stream_getl (s);
+
+  if (command == ZEBRA_MPLS_ADD_LSP)
+    mpls_prefix_add_lsp (MPLS_LSP_LDP, (struct prefix *) &p, nexthop, label);
+  else
+    mpls_prefix_remove_lsp (MPLS_LSP_LDP, (struct prefix *) &p, nexthop);
+
+  return 0;
+}
+
+static int
+zsend_mpls_label (struct zserv *client)
+{
+  struct stream *s;
+
+  /* Reset stream. */
+  s = client->obuf;
+  stream_reset (s);
+  zserv_create_header (s, ZEBRA_MPLS_REQUEST_LABEL);
+
+  /* Put label. */
+  stream_putl (s, mpls_allocate_local_label ());
+
+  /* Write packet size. */
+  stream_putw_at (s, 0, stream_get_endp (s));
+
+  return zebra_server_send_message (client);
+}
+#endif /* HAVE_MPLS */
+
 /* Register zebra server interface information.  Send current all
    interface and address information. */
 static int
@@ -1336,6 +1444,18 @@ zebra_client_read (struct thread *thread)
     case ZEBRA_HELLO:
       zread_hello (client);
       break;
+#ifdef HAVE_MPLS
+    case ZEBRA_MPLS_CHANGE_IN_LABEL:
+      zread_prefix_input_label (client, length);
+      break;
+    case ZEBRA_MPLS_ADD_LSP:
+    case ZEBRA_MPLS_DELETE_LSP:
+      zread_ipv4_lsp (command, client, length);
+      break;
+    case ZEBRA_MPLS_REQUEST_LABEL:
+      zsend_mpls_label (client);
+      break;
+#endif /* HAVE_MPLS */
     default:
       zlog_info ("Zebra received unknown command %d", command);
       break;

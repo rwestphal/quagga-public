@@ -51,6 +51,7 @@ const char *zlog_proto_names[] =
   "BABEL",
   "OSPF6",
   "ISIS",
+  "LDP",
   "MASC",
   NULL,
 };
@@ -845,6 +846,10 @@ static const struct zebra_desc_table command_types[] = {
   DESC_ENTRY	(ZEBRA_ROUTER_ID_DELETE),
   DESC_ENTRY	(ZEBRA_ROUTER_ID_UPDATE),
   DESC_ENTRY	(ZEBRA_HELLO),
+  DESC_ENTRY	(ZEBRA_MPLS_CHANGE_IN_LABEL),
+  DESC_ENTRY	(ZEBRA_MPLS_ADD_LSP),
+  DESC_ENTRY	(ZEBRA_MPLS_DELETE_LSP),
+  DESC_ENTRY	(ZEBRA_MPLS_REQUEST_LABEL),
 };
 #undef DESC_ENTRY
 

@@ -11,8 +11,10 @@
 int kernel_add_ipv4 (struct prefix *a, struct rib *b) { return 0; }
 #ifdef HAVE_SYS_WEAK_ALIAS_PRAGMA
 #pragma weak kernel_delete_ipv4 = kernel_add_ipv4
+#pragma weak kernel_change_ipv4 = kernel_add_ipv4
 #else
 int kernel_delete_ipv4 (struct prefix *a, struct rib *b) { return 0; }
+int kernel_change_ipv4 (struct prefix *a, struct rib *b) { return 0; }
 #endif
 
 int kernel_add_ipv6 (struct prefix *a, struct rib *b) { return 0; }

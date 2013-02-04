@@ -521,6 +521,17 @@ DEFUN (show_memory_isis,
   return CMD_SUCCESS;
 }
 
+DEFUN (show_memory_ldp,
+       show_memory_ldp_cmd,
+       "show memory ldp",
+       SHOW_STR
+       "Memory statistics\n"
+       "LDP memory\n")
+{
+  show_memory_vty (vty, memory_list_ldp);
+  return CMD_SUCCESS;
+}
+
 void
 memory_init (void)
 {
@@ -535,6 +546,7 @@ memory_init (void)
   install_element (RESTRICTED_NODE, &show_memory_ospf6_cmd);
   install_element (RESTRICTED_NODE, &show_memory_isis_cmd);
 
+  install_element (RESTRICTED_NODE, &show_memory_ldp_cmd);
   install_element (VIEW_NODE, &show_memory_cmd);
   install_element (VIEW_NODE, &show_memory_all_cmd);
   install_element (VIEW_NODE, &show_memory_lib_cmd);
@@ -545,6 +557,7 @@ memory_init (void)
   install_element (VIEW_NODE, &show_memory_ospf_cmd);
   install_element (VIEW_NODE, &show_memory_ospf6_cmd);
   install_element (VIEW_NODE, &show_memory_isis_cmd);
+  install_element (VIEW_NODE, &show_memory_ldp_cmd);
 
   install_element (ENABLE_NODE, &show_memory_cmd);
   install_element (ENABLE_NODE, &show_memory_all_cmd);
@@ -557,6 +570,7 @@ memory_init (void)
   install_element (ENABLE_NODE, &show_memory_ospf_cmd);
   install_element (ENABLE_NODE, &show_memory_ospf6_cmd);
   install_element (ENABLE_NODE, &show_memory_isis_cmd);
+  install_element (ENABLE_NODE, &show_memory_ldp_cmd);
 }
 
 /* Stats querying from users */

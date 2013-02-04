@@ -29,6 +29,21 @@
 #define NLMSG_TAIL(nmsg) \
 	((struct rtattr *) (((char *) (nmsg)) + NLMSG_ALIGN((nmsg)->nlmsg_len)))
 
+struct nlsock
+{
+  int sock;
+  int seq;
+  struct sockaddr_nl snl;
+  const char *name;
+};
+
+extern int
+netlink_socket (struct nlsock *nl, unsigned long groups);
+extern int
+netlink_talk (struct nlmsghdr *n, struct nlsock *nl);
+
+extern int
+addraw_l (struct nlmsghdr *n, int maxlen, void *data, int alen);
 extern int
 addattr32 (struct nlmsghdr *n, int maxlen, int type, int data);
 extern int

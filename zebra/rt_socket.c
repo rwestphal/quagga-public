@@ -21,6 +21,10 @@
  */
 
 #include <zebra.h>
+#if defined HAVE_MPLS && defined __OpenBSD__
+#include <netmpls/mpls.h>
+#include "zebra/mpls_lib.h"
+#endif
 
 #include "if.h"
 #include "prefix.h"
@@ -39,7 +43,8 @@ extern struct zebra_privs_t zserv_privs;
 /* kernel socket export */
 extern int rtm_write (int message, union sockunion *dest,
                       union sockunion *mask, union sockunion *gate,
-                      unsigned int index, int zebra_flags, int metric);
+                      union sockunion *mpls, unsigned int index,
+                      int zebra_flags, int metric);
 
 /* Adjust netmask socket length. Return value is a adjusted sin_len
    value. */
@@ -71,6 +76,9 @@ kernel_rtm_ipv4 (int cmd, struct prefix *p, struct rib *rib, int family)
 {
   struct sockaddr_in *mask = NULL;
   struct sockaddr_in sin_dest, sin_mask, sin_gate;
+#if defined HAVE_MPLS && defined __OpenBSD__
+  struct sockaddr_mpls smpls;
+#endif
   struct nexthop *nexthop;
   int nexthop_num = 0;
   unsigned int ifindex = 0;
@@ -106,7 +114,7 @@ kernel_rtm_ipv4 (int cmd, struct prefix *p, struct rib *rib, int family)
        * but this if statement seems overly cautious - what about
        * other than ADD and DELETE?
        */
-      if ((cmd == RTM_ADD
+      if (((cmd == RTM_ADD || cmd == RTM_CHANGE)
 	   && CHECK_FLAG (nexthop->flags, NEXTHOP_FLAG_ACTIVE))
 	  || (cmd == RTM_DELETE
 	      && CHECK_FLAG (nexthop->flags, NEXTHOP_FLAG_FIB)
@@ -158,10 +166,22 @@ kernel_rtm_ipv4 (int cmd, struct prefix *p, struct rib *rib, int family)
 	      mask = &sin_mask;
 	    }
 
+#if defined HAVE_MPLS && defined __OpenBSD__
+	  if (nexthop->lsp)
+	    {
+	      memset (&smpls, 0, sizeof (smpls));
+	      smpls.smpls_len = sizeof (smpls);
+	      smpls.smpls_family = AF_MPLS;
+	      smpls.smpls_label =
+		htonl (nexthop->lsp->remote_label << MPLS_LABEL_OFFSET);
+	    }
+#endif
+
 	  error = rtm_write (cmd,
 			     (union sockunion *)&sin_dest, 
 			     (union sockunion *)mask, 
 			     gate ? (union sockunion *)&sin_gate : NULL,
+			     nexthop->lsp ? (union sockunion *)&smpls : NULL,
 			     ifindex,
 			     rib->flags,
 			     rib->metric);
@@ -186,7 +206,7 @@ kernel_rtm_ipv4 (int cmd, struct prefix *p, struct rib *rib, int family)
                if (IS_ZEBRA_DEBUG_RIB)
                  zlog_debug ("%s: %s/%d: successfully did NH %s",
                    __func__, prefix_buf, p->prefixlen, gate_buf);
-               if (cmd == RTM_ADD)
+               if (cmd == RTM_ADD || cmd == RTM_CHANGE)
                  SET_FLAG (nexthop->flags, NEXTHOP_FLAG_FIB);
                break;
  
@@ -250,6 +270,20 @@ kernel_delete_ipv4 (struct prefix *p, struct rib *rib)
   if (zserv_privs.change(ZPRIVS_RAISE))
     zlog (NULL, LOG_ERR, "Can't raise privileges");
   route = kernel_rtm_ipv4 (RTM_DELETE, p, rib, AF_INET);
+  if (zserv_privs.change(ZPRIVS_LOWER))
+    zlog (NULL, LOG_ERR, "Can't lower privileges");
+
+  return route;
+}
+
+int
+kernel_change_ipv4 (struct prefix *p, struct rib *rib)
+{
+  int route;
+
+  if (zserv_privs.change(ZPRIVS_RAISE))
+    zlog (NULL, LOG_ERR, "Can't raise privileges");
+  route = kernel_rtm_ipv4 (RTM_CHANGE, p, rib, AF_INET);
   if (zserv_privs.change(ZPRIVS_LOWER))
     zlog (NULL, LOG_ERR, "Can't lower privileges");
 
@@ -342,6 +376,7 @@ kernel_rtm_ipv6 (int message, struct prefix_ipv6 *dest,
 		    (union sockunion *) &sin_dest,
 		    (union sockunion *) mask,
 		    gate ? (union sockunion *)&sin_gate : NULL,
+		    NULL,
 		    index,
 		    flags,
 		    0);
@@ -452,6 +487,7 @@ kernel_rtm_ipv6_multipath (int cmd, struct prefix *p, struct rib *rib,
 			(union sockunion *) &sin_dest,
 			(union sockunion *) mask,
 			gate ? (union sockunion *)&sin_gate : NULL,
+			NULL,
 			ifindex,
 			rib->flags,
 			rib->metric);

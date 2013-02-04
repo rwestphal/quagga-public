@@ -1,0 +1,11 @@
+! -*- ldp -*-
+!
+! LDPd sample configuration file
+!
+hostname ldpd
+password zebra
+log stdout
+!
+interface eth0
+ mpls ip
+!
