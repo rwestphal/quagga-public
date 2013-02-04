@@ -26,10 +26,28 @@
 
 #define NL_PKT_BUF_SIZE 8192
 
+#define NLMSG_TAIL(nmsg) \
+	((struct rtattr *) (((char *) (nmsg)) + NLMSG_ALIGN((nmsg)->nlmsg_len)))
+
 extern int
 addattr32 (struct nlmsghdr *n, int maxlen, int type, int data);
 extern int
 addattr_l (struct nlmsghdr *n, int maxlen, int type, void *data, int alen);
+
+static inline struct rtattr *
+addattr_nest (struct nlmsghdr *n, int maxlen, int type)
+{
+  struct rtattr *nest = (struct rtattr *) NLMSG_TAIL(n);
+  addattr_l (n, maxlen, type, NULL, 0);
+  return nest;
+}
+
+static inline int
+addattr_nest_end (struct nlmsghdr *n, struct rtattr *nest)
+{
+  nest->rta_len = (void *)NLMSG_TAIL(n) - (void *)nest;
+  return n->nlmsg_len;
+}
 
 extern int
 rta_addattr_l (struct rtattr *rta, int maxlen, int type, void *data, int alen);
