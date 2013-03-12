@@ -1819,11 +1819,10 @@ void rib_dump (const char * func, const struct prefix_ipv4 * p, const struct rib
   );
   zlog_debug
   (
-    "%s: nexthop_num == %u, nexthop_active_num == %u, nexthop_fib_num == %u",
+    "%s: nexthop_num == %u, nexthop_active_num == %u",
     func,
     rib->nexthop_num,
-    rib->nexthop_active_num,
-    rib->nexthop_fib_num
+    rib->nexthop_active_num
   );
   for (nexthop = rib->nexthop; nexthop; nexthop = nexthop->next)
   {
