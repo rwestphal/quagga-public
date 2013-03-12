@@ -107,8 +107,7 @@ zebra_route_node_active (struct route_node *rn)
   struct rib *rib;
 
   RNODE_FOREACH_RIB (rn, rib)
-    if (CHECK_FLAG (rib->flags, ZEBRA_FLAG_SELECTED)
-        && rib->distance != DISTANCE_INFINITY)
+    if (CHECK_FLAG (rib->flags, ZEBRA_FLAG_SELECTED))
       return rib;
 
   return NULL;
