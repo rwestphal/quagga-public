@@ -398,7 +398,7 @@ nexthop_active_ipv4 (struct rib *rib, struct nexthop *nexthop, int set,
     return 0;
 
   rn = route_node_match (table, (struct prefix *) &p);
-  while (rn)
+  while (rn && rn->p.prefixlen != 0)
     {
       route_unlock_node (rn);
       
@@ -499,7 +499,7 @@ nexthop_active_ipv6 (struct rib *rib, struct nexthop *nexthop, int set,
     return 0;
 
   rn = route_node_match (table, (struct prefix *) &p);
-  while (rn)
+  while (rn && rn->p.prefixlen != 0)
     {
       route_unlock_node (rn);
       
