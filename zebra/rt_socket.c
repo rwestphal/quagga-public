@@ -175,7 +175,6 @@ kernel_rtm_ipv4 (int cmd, struct prefix *p, struct rib *rib, int family)
 	      smpls.smpls_label =
 		htonl (nexthop->lsp->remote_label << MPLS_LABEL_OFFSET);
 	    }
-#endif
 
 	  error = rtm_write (cmd,
 			     (union sockunion *)&sin_dest, 
@@ -185,6 +184,7 @@ kernel_rtm_ipv4 (int cmd, struct prefix *p, struct rib *rib, int family)
 			     ifindex,
 			     rib->flags,
 			     rib->metric);
+#endif
 
            if (IS_ZEBRA_DEBUG_RIB)
            {
