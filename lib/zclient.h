@@ -82,6 +82,9 @@ struct zclient
   int (*ipv4_route_delete) (int, struct zclient *, uint16_t);
   int (*ipv6_route_add) (int, struct zclient *, uint16_t);
   int (*ipv6_route_delete) (int, struct zclient *, uint16_t);
+#ifdef HAVE_MPLS
+  int (*mpls_change_in_label) (int, struct zclient *, uint16_t);
+#endif
 };
 
 /* Zebra API message flag. */

@@ -61,6 +61,11 @@ struct zserv
   /* Redistribute default route flag. */
   u_char redist_default;
 
+#ifdef HAVE_MPLS
+  /* Redistribute MPLS information. */
+  u_char redist_mpls;
+#endif
+
   /* Interface information. */
   u_char ifinfo;
 
@@ -107,6 +112,10 @@ extern int zsend_interface_update (int, struct zserv *, struct interface *);
 extern int zsend_route_multipath (int, struct zserv *, struct prefix *, 
                                   struct rib *);
 extern int zsend_router_id_update(struct zserv *, struct prefix *);
+#ifdef HAVE_MPLS
+struct route_node;
+extern int zsend_prefix_in_label (struct zserv *, struct route_node *);
+#endif
 
 extern pid_t pid;
 

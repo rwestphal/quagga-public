@@ -196,6 +196,10 @@ struct zebra_if
   /* Installed addresses chains tree. */
   struct route_table *ipv4_subnets;
 
+#ifdef HAVE_MPLS
+  int mpls_enabled;
+#endif
+
 #ifdef RTADV
   struct rtadvconf rtadv;
 #endif /* RTADV */

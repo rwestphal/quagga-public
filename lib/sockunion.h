@@ -23,6 +23,10 @@
 #ifndef _ZEBRA_SOCKUNION_H
 #define _ZEBRA_SOCKUNION_H
 
+#if defined HAVE_MPLS && defined __OpenBSD__
+#include <netmpls/mpls.h>
+#endif
+
 #if 0
 union sockunion {
   struct sockinet {
@@ -45,6 +49,9 @@ union sockunion
 #ifdef HAVE_IPV6
   struct sockaddr_in6 sin6;
 #endif /* HAVE_IPV6 */
+#if defined HAVE_MPLS && defined __OpenBSD__
+  struct sockaddr_mpls smpls;
+#endif
 };
 
 enum connect_result

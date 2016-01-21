@@ -53,6 +53,7 @@ typedef enum
   ZLOG_BABEL,
   ZLOG_OSPF6,
   ZLOG_ISIS,
+  ZLOG_LDP,
   ZLOG_MASC
 } zlog_proto_t;
 

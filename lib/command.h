@@ -73,6 +73,7 @@ enum node_type
   AAA_NODE,			/* AAA node. */
   KEYCHAIN_NODE,		/* Key-chain node. */
   KEYCHAIN_KEY_NODE,		/* Key-chain key node. */
+  MPLS_NODE,			/* MPLS node. */
   INTERFACE_NODE,		/* Interface mode node. */
   ZEBRA_NODE,			/* zebra connection node. */
   TABLE_NODE,			/* rtm_table selection node. */
@@ -88,6 +89,7 @@ enum node_type
   OSPF_NODE,			/* OSPF protocol mode */
   OSPF6_NODE,			/* OSPF protocol for IPv6 mode */
   ISIS_NODE,			/* ISIS protocol mode */
+  LDP_NODE,			/* LDP protocol mode */
   MASC_NODE,			/* MASC for multicast.  */
   IRDP_NODE,			/* ICMP Router Discovery Protocol mode. */ 
   IP_NODE,			/* Static ip route node. */
@@ -305,6 +307,7 @@ struct desc
 "(neighbor|interface|area|lsa|zebra|config|dbex|spf|route|lsdb|redistribute|hook|asbr|prefix|abr)"
 #define ISIS_STR "IS-IS information\n"
 #define AREA_TAG_STR "[area tag]\n"
+#define LDP_STR "LDP information\n"
 
 #define CONF_BACKUP_EXT ".sav"
 

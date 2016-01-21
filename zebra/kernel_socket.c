@@ -999,6 +999,7 @@ rtm_write (int message,
 	   union sockunion *dest,
 	   union sockunion *mask,
 	   union sockunion *gate,
+	   union sockunion *mpls,
 	   unsigned int index,
 	   int zebra_flags,
 	   int metric)
@@ -1028,6 +1029,11 @@ rtm_write (int message,
   msg.rtm.rtm_addrs = RTA_DST;
   msg.rtm.rtm_addrs |= RTA_GATEWAY;
   msg.rtm.rtm_flags = RTF_UP;
+#if defined HAVE_MPLS && defined __OpenBSD__
+  msg.rtm.rtm_flags |= RTF_MPATH;
+  msg.rtm.rtm_fmask = RTF_MPLS;
+#endif
+
   msg.rtm.rtm_index = index;
 
   if (metric != 0)
@@ -1038,14 +1044,14 @@ rtm_write (int message,
 
   ifp = if_lookup_by_index (index);
 
-  if (gate && message == RTM_ADD)
+  if (gate && (message == RTM_ADD || message == RTM_CHANGE))
     msg.rtm.rtm_flags |= RTF_GATEWAY;
 
   /* When RTF_CLONING is unavailable on BSD, should we set some
    * other flag instead?
    */
 #ifdef RTF_CLONING
-  if (! gate && message == RTM_ADD && ifp &&
+  if (! gate && (message == RTM_ADD || message == RTM_CHANGE) && ifp &&
       (ifp->flags & IFF_POINTOPOINT) == 0)
     msg.rtm.rtm_flags |= RTF_CLONING;
 #endif /* RTF_CLONING */
@@ -1070,8 +1076,19 @@ rtm_write (int message,
 
   if (mask)
     msg.rtm.rtm_addrs |= RTA_NETMASK;
-  else if (message == RTM_ADD) 
+  else if (message == RTM_ADD || message == RTM_CHANGE)
     msg.rtm.rtm_flags |= RTF_HOST;
+
+#if defined HAVE_MPLS && defined __OpenBSD__
+  if (mpls)
+    {
+      msg.rtm.rtm_addrs |= RTA_SRC;
+      msg.rtm.rtm_flags |= RTF_MPLS;
+
+      if (mpls->smpls.smpls_label != htonl (MPLS_LABEL_IMPLNULL << MPLS_LABEL_OFFSET))
+	msg.rtm.rtm_mpls = MPLS_OP_PUSH;
+    }
+#endif
 
   /* Tagging route with flags */
   msg.rtm.rtm_flags |= (RTF_PROTO1);
@@ -1107,6 +1124,9 @@ rtm_write (int message,
   SOCKADDRSET (dest, RTA_DST);
   SOCKADDRSET (gate, RTA_GATEWAY);
   SOCKADDRSET (mask, RTA_NETMASK);
+#if defined HAVE_MPLS && defined __OpenBSD__
+  SOCKADDRSET (mpls, RTA_SRC);
+#endif
 
   msg.rtm.rtm_msglen = pnt - (caddr_t) &msg;
 

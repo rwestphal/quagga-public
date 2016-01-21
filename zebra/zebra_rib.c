@@ -41,6 +41,9 @@
 #include "zebra/redistribute.h"
 #include "zebra/debug.h"
 #include "zebra/zebra_fpm.h"
+#ifdef HAVE_MPLS
+#include "zebra/mpls_lib.h"
+#endif
 
 /* Default rtm_table for all clients */
 extern struct zebra_t zebrad;
@@ -395,7 +398,7 @@ nexthop_active_ipv4 (struct rib *rib, struct nexthop *nexthop, int set,
     return 0;
 
   rn = route_node_match (table, (struct prefix *) &p);
-  while (rn)
+  while (rn && rn->p.prefixlen != 0)
     {
       route_unlock_node (rn);
       
@@ -496,7 +499,7 @@ nexthop_active_ipv6 (struct rib *rib, struct nexthop *nexthop, int set,
     return 0;
 
   rn = route_node_match (table, (struct prefix *) &p);
-  while (rn)
+  while (rn && rn->p.prefixlen != 0)
     {
       route_unlock_node (rn);
       
@@ -815,9 +818,6 @@ rib_match_ipv6 (struct in6_addr *addr)
 }
 #endif /* HAVE_IPV6 */
 
-#define RIB_SYSTEM_ROUTE(R) \
-        ((R)->type == ZEBRA_ROUTE_KERNEL || (R)->type == ZEBRA_ROUTE_CONNECT)
-
 /* This function verifies reachability of one given nexthop, which can be
  * numbered or unnumbered, IPv4 or IPv6. The result is unconditionally stored
  * in nexthop->flags field. If the 4th parameter, 'set', is non-zero,
@@ -991,6 +991,10 @@ rib_install_kernel (struct route_node *rn, struct rib *rib)
       for (nexthop = rib->nexthop; nexthop; nexthop = nexthop->next)
 	UNSET_FLAG (nexthop->flags, NEXTHOP_FLAG_FIB);
     }
+
+#ifdef HAVE_MPLS
+   mpls_route_install_hook (rn);
+#endif
 }
 
 /* Uninstall the route from kernel. */
@@ -1020,6 +1024,10 @@ rib_uninstall_kernel (struct route_node *rn, struct rib *rib)
 
   for (nexthop = rib->nexthop; nexthop; nexthop = nexthop->next)
     UNSET_FLAG (nexthop->flags, NEXTHOP_FLAG_FIB);
+
+#ifdef HAVE_MPLS
+  mpls_route_uninstall_hook (rn);
+#endif
 
   return ret;
 }
@@ -1285,9 +1293,9 @@ rib_process (struct route_node *rn)
       /* Set real nexthop. */
       nexthop_active_update (rn, select, 1);
 
+      SET_FLAG (select->flags, ZEBRA_FLAG_SELECTED);
       if (! RIB_SYSTEM_ROUTE (select))
         rib_install_kernel (rn, select);
-      SET_FLAG (select->flags, ZEBRA_FLAG_SELECTED);
       redistribute_add (&rn->p, select);
     }
 
@@ -1811,11 +1819,10 @@ void rib_dump (const char * func, const struct prefix_ipv4 * p, const struct rib
   );
   zlog_debug
   (
-    "%s: nexthop_num == %u, nexthop_active_num == %u, nexthop_fib_num == %u",
+    "%s: nexthop_num == %u, nexthop_active_num == %u",
     func,
     rib->nexthop_num,
-    rib->nexthop_active_num,
-    rib->nexthop_fib_num
+    rib->nexthop_active_num
   );
   for (nexthop = rib->nexthop; nexthop; nexthop = nexthop->next)
   {

@@ -88,11 +88,15 @@ struct route_table
   /* Aggregation. */				\
   void *aggregate;
 
-
 /* Each routing entry. */
 struct route_node
 {
   ROUTE_NODE_FIELDS;
+
+#ifdef HAVE_MPLS
+  /* MPLS label bindings. */
+  void *mpls;
+#endif
 
 #define l_left   link[0]
 #define l_right  link[1]

@@ -84,6 +84,10 @@ struct memory_list memory_list_zebra[] =
   { MTYPE_STATIC_IPV6,		"Static IPv6 route"		},
   { MTYPE_RIB_DEST,		"RIB destination"		},
   { MTYPE_RIB_TABLE_INFO,	"RIB table info"		},
+#ifdef HAVE_MPLS
+  { MTYPE_MPLS_BINDINGS,	"MPLS Route Bindings"		},
+  { MTYPE_MPLS_LSP,		"MPLS Label Switched Path"	},
+#endif /* HAVE_MPLS */
   { -1, NULL },
 };
 
@@ -255,6 +259,12 @@ struct memory_list memory_list_isis[] =
   { -1, NULL },
 };
 
+struct memory_list memory_list_ldp[] =
+{
+  { MTYPE_LDP,                "LDP"				},
+  { -1, NULL },
+};
+
 struct memory_list memory_list_vtysh[] =
 {
   { MTYPE_VTYSH_CONFIG,		"Vtysh configuration",		},
@@ -271,5 +281,6 @@ struct mlist mlists[] __attribute__ ((unused)) = {
   { memory_list_ospf6,	"OSPF6"	},
   { memory_list_isis,	"ISIS"	},
   { memory_list_bgp,	"BGP"	},
+  { memory_list_ldp,	"LDP"	},
   { NULL, NULL},
 };

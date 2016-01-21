@@ -5,6 +5,9 @@
 #include "zebra/irdp.h"
 #include "zebra/interface.h"
 #include "zebra/zebra_fpm.h"
+#ifdef HAVE_MPLS
+#include "zebra/mpls_lib.h"
+#endif
 
 void ifstat_update_proc (void) { return; }
 #ifdef HAVE_SYS_WEAK_ALIAS_PRAGMA
@@ -22,3 +25,10 @@ zfpm_trigger_update (struct route_node *rn, const char *reason)
 {
   return;
 }
+
+#ifdef HAVE_MPLS
+int mpls_enabled;
+void mpls_route_install_hook (struct route_node *rn) { return; }
+void mpls_route_uninstall_hook (struct route_node *rn) { return; }
+void mpls_lib_update () {}
+#endif

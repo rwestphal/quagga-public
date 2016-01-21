@@ -40,6 +40,9 @@
 #include "zebra/irdp.h"
 #include "zebra/rtadv.h"
 #include "zebra/zebra_fpm.h"
+#ifdef HAVE_MPLS
+#include "zebra/mpls_lib.h"
+#endif
 
 /* Zebra instance */
 struct zebra_t zebrad =
@@ -168,6 +171,9 @@ sigint (void)
 {
   zlog_notice ("Terminating on signal");
 
+#ifdef HAVE_MPLS
+  mpls_close ();
+#endif
   if (!retain_mode)
     rib_close ();
 #ifdef HAVE_IRDP
@@ -322,10 +328,16 @@ main (int argc, char **argv)
   /* Zebra related initialize. */
   zebra_init ();
   rib_init ();
+#ifdef HAVE_MPLS
+  mpls_init ();
+#endif /* HAVE_MPLS */
   zebra_if_init ();
   zebra_debug_init ();
   router_id_init();
   zebra_vty_init ();
+#ifdef HAVE_MPLS
+  mpls_vty_init ();
+#endif /* HAVE_MPLS */
   access_list_init ();
   prefix_list_init ();
 #ifdef RTADV
@@ -338,6 +350,9 @@ main (int argc, char **argv)
   /* For debug purpose. */
   /* SET_FLAG (zebra_debug_event, ZEBRA_DEBUG_EVENT); */
 
+#ifdef HAVE_MPLS
+  mpls_kernel_init ();
+#endif /* HAVE_MPLS */
   /* Make kernel routing socket. */
   kernel_init ();
   interface_list ();
